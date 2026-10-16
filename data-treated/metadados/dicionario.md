@@ -51,3 +51,20 @@
 | ano | int16 | Ano da ocorrência. |
 | cobertura_confirmada | bool | Abas correspondem ao intervalo declarado e meses estatísticos esperados estão presentes, sem registros estatísticos fora do intervalo. |
 | periodo_parcial | bool | True para cobertura inferior ao ano completo; True em 2026. |
+
+## Campos adicionais dos registros
+
+| Campo | Tipo | Significado |
+|---|---|---|
+| elegivel_painel | bool | Linha usada nas contagens dos conjuntos. |
+| motivo_fora_painel | string | Motivo principal da não inclusão; NULL para elegíveis. A linha é preservada. |
+
+## Conjuntos temporais
+
+Os conjuntos contêm data, bairro_chave, quantidade_registros, dia_semana, mes, ano, bairro_visto_no_treino, cobertura_confirmada e periodo_parcial. Não contêm atributos históricos, preenchimentos estatísticos ou codificadores ajustados.
+
+bairro_visto_no_treino indica se a chave ocorreu nos registros elegíveis de 2022–2023. É um diagnóstico de categorias novas; não é um atributo calculado a partir do alvo futuro.
+
+O universo de rótulos de cada ano é retrospectivo. O preenchimento zero expressa ausência de registros elegíveis no snapshot, não ausência de crime nem garantia de existência do bairro em todos os dias.
+
+Nos microdados, status de data valida significa data conversível, não plausibilidade histórica confirmada. Anos anômalos ficam preservados e fora dos painéis.

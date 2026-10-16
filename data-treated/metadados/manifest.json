@@ -1,0 +1,143 @@
+{
+  "created_at_utc": "2026-10-16T19:36:56.474014+00:00",
+  "dataset_version": "2.0.0",
+  "original_processing_commit": "7da66367c6eb1f269bc337d899e0a58ff41517f2",
+  "original_processing_pipeline_sha256": "0ec45b48598517b3088cd8fe8974e0af18dc5d94c99ad569cd5ff5cefd512b1a",
+  "outputs_sha256": {
+    "auditoria/cobertura_revisada.json": "d1ce8f825cf6d174f11c9a07d1e2efc2374adfc662d75154a4e220f0f8cd1ca3",
+    "auditoria/registros_fora_paineis.csv": "364b93228f6e42d6e93fa3dd5e08f527797aeb6f9331b59802b2cf4970624e23",
+    "auditoria/resumo.json": "c6eb6d5b7c1daeb9398d7cba648350455accd008600e687f63810f3befacdf3a",
+    "auditoria/resumo_conjuntos.csv": "1168316601bbf141b353d136931dfb3c3e063509adf641603b4d9644f31612f8",
+    "auditoria/revisao_boletins.csv": "951dc1147901c0d91460784508870906789b0d1778980626775f1b6dfa339337",
+    "conjuntos/avaliacao_2026.parquet": "0db416f4b7f64fbb249be76ae8add978c097f77834f28a7b2c7b8ffb60c77b42",
+    "conjuntos/teste.parquet": "9a33f34e9884e149b3b8b417cfdb3dfd8188881f13e8b0236bcfb92ac2f8458f",
+    "conjuntos/treino.parquet": "9090d4f0a91a7ed0ae3c49e79ac1135ac1c1e5be2b12f062cd4048a10e477eac",
+    "conjuntos/validacao.parquet": "b9e123271803eba39ac506e76520715a608af53056dbe774ee5d2a3fd6837a37",
+    "metadados/bairro_aliases.csv": "35ab098fbeb90f29426ecbb7077fd6ac45582d4812cf18370bb82227a05ee38a",
+    "metadados/dicionario.md": "7278c494e8b8c1a0d66d246c53b65b182c1eb19d18bbb563670131e2d434c07f",
+    "metadados/regras.json": "08270aaf0fc4d3652e1e1cb0ce22511fcc757627570cb1ccdb4263c9c30ea962",
+    "registros/SPDadosCriminais_2022.parquet": "af73801cbc9132e28b67706d6fa80ef8854fdfe174fd315fc6a4c00cae3752ea",
+    "registros/SPDadosCriminais_2023.parquet": "164ff306faf03d5fd1087af23485a1b3fc75fdc7421a50738fa9e95129097e6e",
+    "registros/SPDadosCriminais_2024.parquet": "40d5d853f881f8868123a77bc786155b12cb17ee4827aaead0448e8306726682",
+    "registros/SPDadosCriminais_2025.parquet": "a250bb42c8ad12d060b981b6eb29e9ea6ab1a04859bf5cbd0bda6a95335865d0",
+    "registros/SPDadosCriminais_2026.parquet": "79b353eda9e20956bb191d2126d3e01b9cfdb8443effb4f5b2a4a7b287fad806"
+  },
+  "packaging_tool_sha256": "b6d9846399ea0bfe056e29d5d1212f9126aed845a31fc2a99e27fe9a82599afa",
+  "snapshot_date": "2026-10-16",
+  "sources": [
+    {
+      "arquivo": "SPDadosCriminais_2022.xlsx",
+      "registros_selecionados": 159402,
+      "sha256": "608399e58e40da0d8dbb30d73db62add1408b4f354191c12f629b108b8f7e810"
+    },
+    {
+      "arquivo": "SPDadosCriminais_2023.xlsx",
+      "registros_selecionados": 148307,
+      "sha256": "84c595a451251b3c532f4483a672134813e5ec3e224ca27db58ec4854ee801df"
+    },
+    {
+      "arquivo": "SPDadosCriminais_2024.xlsx",
+      "registros_selecionados": 127731,
+      "sha256": "b58715efaf1128c971fc5113b5a856cbb29e3e09ece8706e2eec1827fbf10d26"
+    },
+    {
+      "arquivo": "SPDadosCriminais_2025.xlsx",
+      "registros_selecionados": 108279,
+      "sha256": "4ab5b40229d245a0f50b65e74ea9e9b7750bbdb3bff7b02d961d78b9c4143d8c"
+    },
+    {
+      "arquivo": "SPDadosCriminais_2026.xlsx",
+      "registros_selecionados": 48041,
+      "sha256": "881027ed76aa645e43ca07812c5c9d8ff526adddd1574a251803a44926038e8e"
+    }
+  ],
+  "summary": {
+    "arquivos_origem": [
+      {
+        "arquivo": "SPDadosCriminais_2022.parquet",
+        "elegiveis_painel": 156356,
+        "preservados": 159402
+      },
+      {
+        "arquivo": "SPDadosCriminais_2023.parquet",
+        "elegiveis_painel": 147438,
+        "preservados": 148307
+      },
+      {
+        "arquivo": "SPDadosCriminais_2024.parquet",
+        "elegiveis_painel": 126942,
+        "preservados": 127731
+      },
+      {
+        "arquivo": "SPDadosCriminais_2025.parquet",
+        "elegiveis_painel": 107685,
+        "preservados": 108279
+      },
+      {
+        "arquivo": "SPDadosCriminais_2026.parquet",
+        "elegiveis_painel": 47895,
+        "preservados": 48041
+      }
+    ],
+    "boletins_revisados": 6,
+    "conjuntos": {
+      "avaliacao_2026": {
+        "bairros_por_ano": {
+          "2026": 1507
+        },
+        "fim": "2026-06-30",
+        "inicio": "2026-01-01",
+        "linhas": 272767,
+        "linhas_bairro_nao_visto_treino": 13756,
+        "linhas_zero": 248680,
+        "registros_alvo": 46991
+      },
+      "teste": {
+        "bairros_por_ano": {
+          "2025": 1743
+        },
+        "fim": "2025-12-31",
+        "inicio": "2025-01-01",
+        "linhas": 636195,
+        "linhas_bairro_nao_visto_treino": 43800,
+        "linhas_zero": 586373,
+        "registros_alvo": 107297
+      },
+      "treino": {
+        "bairros_por_ano": {
+          "2022": 1863,
+          "2023": 1869
+        },
+        "fim": "2023-12-31",
+        "inicio": "2022-01-01",
+        "linhas": 1362180,
+        "linhas_bairro_nao_visto_treino": 0,
+        "linhas_zero": 1244773,
+        "registros_alvo": 305143
+      },
+      "validacao": {
+        "bairros_por_ano": {
+          "2024": 1765
+        },
+        "fim": "2024-12-31",
+        "inicio": "2024-01-01",
+        "linhas": 645990,
+        "linhas_bairro_nao_visto_treino": 42456,
+        "linhas_zero": 591298,
+        "registros_alvo": 126885
+      }
+    },
+    "exclusoes_dos_paineis": {
+      "bairro_ausente": 2299,
+      "data_ocorrencia_ausente_ou_invalida": 99,
+      "fora_do_periodo": 2928,
+      "ocorrencia_posterior_registro": 116,
+      "reapresentacao_mesmo_bo_natureza": 2
+    },
+    "linhas_vazias_excel_auditadas": 144,
+    "nenhum_registro_removido_dos_microdados": true,
+    "reapresentacoes_excluidas_so_dos_paineis": 2,
+    "registros_elegiveis_paineis": 586316,
+    "registros_preservados": 591760
+  }
+}

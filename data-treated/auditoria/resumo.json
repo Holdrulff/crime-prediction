@@ -1,0 +1,89 @@
+{
+  "arquivos_origem": [
+    {
+      "arquivo": "SPDadosCriminais_2022.parquet",
+      "elegiveis_painel": 156356,
+      "preservados": 159402
+    },
+    {
+      "arquivo": "SPDadosCriminais_2023.parquet",
+      "elegiveis_painel": 147438,
+      "preservados": 148307
+    },
+    {
+      "arquivo": "SPDadosCriminais_2024.parquet",
+      "elegiveis_painel": 126942,
+      "preservados": 127731
+    },
+    {
+      "arquivo": "SPDadosCriminais_2025.parquet",
+      "elegiveis_painel": 107685,
+      "preservados": 108279
+    },
+    {
+      "arquivo": "SPDadosCriminais_2026.parquet",
+      "elegiveis_painel": 47895,
+      "preservados": 48041
+    }
+  ],
+  "boletins_revisados": 6,
+  "conjuntos": {
+    "avaliacao_2026": {
+      "bairros_por_ano": {
+        "2026": 1507
+      },
+      "fim": "2026-06-30",
+      "inicio": "2026-01-01",
+      "linhas": 272767,
+      "linhas_bairro_nao_visto_treino": 13756,
+      "linhas_zero": 248680,
+      "registros_alvo": 46991
+    },
+    "teste": {
+      "bairros_por_ano": {
+        "2025": 1743
+      },
+      "fim": "2025-12-31",
+      "inicio": "2025-01-01",
+      "linhas": 636195,
+      "linhas_bairro_nao_visto_treino": 43800,
+      "linhas_zero": 586373,
+      "registros_alvo": 107297
+    },
+    "treino": {
+      "bairros_por_ano": {
+        "2022": 1863,
+        "2023": 1869
+      },
+      "fim": "2023-12-31",
+      "inicio": "2022-01-01",
+      "linhas": 1362180,
+      "linhas_bairro_nao_visto_treino": 0,
+      "linhas_zero": 1244773,
+      "registros_alvo": 305143
+    },
+    "validacao": {
+      "bairros_por_ano": {
+        "2024": 1765
+      },
+      "fim": "2024-12-31",
+      "inicio": "2024-01-01",
+      "linhas": 645990,
+      "linhas_bairro_nao_visto_treino": 42456,
+      "linhas_zero": 591298,
+      "registros_alvo": 126885
+    }
+  },
+  "exclusoes_dos_paineis": {
+    "bairro_ausente": 2299,
+    "data_ocorrencia_ausente_ou_invalida": 99,
+    "fora_do_periodo": 2928,
+    "ocorrencia_posterior_registro": 116,
+    "reapresentacao_mesmo_bo_natureza": 2
+  },
+  "linhas_vazias_excel_auditadas": 144,
+  "nenhum_registro_removido_dos_microdados": true,
+  "reapresentacoes_excluidas_so_dos_paineis": 2,
+  "registros_elegiveis_paineis": 586316,
+  "registros_preservados": 591760
+}

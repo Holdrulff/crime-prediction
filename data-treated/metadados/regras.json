@@ -1,0 +1,87 @@
+{
+  "city_values": [
+    "S.PAULO",
+    "SAO PAULO"
+  ],
+  "coverage": {
+    "2022": {
+      "end": "2022-12-31",
+      "sheets": [
+        "JAN-JUN_2022",
+        "JUL-DEZ_2022"
+      ],
+      "start": "2022-01-01"
+    },
+    "2023": {
+      "end": "2023-12-31",
+      "sheets": [
+        "JAN-JUN_2023",
+        "JUL-DEZ_2023"
+      ],
+      "start": "2023-01-01"
+    },
+    "2024": {
+      "end": "2024-12-31",
+      "sheets": [
+        "JAN-JUN_2024",
+        "JUL-DEZ_2024"
+      ],
+      "start": "2024-01-01"
+    },
+    "2025": {
+      "end": "2025-12-31",
+      "sheets": [
+        "JAN-JUN_2025",
+        "JUL-DEZ_2025"
+      ],
+      "start": "2025-01-01"
+    },
+    "2026": {
+      "end": "2026-06-30",
+      "sheets": [
+        "JAN-JUN_2026"
+      ],
+      "start": "2026-01-01"
+    }
+  },
+  "coverage_review": "144 linhas vazias sem valores não são registros estatísticos fora do período. Abas e meses esperados confirmados.",
+  "main_years": [
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "missing_neighborhood_values": [
+    "",
+    "NULL",
+    "NAO INFORMADO",
+    "SEM INFORMACAO"
+  ],
+  "model_eligibility": "Data e bairro presentes; 2022-01-01 a 2026-06-30; ocorrência não posterior ao registro; primeira versão para dois BOs reapresentados.",
+  "plausible_bbox": [
+    -24.1,
+    -23.2,
+    -47.1,
+    -46.2
+  ],
+  "splits": {
+    "avaliacao_2026": {
+      "end": "2026-06-30",
+      "start": "2026-01-01"
+    },
+    "teste": {
+      "end": "2025-12-31",
+      "start": "2025-01-01"
+    },
+    "treino": {
+      "end": "2023-12-31",
+      "start": "2022-01-01"
+    },
+    "validacao": {
+      "end": "2024-12-31",
+      "start": "2024-01-01"
+    }
+  },
+  "target": "Registros por natureza criminal; naturezas distintas do mesmo BO são mantidas. Não são crimes únicos nem taxas de risco.",
+  "version": "2.0.0"
+}

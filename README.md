@@ -1,89 +1,108 @@
-# Previsão de registros de roubo em São Paulo
+# Dados de roubos na cidade de São Paulo
 
-O projeto prepara dados públicos da SSP-SP para estudar contagens de registros de roubo por bairro e dia. A base tratada mantém os bairros informados pela SSP e todas as linhas selecionadas. A revisão de possíveis duplicações e a integração com o IBGE continuam sendo etapas posteriores.
+Este repositório reúne os dados públicos originais da SSP-SP e uma versão tratada para explorar contagens de registros de roubo por bairro e dia. Os conjuntos estão separados por data para a futura modelagem. Não há implementação de modelos nesta versão.
 
-## Artigo e análise exploratória
+O snapshot tratado é de **16 de outubro de 2026** e usa exclusivamente as cinco planilhas locais de 2022 a 2026. O arquivo de 2026 contém janeiro a junho. Nenhum indicador do IBGE foi integrado ainda.
 
-O [artigo em LaTeX](Template_SBC/template-latex/sbc-template.tex), com o estilo SBC e os três gráficos na mesma pasta, pode ser importado no Overleaf. A [versão compilada da análise exploratória](docs/relatorio_analise_exploratoria.pdf) acompanha o repositório. Os scripts `eda_preflight.py` e `eda_figures.py` documentam a auditoria e a geração dos gráficos; os resumos pequenos de referência ficam em `preflight/`. Para recriar os gráficos, o script usa ReportLab e fontes Arial do Windows, disponíveis no ambiente de elaboração; essas dependências são separadas do tratamento dos dados.
-
-As bases Parquet em `data/ssp`, o ambiente Python e os arquivos temporários em `output/` são locais e ignorados pelo Git. O relatório de análise exploratória corresponde à etapa descrita no artigo; os resultados do tratamento são gerados separadamente em `data/ssp/relatorios/`.
-
-## Executar
-
-Requisitos: Python 3.12 e espaço para os arquivos originais e derivados. No PowerShell, a partir desta pasta:
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe -m unittest discover -s tests -v
-.\.venv\Scripts\python.exe prepare_data.py
-```
-
-Os Excel grandes são lidos gradualmente. O processamento usa `lxml` para leitura e `pyarrow` para armazenamento Parquet; não exige banco de dados. É possível acompanhar a execução pelas mensagens de progresso. Os originais nunca são escritos pelo tratamento.
-
-Em uma máquina com memória disponível, `prepare_data.py --workers 3` lê até três arquivos anuais em paralelo. O padrão é um arquivo por vez. Cada arquivo anual conferido fica salvo como ponto de retomada; o conjunto só deve ser aceito quando houver manifesto final e a verificação passar.
-
-Uma nova execução confere as assinaturas dos originais, das regras, do código e das dependências. Arquivos anuais já tratados são reutilizados somente quando essas assinaturas e a assinatura do próprio Parquet conferem. Os resumos e painéis são reconstruídos. Para verificar se as saídas de uma execução completa continuam íntegras:
-
-```powershell
-.\.venv\Scripts\python.exe prepare_data.py --verify
-```
-
-## Organização
+## Estrutura
 
 ```text
-data-sources/                    Excel originais já existentes no Git LFS
-config/
-  ssp_rules.json                 Regras e cobertura declarada dos arquivos
-  bairro_aliases.csv             Equivalências de bairros revisadas e justificadas
-data/ssp/                        Saídas reproduzíveis ignoradas pelo Git
-  registros/
-    SPDadosCriminais_ANO.parquet  Registros selecionados de cada arquivo anual
-    SPDadosCriminais_ANO.json     Assinaturas, cabeçalhos, qualidade e cobertura
-  analise/
-    bairro_dia_ANO.parquet        Contagens e calendário de cada ano da ocorrência
-  relatorios/
-    resumo.md                    Resultado legível do tratamento
-    dicionario.md                Tipos e significado dos campos
-    qualidade.json               Reconciliação e indicadores estruturados
-    totais_ano_ocorrencia.csv     Total municipal por ano do fato
-    totais_diarios_municipio.csv  Contagens com e sem bairro por dia do fato
-    bairros_observados.csv        Grafias originais e suas chaves usadas
-    grupos_repetidos.csv         Grupos candidatos à revisão
-    candidatos_duplicacao.parquet Linhas envolvidas nos grupos candidatos
-  manifest.json                  Fontes, regras, versões e assinaturas das saídas
+data-sources/                         Planilhas Excel originais preservadas
+data-treated/
+  registros/                         Um Parquet por arquivo anual da SSP
+  conjuntos/
+    treino.parquet                   Datas de ocorrência de 2022 e 2023
+    validacao.parquet                Datas de ocorrência de 2024
+    teste.parquet                    Datas de ocorrência de 2025
+    avaliacao_2026.parquet            Janeiro a junho de 2026
+  auditoria/
+    resumo.json                      Totais e reconciliação das exclusões dos painéis
+    resumo_conjuntos.csv              Dimensões dos conjuntos para consulta
+    registros_fora_paineis.csv        Identificadores e motivos de não inclusão
+    revisao_boletins.csv              Revisão dos seis grupos de BOs repetidos
+    cobertura_revisada.json           Auditoria das linhas vazias dos Excel
+  metadados/
+    dicionario.md                     Significado dos campos
+    regras.json                      Regras de tratamento e cortes temporais
+    bairro_aliases.csv               Equivalências de bairros revisadas atualmente vazio
+    manifest.json                    Assinaturas SHA256 das fontes e das saídas
+README.md
 ```
 
-Para compartilhar a análise com o grupo, executar o tratamento a partir dos mesmos originais e código ou enviar uma cópia da pasta `data/ssp` completa. Conferir o manifesto com `--verify` antes de usar. Não é necessário colocar Parquet no Git nem contratar infraestrutura. Os arquivos em `preflight/` são a referência local da análise exploratória anterior: quando presentes, o tratamento exige igualdade das contagens selecionadas e por ano da ocorrência usando o conversor numérico anterior. O tratamento também aceita datas em texto ISO; caso recupere datas que antes não eram reconhecidas, registra a diferença em `data_ocorrencia_texto_recuperada`. A ausência da referência anterior é explicitada na metadata anual.
+Os arquivos ocultos `.gitattributes` e `.gitignore` são configurações técnicas do Git. Os Excel e os Parquet usam **Git LFS**. Instale o Git LFS antes de clonar o repositório; em uma cópia já existente, execute `git lfs pull`. Sem isso, podem aparecer apenas arquivos de ponteiro, em vez dos dados binários completos.
 
-## Regras de tratamento
+## Qual arquivo usar
 
-O [dicionário dos campos](docs/dicionario_dados.md) acompanha o código no Git. Cada execução também produz uma cópia junto aos resultados.
+Para explorar os registros individuais, use os arquivos em [data-treated/registros](data-treated/registros). Eles preservam as **591.760 linhas selecionadas**, incluindo as sinalizadas com problemas. As colunas `elegivel_painel` e `motivo_fora_painel` informam sua participação nas contagens.
 
-- O recorte usa o **município da ocorrência**, não o município de registro, e naturezas iniciadas por `ROUBO`.
-- As colunas são localizadas por nomes e equivalências explícitas, incluindo as mudanças de cabeçalho de 2022 e a diferença de grafia de circunscrição. Campos obrigatórios ausentes ou ambíguos interrompem a execução.
-- A data do fato orienta os totais. A data de registro é preservada, assim como os seriais originais do Excel. Ausência e falha de conversão recebem sinalizações diferentes. Datas anteriores ao intervalo principal e posteriores à cobertura permanecem nos registros e nos totais municipais.
-- O status de data `valida` significa que o valor pôde ser convertido para uma data do calendário, sem comprovar sua plausibilidade como data de um crime. Anos anômalos permanecem visíveis nos totais por ano e fora dos painéis de 2022–2026; não são corrigidos por suposição.
-- Bairro original e chave de agregação são campos distintos. A normalização remove acentos, uniformiza espaços e aplica maiúsculas. Não expande `JD`, `VL` ou outras abreviações automaticamente. Valores ausentes estão definidos nas regras.
-- `bairro_aliases.csv` começa vazio. Para adicionar uma equivalência, preencher `origem,destino,justificativa` após conferência. O destino deve ser final: ciclos e cadeias de equivalências são rejeitados. Alterar esse arquivo provoca nova aplicação do tratamento.
-- Coordenadas ausentes, inválidas, nulas, numericamente impossíveis ou fora da faixa preliminar de São Paulo são sinalizadas. Estar dentro dessa faixa retangular não comprova que o ponto esteja dentro do município. Falta de coordenadas não exclui um registro das contagens por bairro e dia.
-- A chave candidata de BO combina delegacia, ano e número. O hash de linha considera todos os campos originais com cabeçalhos normalizados. Repetições são listadas, **não removidas**. Múltiplas naturezas no mesmo BO recebem uma sinalização específica e não comprovam duplicação.
-- Cada registro preserva arquivo, aba, número real da linha e identificador de proveniência. Esse identificador não representa um crime único.
+Para trabalhar com a tarefa de previsão, comece pelos arquivos em [data-treated/conjuntos](data-treated/conjuntos). Cada linha representa um par bairro e dia e contém a variável alvo `quantidade_registros`, além de informações de calendário. Não há médias móveis, defasagens, codificadores ou outras transformações aprendidas nestes arquivos.
 
-## Cobertura e zeros
+| Conjunto | Período da ocorrência | Linhas bairro e dia | Registros contabilizados no alvo |
+|---|---|---:|---:|
+| Treino | 01/01/2022 a 31/12/2023 | 1.362.180 | 305.143 |
+| Validação | 01/01/2024 a 31/12/2024 | 645.990 | 126.885 |
+| Teste | 01/01/2025 a 31/12/2025 | 636.195 | 107.297 |
+| Avaliação adicional | 01/01/2026 a 30/06/2026 | 272.767 | 46.991 |
+| Total | 01/01/2022 a 30/06/2026 | 2.917.132 | 586.316 |
 
-A configuração declara 2022–2025 completos e janeiro–junho de 2026. Para confirmar a cobertura, o código exige as abas declaradas, todos os meses estatísticos esperados e ausência de registros estatísticos fora desse período. Isso verifica a cobertura declarada do arquivo, sem afirmar que todos os crimes tenham sido registrados ou que cada dia e bairro tenham cobertura completa.
+As linhas de bairros de uma mesma data pertencem ao mesmo conjunto. Os arquivos estão ordenados por `data` e `bairro_chave`, sem embaralhamento e sem sobreposição de datas entre os conjuntos.
 
-Em cada intervalo, o universo de bairros é o conjunto de chaves observadas naquele intervalo. Quando a cobertura é confirmada, o painel contém todas as combinações dessas chaves com os dias do intervalo, preenchendo as ausentes com zero. A presença de cada bairro em todo o intervalo é uma hipótese de trabalho; as chaves não definem territórios oficiais. Se a cobertura não for confirmada, o painel contém somente pares observados e nenhuma linha de zero é inventada.
+O teste de 2025 fica reservado para a avaliação após a escolha do modelo. A avaliação de 2026 é complementar e cobre somente meio ano. Os totais de 2025 e 2026 dependem dos registros tardios presentes no snapshot disponível.
 
-Zero significa **nenhum registro encontrado na base**, não ausência de crime. Os painéis são separados por ano da ocorrência, e 2026 recebe `periodo_parcial=True`. Registros sem data não entram nos painéis. Registros com data, mas sem bairro, aparecem nos totais municipais e na reconciliação. Registros fora dos intervalos declarados também permanecem nos resumos municipais.
+## Tratamento aplicado
 
-## Antes de treinar modelos
+1. As colunas foram identificadas pelo nome, considerando mudanças de cabeçalho e posição entre os arquivos.
+2. Foram selecionadas naturezas iniciadas por `ROUBO` e município da ocorrência igual a São Paulo. O município do registro não foi usado como filtro geográfico.
+3. Datas foram convertidas e seus valores originais mantidos. A data da ocorrência define os conjuntos; a data de registro também foi preservada.
+4. O bairro original foi mantido. A chave usada nas contagens tem espaços uniformizados, letras maiúsculas e acentos normalizados. Abreviações não foram expandidas automaticamente e não foram inventadas equivalências geográficas.
+5. Coordenadas ausentes, zeradas, inválidas ou suspeitas foram sinalizadas. A falta de coordenadas não excluiu registros das contagens por bairro e dia.
+6. Cada linha mantém arquivo, aba, número real da linha e identificador de proveniência. Os originais foram conferidos por SHA256 e permaneceram inalterados.
 
-As contagens históricas incorporam registros tardios encontrados nas planilhas posteriores. Portanto, o painel não reproduz o que era conhecido em cada data. Na modelagem, reconstruir a disponibilidade de informação pela data de registro: para prever no início de um dia, usar apenas registros disponíveis antes desse dia. Registros sem data de registro utilizável e datas inconsistentes exigem revisão. Não usar a hora ou o local de um fato futuro como variável preditora.
+## Regras para inclusão nos painéis
 
-Ainda é necessário revisar os candidatos a duplicação, as equivalências entre bairros e a estabilidade da unidade bairro–dia. Os painéis contam **registros preservados**; não os chamar de ocorrências únicas. Não há modelos treinados, geocodificação, limites oficiais de bairros ou indicadores socioeconômicos nesta etapa.
+Para entrar nas contagens, um registro precisa ter data de ocorrência e registro utilizáveis, bairro disponível e ocorrência entre 01/01/2022 e 30/06/2026. A ocorrência não pode ser posterior à data de registro. Reapresentações identificadas do mesmo BO e natureza não são contadas duas vezes.
 
-## Conferências automatizadas
+| Motivo principal da não inclusão | Registros |
+|---|---:|
+| Data de ocorrência fora do intervalo | 2.928 |
+| Bairro ausente | 2.299 |
+| Data de ocorrência ausente ou inválida | 99 |
+| Ocorrência posterior à data de registro | 116 |
+| Reapresentação do mesmo BO e natureza | 2 |
+| Total fora dos painéis | 5.444 |
 
-Os testes usam planilhas pequenas com mudanças de cabeçalhos, datas do Excel, células de texto, saltos de número de linha, dados ausentes, coordenadas inválidas e BOs repetidos com múltiplas naturezas. Verificam preservação dos originais, reconciliação, ausência de pares bairro–dia repetidos, contagens não negativas, ausência de preenchimento zero sem cobertura e repetição determinística das saídas. A execução real também compara os totais com a análise anterior e registra as assinaturas de todos os arquivos gerados.
+Os motivos são aplicados em ordem e são mutuamente exclusivos no resumo. **591.760 preservados = 586.316 elegíveis + 5.444 fora dos painéis.** Todas essas linhas continuam nos Parquet de registros; o CSV de auditoria permite localizá-las.
+
+As sete datas em texto com anos 0222 e 1202 foram preservadas para revisão e ficaram fora do período dos painéis. Nenhuma correção de ano foi feita por suposição.
+
+## Revisão de boletins repetidos
+
+Foram examinadas 12 linhas em seis grupos com a mesma delegacia, ano e número de BO. Em quatro grupos, as naturezas são distintas e foram mantidas. Nos outros dois, os registros repetem BO, natureza, data, bairro e hora em arquivos posteriores: a primeira data de registro foi mantida nas contagens, preservando todas as versões nos microdados.
+
+A decisão e as referências de cada linha estão em [revisao_boletins.csv](data-treated/auditoria/revisao_boletins.csv). A variável alvo conta registros por natureza criminal após essa revisão; ela não representa necessariamente crimes físicos únicos, vítimas ou taxas de risco.
+
+## Cobertura e preenchimento de zeros
+
+A verificação inicial havia sinalizado 141 linhas em 2022, uma em 2023 e duas em 2025. A revisão direta dos XML dos Excel confirmou que as **144 linhas eram vazias**, sem valores e sem ocorrências. Elas não representam registros estatísticos fora do período. As abas declaradas e todos os meses estatísticos esperados foram conferidos; para os três anos revisados, os meses também foram encontrados nos roubos selecionados da capital.
+
+Com essa conferência, os conjuntos contêm todas as combinações de dias com os rótulos de bairro observados em cada ano. Pares sem registro elegível recebem zero. Para 2026, somente janeiro a junho é preenchido.
+
+**Zero significa nenhum registro elegível encontrado neste snapshot**, não ausência de crime. A conferência comprova a cobertura declarada dos arquivos, sem garantir completude dos boletins ou existência de cada bairro em todos os dias.
+
+## Cuidados para a futura modelagem
+
+- A contagem alvo é retrospectiva e incorpora registros tardios. Para criar médias históricas e defasagens em uma previsão no início do dia, usar apenas registros cuja data de registro seja anterior ao dia previsto. Não calcular esses atributos diretamente do painel retrospectivo sem controlar a disponibilidade da informação.
+- Não usar hora, coordenadas, natureza ou características de um fato futuro como entradas da previsão. Esses campos dos microdados descrevem fatos já registrados.
+- Ajustar codificadores, imputações, seleção de atributos e parâmetros somente no treino. Usar a validação para escolher a configuração e reservar o teste para o resultado final.
+- `bairro_visto_no_treino` identifica chaves presentes em 2022–2023. Existem rótulos novos na validação e no teste; o futuro modelo precisará tratá-los como categorias desconhecidas, sem ajustar o codificador com dados desses conjuntos.
+- O universo de rótulos de cada ano é retrospectivo e não define territórios oficiais. Ao simular previsões reais, definir o cadastro de áreas disponível no momento da previsão ou apresentar resultados de bairros novos separadamente. Esses arquivos preparam a exploração e a engenharia de atributos, sem implementar essa política de produção.
+- Os zeros são frequentes. Comparar os modelos com uma previsão de referência simples e analisar erros por bairro, além dos erros agregados.
+- Os dados socioeconômicos do IBGE e sua correspondência geográfica ainda serão incorporados.
+
+## Formatos e conferência
+
+Parquet pode ser lido por Python com pandas ou PyArrow, por R e por outras ferramentas de análise. Os CSV em `auditoria` podem ser consultados em planilhas. O [dicionário](data-treated/metadados/dicionario.md) descreve os tipos e as sinalizações.
+
+Foram conferidos os 591.760 identificadores de origem, a reconciliação de registros, as regras de elegibilidade, os totais dos quatro conjuntos, a ausência de pares bairro e dia repetidos, as contagens não negativas, a ordem das datas e a ausência de sobreposição entre os conjuntos. O [manifesto](data-treated/metadados/manifest.json) contém as assinaturas das fontes e das saídas para verificar integridade.
+
+Esta versão publica um snapshot dos dados. Os scripts e documentos anteriores foram retirados da árvore atual conforme a organização escolhida, mas permanecem no histórico do Git, incluindo o commit `7da66367c6eb1f269bc337d899e0a58ff41517f2`. A implementação dos modelos será adicionada em uma etapa posterior.
