@@ -8,7 +8,7 @@ O snapshot tratado é de **16 de outubro de 2026** e usa exclusivamente as cinco
 
 ```text
 data-sources/                         Planilhas Excel originais preservadas
-data-treated/
+normalized-data/
   registros/                         Um Parquet por arquivo anual da SSP
   conjuntos/
     treino.parquet                   Datas de ocorrência de 2022 e 2023
@@ -33,9 +33,9 @@ Os arquivos ocultos `.gitattributes` e `.gitignore` são configurações técnic
 
 ## Qual arquivo usar
 
-Para explorar os registros individuais, use os arquivos em [data-treated/registros](data-treated/registros). Eles preservam as **591.760 linhas selecionadas**, incluindo as sinalizadas com problemas. As colunas `elegivel_painel` e `motivo_fora_painel` informam sua participação nas contagens.
+Para explorar os registros individuais, use os arquivos em [normalized-data/registros](normalized-data/registros). Eles preservam as **591.760 linhas selecionadas**, incluindo as sinalizadas com problemas. As colunas `elegivel_painel` e `motivo_fora_painel` informam sua participação nas contagens.
 
-Para trabalhar com a tarefa de previsão, comece pelos arquivos em [data-treated/conjuntos](data-treated/conjuntos). Cada linha representa um par bairro e dia e contém a variável alvo `quantidade_registros`, além de informações de calendário. Não há médias móveis, defasagens, codificadores ou outras transformações aprendidas nestes arquivos.
+Para trabalhar com a tarefa de previsão, comece pelos arquivos em [normalized-data/conjuntos](normalized-data/conjuntos). Cada linha representa um par bairro e dia e contém a variável alvo `quantidade_registros`, além de informações de calendário. Não há médias móveis, defasagens, codificadores ou outras transformações aprendidas nestes arquivos.
 
 | Conjunto | Período da ocorrência | Linhas bairro e dia | Registros contabilizados no alvo |
 |---|---|---:|---:|
@@ -79,7 +79,7 @@ As sete datas em texto com anos 0222 e 1202 foram preservadas para revisão e fi
 
 Foram examinadas 12 linhas em seis grupos com a mesma delegacia, ano e número de BO. Em quatro grupos, as naturezas são distintas e foram mantidas. Nos outros dois, os registros repetem BO, natureza, data, bairro e hora em arquivos posteriores: a primeira data de registro foi mantida nas contagens, preservando todas as versões nos microdados.
 
-A decisão e as referências de cada linha estão em [revisao_boletins.csv](data-treated/auditoria/revisao_boletins.csv). A variável alvo conta registros por natureza criminal após essa revisão; ela não representa necessariamente crimes físicos únicos, vítimas ou taxas de risco.
+A decisão e as referências de cada linha estão em [revisao_boletins.csv](normalized-data/auditoria/revisao_boletins.csv). A variável alvo conta registros por natureza criminal após essa revisão; ela não representa necessariamente crimes físicos únicos, vítimas ou taxas de risco.
 
 ## Cobertura e preenchimento de zeros
 
@@ -101,8 +101,8 @@ Com essa conferência, os conjuntos contêm todas as combinações de dias com o
 
 ## Formatos e conferência
 
-Parquet pode ser lido por Python com pandas ou PyArrow, por R e por outras ferramentas de análise. Os CSV em `auditoria` podem ser consultados em planilhas. O [dicionário](data-treated/metadados/dicionario.md) descreve os tipos e as sinalizações.
+Parquet pode ser lido por Python com pandas ou PyArrow, por R e por outras ferramentas de análise. Os CSV em `auditoria` podem ser consultados em planilhas. O [dicionário](normalized-data/metadados/dicionario.md) descreve os tipos e as sinalizações.
 
-Foram conferidos os 591.760 identificadores de origem, a reconciliação de registros, as regras de elegibilidade, os totais dos quatro conjuntos, a ausência de pares bairro e dia repetidos, as contagens não negativas, a ordem das datas e a ausência de sobreposição entre os conjuntos. O [manifesto](data-treated/metadados/manifest.json) contém as assinaturas das fontes e das saídas para verificar integridade.
+Foram conferidos os 591.760 identificadores de origem, a reconciliação de registros, as regras de elegibilidade, os totais dos quatro conjuntos, a ausência de pares bairro e dia repetidos, as contagens não negativas, a ordem das datas e a ausência de sobreposição entre os conjuntos. O [manifesto](normalized-data/metadados/manifest.json) contém as assinaturas das fontes e das saídas para verificar integridade.
 
 Esta versão publica um snapshot dos dados. Os scripts e documentos anteriores foram retirados da árvore atual conforme a organização escolhida, mas permanecem no histórico do Git, incluindo o commit `7da66367c6eb1f269bc337d899e0a58ff41517f2`. A implementação dos modelos será adicionada em uma etapa posterior.
