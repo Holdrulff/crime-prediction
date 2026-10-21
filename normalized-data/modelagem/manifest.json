@@ -1,0 +1,26 @@
+{
+  "outputs_sha256": {
+    "avaliacao_2026/janela_28.parquet": "d722cbc25c96921d970b46d01a50d2e20996491cbec202387f874af4210b290e",
+    "avaliacao_2026/janela_56.parquet": "8067716a34c3412d18396cdac81349839f2e54705cecb954dc4d82982ffd3ae5",
+    "avaliacao_2026/janela_84.parquet": "95705c6e2c7c255647f00f6a4e502210339067cf11813d5fa7fbcac4b20df310",
+    "bairros_desconhecidos.parquet": "185c478b7c31f59799f6b25e37bcbadb709586bee2026e5a12472c6bc1655910",
+    "conferencia_semanal.csv": "53b350df708181c41c45efdccedcd8983c193debb7fa91d350e03d729233cc57",
+    "contribuicoes_alvo.parquet": "9234110791644b814636475e00f2311df0cafc60f6f48de62c4feceda5ab0ae2",
+    "dicionario.md": "88fe81d3bd6aee76c22ee5e0c059e8384d8ee2d6f959dd18dbc9a9fb2eb88bf1",
+    "relatorio.json": "b67fdc2906d7795071d6c559680163c73828e57c47ca6ed6a8f1e9fb252b8e7e",
+    "relatorio.md": "eda2ff728dda206faf52c30c204384262fa016a918441a5208ea0deb0b1e45d8",
+    "teste/janela_28.parquet": "f1467da09c7e391a42a9e259c83bd96571badd3ffa2db190da047cd62ee29427",
+    "teste/janela_56.parquet": "5e956c3f6fbd7d978792e5f5e812f930cff8563576d7d3d4aa92f3849743fe71",
+    "teste/janela_84.parquet": "b268f6d3fe1f5ccbd5432b22feb0d50e764aad3a53891a93bb88324fc0cad020",
+    "treino/janela_28.parquet": "bfd7a48b7e62cd1c44c025b609de31db03ab01fa1035040f953034999587a427",
+    "treino/janela_56.parquet": "882c43825e991743d1026a9ca0ff7551216d92ac56337c0d32e3cb7af72bb6c0",
+    "treino/janela_84.parquet": "764398113d7edfd88c738311dea617b87e4a40f97966fe811bdcbdce751e3fc3",
+    "validacao/janela_28.parquet": "2a208fd5100fedc64cac4d4a8ae9c48f1f086a7d54326a1e4c70acb1364a66e7",
+    "validacao/janela_56.parquet": "4582b7ee34464950262ef78c4457a803e48b46797117483e334a34b5a5de0dbb",
+    "validacao/janela_84.parquet": "24028fb4905ea6be14766e994b4721460fa90438654083b648d2c5aaf9f3677a"
+  },
+  "pyarrow_version": "26.0.0",
+  "script_sha256": "90a5a30e69363517b3e5868e7566ca5fbafe1680972bbbe947c33f0f1b6c59e7",
+  "source_manifest_sha256": "842876822b936b0fadc391492aabc74ae1de9c51b404fd104fd04cad3a8948d2",
+  "version": "1.0.0"
+}

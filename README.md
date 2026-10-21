@@ -1,8 +1,8 @@
 # Dados de roubos na cidade de São Paulo
 
-Este repositório reúne os dados públicos originais da SSP-SP e uma versão tratada para explorar contagens de registros de roubo por bairro e dia. Os conjuntos estão separados por data para a futura modelagem. Não há implementação de modelos nesta versão.
+Este repositório reúne os dados públicos originais da SSP-SP, os registros normalizados e exemplos para prever contagens de registros de roubo por bairro na semana seguinte. As entradas usam históricos de 28, 56 ou 84 dias. Há scripts de preparação e conferência; os modelos ainda não foram treinados.
 
-O snapshot tratado é de **16 de outubro de 2026** e usa exclusivamente as cinco planilhas locais de 2022 a 2026. O arquivo de 2026 contém janeiro a junho. Nenhum indicador do IBGE foi integrado ainda.
+O snapshot normalizado é de **16 de outubro de 2026** e usa exclusivamente as cinco planilhas locais de 2022 a 2026. O arquivo de 2026 contém janeiro a junho. O escopo atual usa somente SSP-SP; não inclui integração com o IBGE.
 
 ## Estrutura
 
@@ -29,13 +29,57 @@ normalized-data/
 README.md
 ```
 
+A preparação semanal acrescenta `normalized-data/modelagem/`, `scripts/`, `tests/` e `requirements.txt`. Os arquivos originais e os painéis diários acima foram preservados.
+
+## Base semanal para modelagem
+
+Cada exemplo representa uma previsão emitida no início da segunda-feira para a contagem da semana, de segunda a domingo. As três janelas têm os mesmos pares bairro–semana e começam após 84 dias de cobertura. Semanas que cruzam divisões ou o fim da cobertura não entram na avaliação. O bairro é um rótulo textual da SSP, sem limites geográficos oficiais ou relações de vizinhança modeladas.
+
+Arquivos em `normalized-data/modelagem/`:
+
+- `treino/`, `validacao/`, `teste/` e `avaliacao_2026/`: cada pasta contém `janela_28.parquet`, `janela_56.parquet` e `janela_84.parquet`.
+- `contribuicoes_alvo.parquet`: contagens agrupadas por bairro, semana da ocorrência e data de registro, necessárias para reconstruir alvos disponíveis em uma data de treinamento.
+- `bairros_desconhecidos.parquet`: contagens de bairros ainda não conhecidos no início da semana prevista, fora da avaliação principal.
+- `relatorio.md`, `relatorio.json` e `conferencia_semanal.csv`: dimensões e reconciliação dos registros.
+- `dicionario.md`: definição dos campos e limitações.
+- `manifest.json`: hashes dos resultados, do script e do manifesto de entrada.
+
+### Executar a preparação
+
+Requer Python 3.10 ou superior. Os binários de entrada devem estar disponíveis pelo Git LFS.
+
+```bash
+python -m pip install -r requirements.txt
+python -m unittest discover -s tests -v
+python scripts/prepare_weekly_data.py build --output normalized-data/modelagem_reconstruida
+python scripts/verify_weekly_data.py --output normalized-data/modelagem_reconstruida
+```
+
+O destino deve estar vazio para evitar sobrescritas e mistura entre execuções. Para produzir a pasta principal na primeira execução, basta omitir `--output`. Os hashes permitem comparar uma reconstrução com a versão publicada; usar a mesma versão de Python e PyArrow para comparação binária.
+
+### Disponibilidade e alvos de treinamento
+
+As entradas e o cadastro de bairros usam somente registros com `data_registro < inicio_semana`. As contagens históricas também exigem ocorrência dentro da janela e anterior à previsão. Bairros permanecem no cadastro após serem conhecidos; zeros anteriores à primeira observação significam ausência de registros disponíveis, sem comprovar existência territorial ou ausência de crimes.
+
+`alvo_retrospectivo` é a contagem final **no snapshot disponível**, destinada à avaliação. **Não deve ser usado diretamente para ajustar um modelo em uma simulação histórica.** Para treinar em uma data, reconstruir os alvos com o comando abaixo:
+
+```bash
+python scripts/prepare_weekly_data.py targets --examples normalized-data/modelagem/treino/janela_28.parquet --as-of 2024-01-01 --output normalized-data/alvos_treinamento/treino_28_corte_2024-01-01.parquet
+```
+
+O comando remove `alvo_retrospectivo`, inclui `alvo_disponivel` e `data_corte_treinamento`, e exclui semanas ainda abertas na data de corte. O corte é exclusivo: registros feitos no próprio dia ficam de fora. A mesma operação funciona para as demais janelas e datas. Os alvos disponíveis podem estar incompletos por atraso; uma política de maturação e eventuais reajustes do modelo ainda precisam ser avaliados na etapa de treinamento. O arquivo de contribuições contém informação futura e deve servir apenas à reconstrução filtrada dos alvos e à auditoria, nunca como entrada direta do modelo.
+
+A data de registro é uma aproximação da disponibilidade, não uma comprovação de quando cada boletim foi publicado. O snapshot não conserva todas as versões históricas dos boletins. Ocorrências próximas ao fim de junho de 2026 também podem estar incompletas por registros tardios ainda ausentes.
+
+Na seleção dos modelos, usar 2024; reservar 2025 para o teste final. Não ajustar codificadores com bairros de períodos futuros. Antes de treinar, selecionar explicitamente as colunas preditoras: bairro, mês e atributos históricos; datas identificam as previsões, e alvos/colunas de auditoria não são preditores. As janelas não usam eventos futuros nem dados socioeconômicos.
+
 Os arquivos ocultos `.gitattributes` e `.gitignore` são configurações técnicas do Git. Os Excel e os Parquet usam **Git LFS**. Instale o Git LFS antes de clonar o repositório; em uma cópia já existente, execute `git lfs pull`. Sem isso, podem aparecer apenas arquivos de ponteiro, em vez dos dados binários completos.
 
 ## Qual arquivo usar
 
 Para explorar os registros individuais, use os arquivos em [normalized-data/registros](normalized-data/registros). Eles preservam as **591.760 linhas selecionadas**, incluindo as sinalizadas com problemas. As colunas `elegivel_painel` e `motivo_fora_painel` informam sua participação nas contagens.
 
-Para trabalhar com a tarefa de previsão, comece pelos arquivos em [normalized-data/conjuntos](normalized-data/conjuntos). Cada linha representa um par bairro e dia e contém a variável alvo `quantidade_registros`, além de informações de calendário. Não há médias móveis, defasagens, codificadores ou outras transformações aprendidas nestes arquivos.
+Para explorar a agregação diária, consulte [normalized-data/conjuntos](normalized-data/conjuntos). Cada linha representa um par bairro e dia e contém a contagem `quantidade_registros`, além de informações de calendário. Não há médias móveis, defasagens, codificadores ou outras transformações aprendidas nestes arquivos. Para os experimentos de previsão semanal, use [normalized-data/modelagem](normalized-data/modelagem), seguindo as regras de disponibilidade e reconstrução de alvos descritas acima.
 
 | Conjunto | Período da ocorrência | Linhas bairro e dia | Registros contabilizados no alvo |
 |---|---|---:|---:|
@@ -97,7 +141,7 @@ Com essa conferência, os conjuntos contêm todas as combinações de dias com o
 - `bairro_visto_no_treino` identifica chaves presentes em 2022–2023. Existem rótulos novos na validação e no teste; o futuro modelo precisará tratá-los como categorias desconhecidas, sem ajustar o codificador com dados desses conjuntos.
 - O universo de rótulos de cada ano é retrospectivo e não define territórios oficiais. Ao simular previsões reais, definir o cadastro de áreas disponível no momento da previsão ou apresentar resultados de bairros novos separadamente. Esses arquivos preparam a exploração e a engenharia de atributos, sem implementar essa política de produção.
 - Os zeros são frequentes. Comparar os modelos com uma previsão de referência simples e analisar erros por bairro, além dos erros agregados.
-- Os dados socioeconômicos do IBGE e sua correspondência geográfica ainda serão incorporados.
+- A implementação semanal usa somente SSP-SP. A construção de um mapa geográfico continua dependendo da correspondência entre rótulos de bairro e unidades espaciais; ela não é necessária para treinar os modelos tabulares.
 
 ## Formatos e conferência
 
@@ -105,4 +149,4 @@ Parquet pode ser lido por Python com pandas ou PyArrow, por R e por outras ferra
 
 Foram conferidos os 591.760 identificadores de origem, a reconciliação de registros, as regras de elegibilidade, os totais dos quatro conjuntos, a ausência de pares bairro e dia repetidos, as contagens não negativas, a ordem das datas e a ausência de sobreposição entre os conjuntos. O [manifesto](normalized-data/metadados/manifest.json) contém as assinaturas das fontes e das saídas para verificar integridade.
 
-Esta versão publica um snapshot dos dados. Os scripts e documentos anteriores foram retirados da árvore atual conforme a organização escolhida, mas permanecem no histórico do Git, incluindo o commit `7da66367c6eb1f269bc337d899e0a58ff41517f2`. A implementação dos modelos será adicionada em uma etapa posterior.
+Esta versão preserva o snapshot dos dados e acrescenta a preparação semanal. Os scripts e documentos anteriores de normalização permanecem no histórico do Git, incluindo o commit `7da66367c6eb1f269bc337d899e0a58ff41517f2`. A implementação dos modelos será adicionada em uma etapa posterior.

@@ -1,0 +1,2246 @@
+{
+  "alvo": "registros por natureza; não crimes únicos",
+  "cobertura": [
+    "2022-01-01",
+    "2026-06-30"
+  ],
+  "conjuntos": {
+    "avaliacao_2026": {
+      "alvos_zero_por_janela": 48617,
+      "exemplos_por_janela": 58876,
+      "registros_avaliados": 46059,
+      "registros_bairros_desconhecidos": 48,
+      "semanas": 25
+    },
+    "teste": {
+      "alvos_zero_por_janela": 95963,
+      "exemplos_por_janela": 116436,
+      "registros_avaliados": 105216,
+      "registros_bairros_desconhecidos": 92,
+      "semanas": 51
+    },
+    "treino": {
+      "alvos_zero_por_janela": 127983,
+      "exemplos_por_janela": 170024,
+      "registros_avaliados": 268270,
+      "registros_bairros_desconhecidos": 858,
+      "semanas": 92
+    },
+    "validacao": {
+      "alvos_zero_por_janela": 91127,
+      "exemplos_por_janela": 113661,
+      "registros_avaliados": 126220,
+      "registros_bairros_desconhecidos": 115,
+      "semanas": 52
+    }
+  },
+  "disponibilidade": "data_registro < inicio_semana; proxy da publicação",
+  "registros_elegiveis": 586316,
+  "registros_fora_calendario": {
+    "historico_inicial_84_dias": 36015,
+    "semana_parcial_ou_cruza_divisao": 3423
+  },
+  "semanas": [
+    {
+      "alvos_zero": 857,
+      "bairros_conhecidos": 1306,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1306,
+      "inicio_semana": "2022-03-28",
+      "registros_avaliados": 3166,
+      "registros_bairros_desconhecidos": 35,
+      "total_elegivel_semana": 3201
+    },
+    {
+      "alvos_zero": 897,
+      "bairros_conhecidos": 1341,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1341,
+      "inicio_semana": "2022-04-04",
+      "registros_avaliados": 3047,
+      "registros_bairros_desconhecidos": 41,
+      "total_elegivel_semana": 3088
+    },
+    {
+      "alvos_zero": 942,
+      "bairros_conhecidos": 1377,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1377,
+      "inicio_semana": "2022-04-11",
+      "registros_avaliados": 2802,
+      "registros_bairros_desconhecidos": 34,
+      "total_elegivel_semana": 2836
+    },
+    {
+      "alvos_zero": 981,
+      "bairros_conhecidos": 1407,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1407,
+      "inicio_semana": "2022-04-18",
+      "registros_avaliados": 3042,
+      "registros_bairros_desconhecidos": 25,
+      "total_elegivel_semana": 3067
+    },
+    {
+      "alvos_zero": 982,
+      "bairros_conhecidos": 1431,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1431,
+      "inicio_semana": "2022-04-25",
+      "registros_avaliados": 3003,
+      "registros_bairros_desconhecidos": 26,
+      "total_elegivel_semana": 3029
+    },
+    {
+      "alvos_zero": 1043,
+      "bairros_conhecidos": 1455,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1455,
+      "inicio_semana": "2022-05-02",
+      "registros_avaliados": 2915,
+      "registros_bairros_desconhecidos": 16,
+      "total_elegivel_semana": 2931
+    },
+    {
+      "alvos_zero": 1036,
+      "bairros_conhecidos": 1472,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1472,
+      "inicio_semana": "2022-05-09",
+      "registros_avaliados": 2943,
+      "registros_bairros_desconhecidos": 17,
+      "total_elegivel_semana": 2960
+    },
+    {
+      "alvos_zero": 1029,
+      "bairros_conhecidos": 1485,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1485,
+      "inicio_semana": "2022-05-16",
+      "registros_avaliados": 2833,
+      "registros_bairros_desconhecidos": 21,
+      "total_elegivel_semana": 2854
+    },
+    {
+      "alvos_zero": 1073,
+      "bairros_conhecidos": 1506,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1506,
+      "inicio_semana": "2022-05-23",
+      "registros_avaliados": 3067,
+      "registros_bairros_desconhecidos": 22,
+      "total_elegivel_semana": 3089
+    },
+    {
+      "alvos_zero": 1075,
+      "bairros_conhecidos": 1521,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1521,
+      "inicio_semana": "2022-05-30",
+      "registros_avaliados": 2713,
+      "registros_bairros_desconhecidos": 19,
+      "total_elegivel_semana": 2732
+    },
+    {
+      "alvos_zero": 1110,
+      "bairros_conhecidos": 1546,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1546,
+      "inicio_semana": "2022-06-06",
+      "registros_avaliados": 2890,
+      "registros_bairros_desconhecidos": 11,
+      "total_elegivel_semana": 2901
+    },
+    {
+      "alvos_zero": 1090,
+      "bairros_conhecidos": 1560,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1560,
+      "inicio_semana": "2022-06-13",
+      "registros_avaliados": 3109,
+      "registros_bairros_desconhecidos": 26,
+      "total_elegivel_semana": 3135
+    },
+    {
+      "alvos_zero": 1149,
+      "bairros_conhecidos": 1576,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1576,
+      "inicio_semana": "2022-06-20",
+      "registros_avaliados": 3027,
+      "registros_bairros_desconhecidos": 10,
+      "total_elegivel_semana": 3037
+    },
+    {
+      "alvos_zero": 1175,
+      "bairros_conhecidos": 1587,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1587,
+      "inicio_semana": "2022-06-27",
+      "registros_avaliados": 2624,
+      "registros_bairros_desconhecidos": 20,
+      "total_elegivel_semana": 2644
+    },
+    {
+      "alvos_zero": 1208,
+      "bairros_conhecidos": 1607,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1607,
+      "inicio_semana": "2022-07-04",
+      "registros_avaliados": 2858,
+      "registros_bairros_desconhecidos": 12,
+      "total_elegivel_semana": 2870
+    },
+    {
+      "alvos_zero": 1205,
+      "bairros_conhecidos": 1618,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1618,
+      "inicio_semana": "2022-07-11",
+      "registros_avaliados": 2703,
+      "registros_bairros_desconhecidos": 17,
+      "total_elegivel_semana": 2720
+    },
+    {
+      "alvos_zero": 1208,
+      "bairros_conhecidos": 1631,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1631,
+      "inicio_semana": "2022-07-18",
+      "registros_avaliados": 2930,
+      "registros_bairros_desconhecidos": 8,
+      "total_elegivel_semana": 2938
+    },
+    {
+      "alvos_zero": 1221,
+      "bairros_conhecidos": 1642,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1642,
+      "inicio_semana": "2022-07-25",
+      "registros_avaliados": 2808,
+      "registros_bairros_desconhecidos": 16,
+      "total_elegivel_semana": 2824
+    },
+    {
+      "alvos_zero": 1214,
+      "bairros_conhecidos": 1656,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1656,
+      "inicio_semana": "2022-08-01",
+      "registros_avaliados": 2912,
+      "registros_bairros_desconhecidos": 13,
+      "total_elegivel_semana": 2925
+    },
+    {
+      "alvos_zero": 1231,
+      "bairros_conhecidos": 1670,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1670,
+      "inicio_semana": "2022-08-08",
+      "registros_avaliados": 2847,
+      "registros_bairros_desconhecidos": 7,
+      "total_elegivel_semana": 2854
+    },
+    {
+      "alvos_zero": 1212,
+      "bairros_conhecidos": 1677,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1677,
+      "inicio_semana": "2022-08-15",
+      "registros_avaliados": 2992,
+      "registros_bairros_desconhecidos": 20,
+      "total_elegivel_semana": 3012
+    },
+    {
+      "alvos_zero": 1220,
+      "bairros_conhecidos": 1689,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1689,
+      "inicio_semana": "2022-08-22",
+      "registros_avaliados": 3001,
+      "registros_bairros_desconhecidos": 9,
+      "total_elegivel_semana": 3010
+    },
+    {
+      "alvos_zero": 1262,
+      "bairros_conhecidos": 1699,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1699,
+      "inicio_semana": "2022-08-29",
+      "registros_avaliados": 2947,
+      "registros_bairros_desconhecidos": 11,
+      "total_elegivel_semana": 2958
+    },
+    {
+      "alvos_zero": 1280,
+      "bairros_conhecidos": 1709,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1709,
+      "inicio_semana": "2022-09-05",
+      "registros_avaliados": 3178,
+      "registros_bairros_desconhecidos": 9,
+      "total_elegivel_semana": 3187
+    },
+    {
+      "alvos_zero": 1249,
+      "bairros_conhecidos": 1720,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1720,
+      "inicio_semana": "2022-09-12",
+      "registros_avaliados": 2992,
+      "registros_bairros_desconhecidos": 9,
+      "total_elegivel_semana": 3001
+    },
+    {
+      "alvos_zero": 1255,
+      "bairros_conhecidos": 1730,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1730,
+      "inicio_semana": "2022-09-19",
+      "registros_avaliados": 3094,
+      "registros_bairros_desconhecidos": 11,
+      "total_elegivel_semana": 3105
+    },
+    {
+      "alvos_zero": 1245,
+      "bairros_conhecidos": 1741,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1741,
+      "inicio_semana": "2022-09-26",
+      "registros_avaliados": 3182,
+      "registros_bairros_desconhecidos": 9,
+      "total_elegivel_semana": 3191
+    },
+    {
+      "alvos_zero": 1282,
+      "bairros_conhecidos": 1748,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1748,
+      "inicio_semana": "2022-10-03",
+      "registros_avaliados": 3230,
+      "registros_bairros_desconhecidos": 12,
+      "total_elegivel_semana": 3242
+    },
+    {
+      "alvos_zero": 1279,
+      "bairros_conhecidos": 1757,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1757,
+      "inicio_semana": "2022-10-10",
+      "registros_avaliados": 3216,
+      "registros_bairros_desconhecidos": 9,
+      "total_elegivel_semana": 3225
+    },
+    {
+      "alvos_zero": 1290,
+      "bairros_conhecidos": 1769,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1769,
+      "inicio_semana": "2022-10-17",
+      "registros_avaliados": 3163,
+      "registros_bairros_desconhecidos": 9,
+      "total_elegivel_semana": 3172
+    },
+    {
+      "alvos_zero": 1272,
+      "bairros_conhecidos": 1776,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1776,
+      "inicio_semana": "2022-10-24",
+      "registros_avaliados": 3262,
+      "registros_bairros_desconhecidos": 8,
+      "total_elegivel_semana": 3270
+    },
+    {
+      "alvos_zero": 1299,
+      "bairros_conhecidos": 1786,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1786,
+      "inicio_semana": "2022-10-31",
+      "registros_avaliados": 2982,
+      "registros_bairros_desconhecidos": 6,
+      "total_elegivel_semana": 2988
+    },
+    {
+      "alvos_zero": 1288,
+      "bairros_conhecidos": 1791,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1791,
+      "inicio_semana": "2022-11-07",
+      "registros_avaliados": 3329,
+      "registros_bairros_desconhecidos": 15,
+      "total_elegivel_semana": 3344
+    },
+    {
+      "alvos_zero": 1320,
+      "bairros_conhecidos": 1804,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1804,
+      "inicio_semana": "2022-11-14",
+      "registros_avaliados": 3214,
+      "registros_bairros_desconhecidos": 18,
+      "total_elegivel_semana": 3232
+    },
+    {
+      "alvos_zero": 1321,
+      "bairros_conhecidos": 1825,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1825,
+      "inicio_semana": "2022-11-21",
+      "registros_avaliados": 3326,
+      "registros_bairros_desconhecidos": 7,
+      "total_elegivel_semana": 3333
+    },
+    {
+      "alvos_zero": 1342,
+      "bairros_conhecidos": 1830,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1830,
+      "inicio_semana": "2022-11-28",
+      "registros_avaliados": 3247,
+      "registros_bairros_desconhecidos": 10,
+      "total_elegivel_semana": 3257
+    },
+    {
+      "alvos_zero": 1300,
+      "bairros_conhecidos": 1840,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1840,
+      "inicio_semana": "2022-12-05",
+      "registros_avaliados": 3553,
+      "registros_bairros_desconhecidos": 4,
+      "total_elegivel_semana": 3557
+    },
+    {
+      "alvos_zero": 1299,
+      "bairros_conhecidos": 1845,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1845,
+      "inicio_semana": "2022-12-12",
+      "registros_avaliados": 3668,
+      "registros_bairros_desconhecidos": 10,
+      "total_elegivel_semana": 3678
+    },
+    {
+      "alvos_zero": 1372,
+      "bairros_conhecidos": 1854,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1854,
+      "inicio_semana": "2022-12-19",
+      "registros_avaliados": 3144,
+      "registros_bairros_desconhecidos": 5,
+      "total_elegivel_semana": 3149
+    },
+    {
+      "alvos_zero": 1407,
+      "bairros_conhecidos": 1856,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1856,
+      "inicio_semana": "2022-12-26",
+      "registros_avaliados": 2789,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 2792
+    },
+    {
+      "alvos_zero": 1411,
+      "bairros_conhecidos": 1858,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1858,
+      "inicio_semana": "2023-01-02",
+      "registros_avaliados": 2607,
+      "registros_bairros_desconhecidos": 12,
+      "total_elegivel_semana": 2619
+    },
+    {
+      "alvos_zero": 1390,
+      "bairros_conhecidos": 1870,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1870,
+      "inicio_semana": "2023-01-09",
+      "registros_avaliados": 3135,
+      "registros_bairros_desconhecidos": 5,
+      "total_elegivel_semana": 3140
+    },
+    {
+      "alvos_zero": 1403,
+      "bairros_conhecidos": 1876,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1876,
+      "inicio_semana": "2023-01-16",
+      "registros_avaliados": 3000,
+      "registros_bairros_desconhecidos": 8,
+      "total_elegivel_semana": 3008
+    },
+    {
+      "alvos_zero": 1424,
+      "bairros_conhecidos": 1884,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1884,
+      "inicio_semana": "2023-01-23",
+      "registros_avaliados": 2887,
+      "registros_bairros_desconhecidos": 6,
+      "total_elegivel_semana": 2893
+    },
+    {
+      "alvos_zero": 1443,
+      "bairros_conhecidos": 1890,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1890,
+      "inicio_semana": "2023-01-30",
+      "registros_avaliados": 3000,
+      "registros_bairros_desconhecidos": 7,
+      "total_elegivel_semana": 3007
+    },
+    {
+      "alvos_zero": 1432,
+      "bairros_conhecidos": 1894,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1894,
+      "inicio_semana": "2023-02-06",
+      "registros_avaliados": 3206,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 3208
+    },
+    {
+      "alvos_zero": 1413,
+      "bairros_conhecidos": 1897,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1897,
+      "inicio_semana": "2023-02-13",
+      "registros_avaliados": 3270,
+      "registros_bairros_desconhecidos": 11,
+      "total_elegivel_semana": 3281
+    },
+    {
+      "alvos_zero": 1423,
+      "bairros_conhecidos": 1908,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1908,
+      "inicio_semana": "2023-02-20",
+      "registros_avaliados": 3362,
+      "registros_bairros_desconhecidos": 7,
+      "total_elegivel_semana": 3369
+    },
+    {
+      "alvos_zero": 1426,
+      "bairros_conhecidos": 1912,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1912,
+      "inicio_semana": "2023-02-27",
+      "registros_avaliados": 2841,
+      "registros_bairros_desconhecidos": 4,
+      "total_elegivel_semana": 2845
+    },
+    {
+      "alvos_zero": 1447,
+      "bairros_conhecidos": 1918,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1918,
+      "inicio_semana": "2023-03-06",
+      "registros_avaliados": 2902,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 2905
+    },
+    {
+      "alvos_zero": 1443,
+      "bairros_conhecidos": 1922,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1922,
+      "inicio_semana": "2023-03-13",
+      "registros_avaliados": 3206,
+      "registros_bairros_desconhecidos": 10,
+      "total_elegivel_semana": 3216
+    },
+    {
+      "alvos_zero": 1441,
+      "bairros_conhecidos": 1934,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1934,
+      "inicio_semana": "2023-03-20",
+      "registros_avaliados": 3221,
+      "registros_bairros_desconhecidos": 5,
+      "total_elegivel_semana": 3226
+    },
+    {
+      "alvos_zero": 1472,
+      "bairros_conhecidos": 1940,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1940,
+      "inicio_semana": "2023-03-27",
+      "registros_avaliados": 3013,
+      "registros_bairros_desconhecidos": 8,
+      "total_elegivel_semana": 3021
+    },
+    {
+      "alvos_zero": 1518,
+      "bairros_conhecidos": 1946,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1946,
+      "inicio_semana": "2023-04-03",
+      "registros_avaliados": 2538,
+      "registros_bairros_desconhecidos": 5,
+      "total_elegivel_semana": 2543
+    },
+    {
+      "alvos_zero": 1470,
+      "bairros_conhecidos": 1951,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1951,
+      "inicio_semana": "2023-04-10",
+      "registros_avaliados": 2831,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 2834
+    },
+    {
+      "alvos_zero": 1502,
+      "bairros_conhecidos": 1955,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1955,
+      "inicio_semana": "2023-04-17",
+      "registros_avaliados": 2735,
+      "registros_bairros_desconhecidos": 6,
+      "total_elegivel_semana": 2741
+    },
+    {
+      "alvos_zero": 1557,
+      "bairros_conhecidos": 1960,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1960,
+      "inicio_semana": "2023-04-24",
+      "registros_avaliados": 2924,
+      "registros_bairros_desconhecidos": 7,
+      "total_elegivel_semana": 2931
+    },
+    {
+      "alvos_zero": 1557,
+      "bairros_conhecidos": 1965,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1965,
+      "inicio_semana": "2023-05-01",
+      "registros_avaliados": 2817,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2819
+    },
+    {
+      "alvos_zero": 1535,
+      "bairros_conhecidos": 1968,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1968,
+      "inicio_semana": "2023-05-08",
+      "registros_avaliados": 2763,
+      "registros_bairros_desconhecidos": 7,
+      "total_elegivel_semana": 2770
+    },
+    {
+      "alvos_zero": 1496,
+      "bairros_conhecidos": 1975,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1975,
+      "inicio_semana": "2023-05-15",
+      "registros_avaliados": 2872,
+      "registros_bairros_desconhecidos": 4,
+      "total_elegivel_semana": 2876
+    },
+    {
+      "alvos_zero": 1531,
+      "bairros_conhecidos": 1980,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1980,
+      "inicio_semana": "2023-05-22",
+      "registros_avaliados": 2618,
+      "registros_bairros_desconhecidos": 5,
+      "total_elegivel_semana": 2623
+    },
+    {
+      "alvos_zero": 1565,
+      "bairros_conhecidos": 1983,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1983,
+      "inicio_semana": "2023-05-29",
+      "registros_avaliados": 2649,
+      "registros_bairros_desconhecidos": 5,
+      "total_elegivel_semana": 2654
+    },
+    {
+      "alvos_zero": 1576,
+      "bairros_conhecidos": 1988,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1988,
+      "inicio_semana": "2023-06-05",
+      "registros_avaliados": 2757,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2759
+    },
+    {
+      "alvos_zero": 1551,
+      "bairros_conhecidos": 1992,
+      "conjunto": "treino",
+      "exemplos_por_janela": 1992,
+      "inicio_semana": "2023-06-12",
+      "registros_avaliados": 2779,
+      "registros_bairros_desconhecidos": 10,
+      "total_elegivel_semana": 2789
+    },
+    {
+      "alvos_zero": 1573,
+      "bairros_conhecidos": 2000,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2000,
+      "inicio_semana": "2023-06-19",
+      "registros_avaliados": 2656,
+      "registros_bairros_desconhecidos": 6,
+      "total_elegivel_semana": 2662
+    },
+    {
+      "alvos_zero": 1552,
+      "bairros_conhecidos": 2005,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2005,
+      "inicio_semana": "2023-06-26",
+      "registros_avaliados": 2702,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2704
+    },
+    {
+      "alvos_zero": 1584,
+      "bairros_conhecidos": 2008,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2008,
+      "inicio_semana": "2023-07-03",
+      "registros_avaliados": 2565,
+      "registros_bairros_desconhecidos": 9,
+      "total_elegivel_semana": 2574
+    },
+    {
+      "alvos_zero": 1575,
+      "bairros_conhecidos": 2014,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2014,
+      "inicio_semana": "2023-07-10",
+      "registros_avaliados": 2665,
+      "registros_bairros_desconhecidos": 8,
+      "total_elegivel_semana": 2673
+    },
+    {
+      "alvos_zero": 1588,
+      "bairros_conhecidos": 2023,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2023,
+      "inicio_semana": "2023-07-17",
+      "registros_avaliados": 2730,
+      "registros_bairros_desconhecidos": 5,
+      "total_elegivel_semana": 2735
+    },
+    {
+      "alvos_zero": 1577,
+      "bairros_conhecidos": 2029,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2029,
+      "inicio_semana": "2023-07-24",
+      "registros_avaliados": 2524,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2526
+    },
+    {
+      "alvos_zero": 1608,
+      "bairros_conhecidos": 2032,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2032,
+      "inicio_semana": "2023-07-31",
+      "registros_avaliados": 2568,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2569
+    },
+    {
+      "alvos_zero": 1585,
+      "bairros_conhecidos": 2032,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2032,
+      "inicio_semana": "2023-08-07",
+      "registros_avaliados": 2713,
+      "registros_bairros_desconhecidos": 7,
+      "total_elegivel_semana": 2720
+    },
+    {
+      "alvos_zero": 1560,
+      "bairros_conhecidos": 2038,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2038,
+      "inicio_semana": "2023-08-14",
+      "registros_avaliados": 2953,
+      "registros_bairros_desconhecidos": 8,
+      "total_elegivel_semana": 2961
+    },
+    {
+      "alvos_zero": 1620,
+      "bairros_conhecidos": 2046,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2046,
+      "inicio_semana": "2023-08-21",
+      "registros_avaliados": 2533,
+      "registros_bairros_desconhecidos": 5,
+      "total_elegivel_semana": 2538
+    },
+    {
+      "alvos_zero": 1578,
+      "bairros_conhecidos": 2052,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2052,
+      "inicio_semana": "2023-08-28",
+      "registros_avaliados": 2539,
+      "registros_bairros_desconhecidos": 4,
+      "total_elegivel_semana": 2543
+    },
+    {
+      "alvos_zero": 1595,
+      "bairros_conhecidos": 2057,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2057,
+      "inicio_semana": "2023-09-04",
+      "registros_avaliados": 2670,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2672
+    },
+    {
+      "alvos_zero": 1603,
+      "bairros_conhecidos": 2059,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2059,
+      "inicio_semana": "2023-09-11",
+      "registros_avaliados": 2751,
+      "registros_bairros_desconhecidos": 6,
+      "total_elegivel_semana": 2757
+    },
+    {
+      "alvos_zero": 1578,
+      "bairros_conhecidos": 2065,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2065,
+      "inicio_semana": "2023-09-18",
+      "registros_avaliados": 2728,
+      "registros_bairros_desconhecidos": 4,
+      "total_elegivel_semana": 2732
+    },
+    {
+      "alvos_zero": 1605,
+      "bairros_conhecidos": 2068,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2068,
+      "inicio_semana": "2023-09-25",
+      "registros_avaliados": 2756,
+      "registros_bairros_desconhecidos": 4,
+      "total_elegivel_semana": 2760
+    },
+    {
+      "alvos_zero": 1640,
+      "bairros_conhecidos": 2073,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2073,
+      "inicio_semana": "2023-10-02",
+      "registros_avaliados": 2793,
+      "registros_bairros_desconhecidos": 5,
+      "total_elegivel_semana": 2798
+    },
+    {
+      "alvos_zero": 1632,
+      "bairros_conhecidos": 2079,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2079,
+      "inicio_semana": "2023-10-09",
+      "registros_avaliados": 2793,
+      "registros_bairros_desconhecidos": 6,
+      "total_elegivel_semana": 2799
+    },
+    {
+      "alvos_zero": 1593,
+      "bairros_conhecidos": 2084,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2084,
+      "inicio_semana": "2023-10-16",
+      "registros_avaliados": 2882,
+      "registros_bairros_desconhecidos": 4,
+      "total_elegivel_semana": 2886
+    },
+    {
+      "alvos_zero": 1635,
+      "bairros_conhecidos": 2087,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2087,
+      "inicio_semana": "2023-10-23",
+      "registros_avaliados": 2659,
+      "registros_bairros_desconhecidos": 6,
+      "total_elegivel_semana": 2665
+    },
+    {
+      "alvos_zero": 1621,
+      "bairros_conhecidos": 2094,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2094,
+      "inicio_semana": "2023-10-30",
+      "registros_avaliados": 2593,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2595
+    },
+    {
+      "alvos_zero": 1610,
+      "bairros_conhecidos": 2095,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2095,
+      "inicio_semana": "2023-11-06",
+      "registros_avaliados": 3070,
+      "registros_bairros_desconhecidos": 4,
+      "total_elegivel_semana": 3074
+    },
+    {
+      "alvos_zero": 1636,
+      "bairros_conhecidos": 2100,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2100,
+      "inicio_semana": "2023-11-13",
+      "registros_avaliados": 2796,
+      "registros_bairros_desconhecidos": 5,
+      "total_elegivel_semana": 2801
+    },
+    {
+      "alvos_zero": 1629,
+      "bairros_conhecidos": 2105,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2105,
+      "inicio_semana": "2023-11-20",
+      "registros_avaliados": 2877,
+      "registros_bairros_desconhecidos": 5,
+      "total_elegivel_semana": 2882
+    },
+    {
+      "alvos_zero": 1662,
+      "bairros_conhecidos": 2107,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2107,
+      "inicio_semana": "2023-11-27",
+      "registros_avaliados": 2859,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2860
+    },
+    {
+      "alvos_zero": 1624,
+      "bairros_conhecidos": 2110,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2110,
+      "inicio_semana": "2023-12-04",
+      "registros_avaliados": 3159,
+      "registros_bairros_desconhecidos": 6,
+      "total_elegivel_semana": 3165
+    },
+    {
+      "alvos_zero": 1621,
+      "bairros_conhecidos": 2116,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2116,
+      "inicio_semana": "2023-12-11",
+      "registros_avaliados": 2923,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 2926
+    },
+    {
+      "alvos_zero": 1639,
+      "bairros_conhecidos": 2118,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2118,
+      "inicio_semana": "2023-12-18",
+      "registros_avaliados": 2955,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2957
+    },
+    {
+      "alvos_zero": 1714,
+      "bairros_conhecidos": 2122,
+      "conjunto": "treino",
+      "exemplos_por_janela": 2122,
+      "inicio_semana": "2023-12-25",
+      "registros_avaliados": 2177,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2179
+    },
+    {
+      "alvos_zero": 1735,
+      "bairros_conhecidos": 2124,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2124,
+      "inicio_semana": "2024-01-01",
+      "registros_avaliados": 2190,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2192
+    },
+    {
+      "alvos_zero": 1688,
+      "bairros_conhecidos": 2126,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2126,
+      "inicio_semana": "2024-01-08",
+      "registros_avaliados": 2579,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 2582
+    },
+    {
+      "alvos_zero": 1684,
+      "bairros_conhecidos": 2130,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2130,
+      "inicio_semana": "2024-01-15",
+      "registros_avaliados": 2608,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 2611
+    },
+    {
+      "alvos_zero": 1679,
+      "bairros_conhecidos": 2132,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2132,
+      "inicio_semana": "2024-01-22",
+      "registros_avaliados": 2565,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 2568
+    },
+    {
+      "alvos_zero": 1685,
+      "bairros_conhecidos": 2134,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2134,
+      "inicio_semana": "2024-01-29",
+      "registros_avaliados": 2769,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 2772
+    },
+    {
+      "alvos_zero": 1672,
+      "bairros_conhecidos": 2138,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2138,
+      "inicio_semana": "2024-02-05",
+      "registros_avaliados": 2875,
+      "registros_bairros_desconhecidos": 4,
+      "total_elegivel_semana": 2879
+    },
+    {
+      "alvos_zero": 1719,
+      "bairros_conhecidos": 2143,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2143,
+      "inicio_semana": "2024-02-12",
+      "registros_avaliados": 2655,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2657
+    },
+    {
+      "alvos_zero": 1698,
+      "bairros_conhecidos": 2144,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2144,
+      "inicio_semana": "2024-02-19",
+      "registros_avaliados": 2602,
+      "registros_bairros_desconhecidos": 0,
+      "total_elegivel_semana": 2602
+    },
+    {
+      "alvos_zero": 1689,
+      "bairros_conhecidos": 2145,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2145,
+      "inicio_semana": "2024-02-26",
+      "registros_avaliados": 2647,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2649
+    },
+    {
+      "alvos_zero": 1715,
+      "bairros_conhecidos": 2147,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2147,
+      "inicio_semana": "2024-03-04",
+      "registros_avaliados": 2724,
+      "registros_bairros_desconhecidos": 5,
+      "total_elegivel_semana": 2729
+    },
+    {
+      "alvos_zero": 1722,
+      "bairros_conhecidos": 2151,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2151,
+      "inicio_semana": "2024-03-11",
+      "registros_avaliados": 2622,
+      "registros_bairros_desconhecidos": 0,
+      "total_elegivel_semana": 2622
+    },
+    {
+      "alvos_zero": 1706,
+      "bairros_conhecidos": 2152,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2152,
+      "inicio_semana": "2024-03-18",
+      "registros_avaliados": 2389,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2390
+    },
+    {
+      "alvos_zero": 1760,
+      "bairros_conhecidos": 2153,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2153,
+      "inicio_semana": "2024-03-25",
+      "registros_avaliados": 2255,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2257
+    },
+    {
+      "alvos_zero": 1701,
+      "bairros_conhecidos": 2155,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2155,
+      "inicio_semana": "2024-04-01",
+      "registros_avaliados": 2595,
+      "registros_bairros_desconhecidos": 4,
+      "total_elegivel_semana": 2599
+    },
+    {
+      "alvos_zero": 1729,
+      "bairros_conhecidos": 2157,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2157,
+      "inicio_semana": "2024-04-08",
+      "registros_avaliados": 2587,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2588
+    },
+    {
+      "alvos_zero": 1713,
+      "bairros_conhecidos": 2158,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2158,
+      "inicio_semana": "2024-04-15",
+      "registros_avaliados": 2569,
+      "registros_bairros_desconhecidos": 4,
+      "total_elegivel_semana": 2573
+    },
+    {
+      "alvos_zero": 1717,
+      "bairros_conhecidos": 2162,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2162,
+      "inicio_semana": "2024-04-22",
+      "registros_avaliados": 2427,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 2430
+    },
+    {
+      "alvos_zero": 1746,
+      "bairros_conhecidos": 2165,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2165,
+      "inicio_semana": "2024-04-29",
+      "registros_avaliados": 2421,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2423
+    },
+    {
+      "alvos_zero": 1744,
+      "bairros_conhecidos": 2169,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2169,
+      "inicio_semana": "2024-05-06",
+      "registros_avaliados": 2461,
+      "registros_bairros_desconhecidos": 5,
+      "total_elegivel_semana": 2466
+    },
+    {
+      "alvos_zero": 1728,
+      "bairros_conhecidos": 2174,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2174,
+      "inicio_semana": "2024-05-13",
+      "registros_avaliados": 2553,
+      "registros_bairros_desconhecidos": 8,
+      "total_elegivel_semana": 2561
+    },
+    {
+      "alvos_zero": 1760,
+      "bairros_conhecidos": 2179,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2179,
+      "inicio_semana": "2024-05-20",
+      "registros_avaliados": 2272,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2273
+    },
+    {
+      "alvos_zero": 1759,
+      "bairros_conhecidos": 2182,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2182,
+      "inicio_semana": "2024-05-27",
+      "registros_avaliados": 2341,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2343
+    },
+    {
+      "alvos_zero": 1741,
+      "bairros_conhecidos": 2184,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2184,
+      "inicio_semana": "2024-06-03",
+      "registros_avaliados": 2449,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2451
+    },
+    {
+      "alvos_zero": 1714,
+      "bairros_conhecidos": 2185,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2185,
+      "inicio_semana": "2024-06-10",
+      "registros_avaliados": 2605,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 2608
+    },
+    {
+      "alvos_zero": 1757,
+      "bairros_conhecidos": 2187,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2187,
+      "inicio_semana": "2024-06-17",
+      "registros_avaliados": 2436,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2437
+    },
+    {
+      "alvos_zero": 1759,
+      "bairros_conhecidos": 2190,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2190,
+      "inicio_semana": "2024-06-24",
+      "registros_avaliados": 2319,
+      "registros_bairros_desconhecidos": 0,
+      "total_elegivel_semana": 2319
+    },
+    {
+      "alvos_zero": 1785,
+      "bairros_conhecidos": 2190,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2190,
+      "inicio_semana": "2024-07-01",
+      "registros_avaliados": 2342,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2344
+    },
+    {
+      "alvos_zero": 1771,
+      "bairros_conhecidos": 2192,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2192,
+      "inicio_semana": "2024-07-08",
+      "registros_avaliados": 2269,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2271
+    },
+    {
+      "alvos_zero": 1765,
+      "bairros_conhecidos": 2194,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2194,
+      "inicio_semana": "2024-07-15",
+      "registros_avaliados": 2342,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2344
+    },
+    {
+      "alvos_zero": 1782,
+      "bairros_conhecidos": 2196,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2196,
+      "inicio_semana": "2024-07-22",
+      "registros_avaliados": 2385,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2386
+    },
+    {
+      "alvos_zero": 1787,
+      "bairros_conhecidos": 2196,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2196,
+      "inicio_semana": "2024-07-29",
+      "registros_avaliados": 2218,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 2221
+    },
+    {
+      "alvos_zero": 1780,
+      "bairros_conhecidos": 2200,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2200,
+      "inicio_semana": "2024-08-05",
+      "registros_avaliados": 2244,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2246
+    },
+    {
+      "alvos_zero": 1773,
+      "bairros_conhecidos": 2202,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2202,
+      "inicio_semana": "2024-08-12",
+      "registros_avaliados": 2290,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2291
+    },
+    {
+      "alvos_zero": 1775,
+      "bairros_conhecidos": 2203,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2203,
+      "inicio_semana": "2024-08-19",
+      "registros_avaliados": 2213,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 2216
+    },
+    {
+      "alvos_zero": 1808,
+      "bairros_conhecidos": 2205,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2205,
+      "inicio_semana": "2024-08-26",
+      "registros_avaliados": 2140,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2141
+    },
+    {
+      "alvos_zero": 1786,
+      "bairros_conhecidos": 2207,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2207,
+      "inicio_semana": "2024-09-02",
+      "registros_avaliados": 2185,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2187
+    },
+    {
+      "alvos_zero": 1815,
+      "bairros_conhecidos": 2209,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2209,
+      "inicio_semana": "2024-09-09",
+      "registros_avaliados": 2163,
+      "registros_bairros_desconhecidos": 4,
+      "total_elegivel_semana": 2167
+    },
+    {
+      "alvos_zero": 1793,
+      "bairros_conhecidos": 2213,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2213,
+      "inicio_semana": "2024-09-16",
+      "registros_avaliados": 2186,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2188
+    },
+    {
+      "alvos_zero": 1798,
+      "bairros_conhecidos": 2215,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2215,
+      "inicio_semana": "2024-09-23",
+      "registros_avaliados": 2259,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2260
+    },
+    {
+      "alvos_zero": 1800,
+      "bairros_conhecidos": 2215,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2215,
+      "inicio_semana": "2024-09-30",
+      "registros_avaliados": 2331,
+      "registros_bairros_desconhecidos": 4,
+      "total_elegivel_semana": 2335
+    },
+    {
+      "alvos_zero": 1794,
+      "bairros_conhecidos": 2219,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2219,
+      "inicio_semana": "2024-10-07",
+      "registros_avaliados": 2390,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 2393
+    },
+    {
+      "alvos_zero": 1790,
+      "bairros_conhecidos": 2222,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2222,
+      "inicio_semana": "2024-10-14",
+      "registros_avaliados": 2263,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2265
+    },
+    {
+      "alvos_zero": 1783,
+      "bairros_conhecidos": 2224,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2224,
+      "inicio_semana": "2024-10-21",
+      "registros_avaliados": 2296,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2297
+    },
+    {
+      "alvos_zero": 1789,
+      "bairros_conhecidos": 2226,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2226,
+      "inicio_semana": "2024-10-28",
+      "registros_avaliados": 2231,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 2234
+    },
+    {
+      "alvos_zero": 1781,
+      "bairros_conhecidos": 2227,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2227,
+      "inicio_semana": "2024-11-04",
+      "registros_avaliados": 2364,
+      "registros_bairros_desconhecidos": 0,
+      "total_elegivel_semana": 2364
+    },
+    {
+      "alvos_zero": 1791,
+      "bairros_conhecidos": 2230,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2230,
+      "inicio_semana": "2024-11-11",
+      "registros_avaliados": 2327,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2329
+    },
+    {
+      "alvos_zero": 1785,
+      "bairros_conhecidos": 2231,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2231,
+      "inicio_semana": "2024-11-18",
+      "registros_avaliados": 2486,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2488
+    },
+    {
+      "alvos_zero": 1765,
+      "bairros_conhecidos": 2232,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2232,
+      "inicio_semana": "2024-11-25",
+      "registros_avaliados": 2563,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2565
+    },
+    {
+      "alvos_zero": 1755,
+      "bairros_conhecidos": 2236,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2236,
+      "inicio_semana": "2024-12-02",
+      "registros_avaliados": 2620,
+      "registros_bairros_desconhecidos": 0,
+      "total_elegivel_semana": 2620
+    },
+    {
+      "alvos_zero": 1782,
+      "bairros_conhecidos": 2236,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2236,
+      "inicio_semana": "2024-12-09",
+      "registros_avaliados": 2654,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2656
+    },
+    {
+      "alvos_zero": 1754,
+      "bairros_conhecidos": 2237,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2237,
+      "inicio_semana": "2024-12-16",
+      "registros_avaliados": 2821,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2822
+    },
+    {
+      "alvos_zero": 1820,
+      "bairros_conhecidos": 2238,
+      "conjunto": "validacao",
+      "exemplos_por_janela": 2238,
+      "inicio_semana": "2024-12-23",
+      "registros_avaliados": 2123,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2124
+    },
+    {
+      "alvos_zero": 1792,
+      "bairros_conhecidos": 2241,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2241,
+      "inicio_semana": "2025-01-06",
+      "registros_avaliados": 2386,
+      "registros_bairros_desconhecidos": 0,
+      "total_elegivel_semana": 2386
+    },
+    {
+      "alvos_zero": 1808,
+      "bairros_conhecidos": 2241,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2241,
+      "inicio_semana": "2025-01-13",
+      "registros_avaliados": 2220,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 2223
+    },
+    {
+      "alvos_zero": 1782,
+      "bairros_conhecidos": 2244,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2244,
+      "inicio_semana": "2025-01-20",
+      "registros_avaliados": 2381,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2383
+    },
+    {
+      "alvos_zero": 1830,
+      "bairros_conhecidos": 2245,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2245,
+      "inicio_semana": "2025-01-27",
+      "registros_avaliados": 2176,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 2179
+    },
+    {
+      "alvos_zero": 1809,
+      "bairros_conhecidos": 2249,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2249,
+      "inicio_semana": "2025-02-03",
+      "registros_avaliados": 2402,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2403
+    },
+    {
+      "alvos_zero": 1820,
+      "bairros_conhecidos": 2250,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2250,
+      "inicio_semana": "2025-02-10",
+      "registros_avaliados": 2345,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2346
+    },
+    {
+      "alvos_zero": 1818,
+      "bairros_conhecidos": 2251,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2251,
+      "inicio_semana": "2025-02-17",
+      "registros_avaliados": 2436,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2437
+    },
+    {
+      "alvos_zero": 1820,
+      "bairros_conhecidos": 2252,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2252,
+      "inicio_semana": "2025-02-24",
+      "registros_avaliados": 2385,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 2388
+    },
+    {
+      "alvos_zero": 1839,
+      "bairros_conhecidos": 2254,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2254,
+      "inicio_semana": "2025-03-03",
+      "registros_avaliados": 2332,
+      "registros_bairros_desconhecidos": 0,
+      "total_elegivel_semana": 2332
+    },
+    {
+      "alvos_zero": 1832,
+      "bairros_conhecidos": 2254,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2254,
+      "inicio_semana": "2025-03-10",
+      "registros_avaliados": 2217,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 2220
+    },
+    {
+      "alvos_zero": 1843,
+      "bairros_conhecidos": 2258,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2258,
+      "inicio_semana": "2025-03-17",
+      "registros_avaliados": 2234,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 2237
+    },
+    {
+      "alvos_zero": 1848,
+      "bairros_conhecidos": 2261,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2261,
+      "inicio_semana": "2025-03-24",
+      "registros_avaliados": 2317,
+      "registros_bairros_desconhecidos": 4,
+      "total_elegivel_semana": 2321
+    },
+    {
+      "alvos_zero": 1843,
+      "bairros_conhecidos": 2263,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2263,
+      "inicio_semana": "2025-03-31",
+      "registros_avaliados": 2073,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2074
+    },
+    {
+      "alvos_zero": 1870,
+      "bairros_conhecidos": 2265,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2265,
+      "inicio_semana": "2025-04-07",
+      "registros_avaliados": 2164,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2165
+    },
+    {
+      "alvos_zero": 1883,
+      "bairros_conhecidos": 2266,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2266,
+      "inicio_semana": "2025-04-14",
+      "registros_avaliados": 1908,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 1910
+    },
+    {
+      "alvos_zero": 1849,
+      "bairros_conhecidos": 2267,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2267,
+      "inicio_semana": "2025-04-21",
+      "registros_avaliados": 2042,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2043
+    },
+    {
+      "alvos_zero": 1885,
+      "bairros_conhecidos": 2269,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2269,
+      "inicio_semana": "2025-04-28",
+      "registros_avaliados": 2026,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2028
+    },
+    {
+      "alvos_zero": 1847,
+      "bairros_conhecidos": 2272,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2272,
+      "inicio_semana": "2025-05-05",
+      "registros_avaliados": 1982,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 1983
+    },
+    {
+      "alvos_zero": 1873,
+      "bairros_conhecidos": 2273,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2273,
+      "inicio_semana": "2025-05-12",
+      "registros_avaliados": 2187,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2188
+    },
+    {
+      "alvos_zero": 1850,
+      "bairros_conhecidos": 2273,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2273,
+      "inicio_semana": "2025-05-19",
+      "registros_avaliados": 2014,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2015
+    },
+    {
+      "alvos_zero": 1873,
+      "bairros_conhecidos": 2274,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2274,
+      "inicio_semana": "2025-05-26",
+      "registros_avaliados": 1974,
+      "registros_bairros_desconhecidos": 5,
+      "total_elegivel_semana": 1979
+    },
+    {
+      "alvos_zero": 1869,
+      "bairros_conhecidos": 2278,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2278,
+      "inicio_semana": "2025-06-02",
+      "registros_avaliados": 2018,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2020
+    },
+    {
+      "alvos_zero": 1895,
+      "bairros_conhecidos": 2280,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2280,
+      "inicio_semana": "2025-06-09",
+      "registros_avaliados": 1923,
+      "registros_bairros_desconhecidos": 0,
+      "total_elegivel_semana": 1923
+    },
+    {
+      "alvos_zero": 1879,
+      "bairros_conhecidos": 2280,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2280,
+      "inicio_semana": "2025-06-16",
+      "registros_avaliados": 2102,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2104
+    },
+    {
+      "alvos_zero": 1878,
+      "bairros_conhecidos": 2282,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2282,
+      "inicio_semana": "2025-06-23",
+      "registros_avaliados": 2090,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2091
+    },
+    {
+      "alvos_zero": 1890,
+      "bairros_conhecidos": 2283,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2283,
+      "inicio_semana": "2025-06-30",
+      "registros_avaliados": 1954,
+      "registros_bairros_desconhecidos": 0,
+      "total_elegivel_semana": 1954
+    },
+    {
+      "alvos_zero": 1878,
+      "bairros_conhecidos": 2284,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2284,
+      "inicio_semana": "2025-07-07",
+      "registros_avaliados": 2100,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2101
+    },
+    {
+      "alvos_zero": 1874,
+      "bairros_conhecidos": 2284,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2284,
+      "inicio_semana": "2025-07-14",
+      "registros_avaliados": 2225,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2226
+    },
+    {
+      "alvos_zero": 1892,
+      "bairros_conhecidos": 2286,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2286,
+      "inicio_semana": "2025-07-21",
+      "registros_avaliados": 2066,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2067
+    },
+    {
+      "alvos_zero": 1895,
+      "bairros_conhecidos": 2286,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2286,
+      "inicio_semana": "2025-07-28",
+      "registros_avaliados": 2054,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2056
+    },
+    {
+      "alvos_zero": 1880,
+      "bairros_conhecidos": 2289,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2289,
+      "inicio_semana": "2025-08-04",
+      "registros_avaliados": 2070,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2071
+    },
+    {
+      "alvos_zero": 1873,
+      "bairros_conhecidos": 2290,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2290,
+      "inicio_semana": "2025-08-11",
+      "registros_avaliados": 2105,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2107
+    },
+    {
+      "alvos_zero": 1902,
+      "bairros_conhecidos": 2292,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2292,
+      "inicio_semana": "2025-08-18",
+      "registros_avaliados": 2009,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2011
+    },
+    {
+      "alvos_zero": 1895,
+      "bairros_conhecidos": 2294,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2294,
+      "inicio_semana": "2025-08-25",
+      "registros_avaliados": 2022,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2023
+    },
+    {
+      "alvos_zero": 1911,
+      "bairros_conhecidos": 2294,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2294,
+      "inicio_semana": "2025-09-01",
+      "registros_avaliados": 2028,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2029
+    },
+    {
+      "alvos_zero": 1891,
+      "bairros_conhecidos": 2296,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2296,
+      "inicio_semana": "2025-09-08",
+      "registros_avaliados": 2095,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2096
+    },
+    {
+      "alvos_zero": 1901,
+      "bairros_conhecidos": 2297,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2297,
+      "inicio_semana": "2025-09-15",
+      "registros_avaliados": 2062,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 2063
+    },
+    {
+      "alvos_zero": 1896,
+      "bairros_conhecidos": 2297,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2297,
+      "inicio_semana": "2025-09-22",
+      "registros_avaliados": 1904,
+      "registros_bairros_desconhecidos": 6,
+      "total_elegivel_semana": 1910
+    },
+    {
+      "alvos_zero": 1924,
+      "bairros_conhecidos": 2303,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2303,
+      "inicio_semana": "2025-09-29",
+      "registros_avaliados": 1938,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 1940
+    },
+    {
+      "alvos_zero": 1942,
+      "bairros_conhecidos": 2305,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2305,
+      "inicio_semana": "2025-10-06",
+      "registros_avaliados": 1860,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 1861
+    },
+    {
+      "alvos_zero": 1942,
+      "bairros_conhecidos": 2307,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2307,
+      "inicio_semana": "2025-10-13",
+      "registros_avaliados": 1830,
+      "registros_bairros_desconhecidos": 4,
+      "total_elegivel_semana": 1834
+    },
+    {
+      "alvos_zero": 1921,
+      "bairros_conhecidos": 2311,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2311,
+      "inicio_semana": "2025-10-20",
+      "registros_avaliados": 1970,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 1971
+    },
+    {
+      "alvos_zero": 1944,
+      "bairros_conhecidos": 2311,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2311,
+      "inicio_semana": "2025-10-27",
+      "registros_avaliados": 1865,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 1868
+    },
+    {
+      "alvos_zero": 1918,
+      "bairros_conhecidos": 2313,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2313,
+      "inicio_semana": "2025-11-03",
+      "registros_avaliados": 1955,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 1958
+    },
+    {
+      "alvos_zero": 1936,
+      "bairros_conhecidos": 2318,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2318,
+      "inicio_semana": "2025-11-10",
+      "registros_avaliados": 1804,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 1807
+    },
+    {
+      "alvos_zero": 1958,
+      "bairros_conhecidos": 2321,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2321,
+      "inicio_semana": "2025-11-17",
+      "registros_avaliados": 1802,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 1803
+    },
+    {
+      "alvos_zero": 1931,
+      "bairros_conhecidos": 2321,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2321,
+      "inicio_semana": "2025-11-24",
+      "registros_avaliados": 1921,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 1923
+    },
+    {
+      "alvos_zero": 1946,
+      "bairros_conhecidos": 2325,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2325,
+      "inicio_semana": "2025-12-01",
+      "registros_avaliados": 1915,
+      "registros_bairros_desconhecidos": 4,
+      "total_elegivel_semana": 1919
+    },
+    {
+      "alvos_zero": 1937,
+      "bairros_conhecidos": 2327,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2327,
+      "inicio_semana": "2025-12-08",
+      "registros_avaliados": 1893,
+      "registros_bairros_desconhecidos": 0,
+      "total_elegivel_semana": 1893
+    },
+    {
+      "alvos_zero": 1930,
+      "bairros_conhecidos": 2329,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2329,
+      "inicio_semana": "2025-12-15",
+      "registros_avaliados": 2067,
+      "registros_bairros_desconhecidos": 4,
+      "total_elegivel_semana": 2071
+    },
+    {
+      "alvos_zero": 2021,
+      "bairros_conhecidos": 2331,
+      "conjunto": "teste",
+      "exemplos_por_janela": 2331,
+      "inicio_semana": "2025-12-22",
+      "registros_avaliados": 1368,
+      "registros_bairros_desconhecidos": 0,
+      "total_elegivel_semana": 1368
+    },
+    {
+      "alvos_zero": 1975,
+      "bairros_conhecidos": 2333,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2333,
+      "inicio_semana": "2026-01-05",
+      "registros_avaliados": 1850,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 1852
+    },
+    {
+      "alvos_zero": 1957,
+      "bairros_conhecidos": 2334,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2334,
+      "inicio_semana": "2026-01-12",
+      "registros_avaliados": 1776,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 1777
+    },
+    {
+      "alvos_zero": 1979,
+      "bairros_conhecidos": 2336,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2336,
+      "inicio_semana": "2026-01-19",
+      "registros_avaliados": 1822,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 1824
+    },
+    {
+      "alvos_zero": 1967,
+      "bairros_conhecidos": 2338,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2338,
+      "inicio_semana": "2026-01-26",
+      "registros_avaliados": 1876,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 1878
+    },
+    {
+      "alvos_zero": 1948,
+      "bairros_conhecidos": 2339,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2339,
+      "inicio_semana": "2026-02-02",
+      "registros_avaliados": 1964,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 1966
+    },
+    {
+      "alvos_zero": 1947,
+      "bairros_conhecidos": 2340,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2340,
+      "inicio_semana": "2026-02-09",
+      "registros_avaliados": 2059,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 2061
+    },
+    {
+      "alvos_zero": 1946,
+      "bairros_conhecidos": 2343,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2343,
+      "inicio_semana": "2026-02-16",
+      "registros_avaliados": 2027,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 2030
+    },
+    {
+      "alvos_zero": 1958,
+      "bairros_conhecidos": 2347,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2347,
+      "inicio_semana": "2026-02-23",
+      "registros_avaliados": 1958,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 1959
+    },
+    {
+      "alvos_zero": 1971,
+      "bairros_conhecidos": 2348,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2348,
+      "inicio_semana": "2026-03-02",
+      "registros_avaliados": 1864,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 1866
+    },
+    {
+      "alvos_zero": 1953,
+      "bairros_conhecidos": 2351,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2351,
+      "inicio_semana": "2026-03-09",
+      "registros_avaliados": 1939,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 1941
+    },
+    {
+      "alvos_zero": 1937,
+      "bairros_conhecidos": 2353,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2353,
+      "inicio_semana": "2026-03-16",
+      "registros_avaliados": 2085,
+      "registros_bairros_desconhecidos": 0,
+      "total_elegivel_semana": 2085
+    },
+    {
+      "alvos_zero": 1931,
+      "bairros_conhecidos": 2353,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2353,
+      "inicio_semana": "2026-03-23",
+      "registros_avaliados": 1958,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 1959
+    },
+    {
+      "alvos_zero": 1940,
+      "bairros_conhecidos": 2354,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2354,
+      "inicio_semana": "2026-03-30",
+      "registros_avaliados": 1760,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 1762
+    },
+    {
+      "alvos_zero": 1921,
+      "bairros_conhecidos": 2356,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2356,
+      "inicio_semana": "2026-04-06",
+      "registros_avaliados": 1951,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 1952
+    },
+    {
+      "alvos_zero": 1943,
+      "bairros_conhecidos": 2356,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2356,
+      "inicio_semana": "2026-04-13",
+      "registros_avaliados": 1803,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 1805
+    },
+    {
+      "alvos_zero": 1931,
+      "bairros_conhecidos": 2358,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2358,
+      "inicio_semana": "2026-04-20",
+      "registros_avaliados": 1824,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 1826
+    },
+    {
+      "alvos_zero": 1912,
+      "bairros_conhecidos": 2361,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2361,
+      "inicio_semana": "2026-04-27",
+      "registros_avaliados": 1743,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 1746
+    },
+    {
+      "alvos_zero": 1902,
+      "bairros_conhecidos": 2363,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2363,
+      "inicio_semana": "2026-05-04",
+      "registros_avaliados": 1852,
+      "registros_bairros_desconhecidos": 7,
+      "total_elegivel_semana": 1859
+    },
+    {
+      "alvos_zero": 1897,
+      "bairros_conhecidos": 2369,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2369,
+      "inicio_semana": "2026-05-11",
+      "registros_avaliados": 1835,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 1836
+    },
+    {
+      "alvos_zero": 1932,
+      "bairros_conhecidos": 2370,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2370,
+      "inicio_semana": "2026-05-18",
+      "registros_avaliados": 1745,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 1746
+    },
+    {
+      "alvos_zero": 1924,
+      "bairros_conhecidos": 2372,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2372,
+      "inicio_semana": "2026-05-25",
+      "registros_avaliados": 1823,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 1825
+    },
+    {
+      "alvos_zero": 1961,
+      "bairros_conhecidos": 2373,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2373,
+      "inicio_semana": "2026-06-01",
+      "registros_avaliados": 1733,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 1734
+    },
+    {
+      "alvos_zero": 1952,
+      "bairros_conhecidos": 2375,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2375,
+      "inicio_semana": "2026-06-08",
+      "registros_avaliados": 1723,
+      "registros_bairros_desconhecidos": 1,
+      "total_elegivel_semana": 1724
+    },
+    {
+      "alvos_zero": 1946,
+      "bairros_conhecidos": 2376,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2376,
+      "inicio_semana": "2026-06-15",
+      "registros_avaliados": 1689,
+      "registros_bairros_desconhecidos": 2,
+      "total_elegivel_semana": 1691
+    },
+    {
+      "alvos_zero": 1987,
+      "bairros_conhecidos": 2378,
+      "conjunto": "avaliacao_2026",
+      "exemplos_por_janela": 2378,
+      "inicio_semana": "2026-06-22",
+      "registros_avaliados": 1400,
+      "registros_bairros_desconhecidos": 3,
+      "total_elegivel_semana": 1403
+    }
+  ],
+  "version": "1.0.0"
+}
