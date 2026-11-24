@@ -38,11 +38,11 @@ class WeeklyDataTests(unittest.TestCase):
             source = root / 'source'
             (source / 'registros').mkdir(parents=True)
             (source / 'metadados').mkdir()
-            # Registro em 28/03 (igual à previsão) fica indisponível nessa segunda.
+
             events = [('a', date(2022, 1, 1), date(2022, 1, 1)),
                       ('a', date(2022, 3, 27), date(2022, 3, 28)),
                       ('a', date(2022, 3, 28), date(2022, 4, 5)),
-                      ('novo', date(2022, 3, 29), date(2022, 3, 29))]
+                      ('new', date(2022, 3, 29), date(2022, 3, 29))]
             schema = pa.schema([('record_id', pa.string()), ('bairro_chave', pa.string()), ('data_ocorrencia', pa.date32()), ('data_registro', pa.date32()), ('elegivel_painel', pa.bool_())])
             path = source / 'registros/source.parquet'
             pq.write_table(pa.Table.from_pylist([dict(record_id=str(i), bairro_chave=b, data_ocorrencia=e, data_registro=r, elegivel_painel=True) for i, (b, e, r) in enumerate(events)], schema=schema), path)
@@ -63,7 +63,7 @@ class WeeklyDataTests(unittest.TestCase):
             self.assertEqual(second['contagem_semana_anterior_01'], 0)
             self.assertEqual(second['contagem_semana_anterior_02'], 1)
             unknown = pq.read_table(root / 'one/bairros_desconhecidos.parquet').to_pylist()
-            self.assertEqual(unknown, [dict(bairro_chave='novo', inicio_semana=date(2022, 3, 28), quantidade_registros=1)])
+            self.assertEqual(unknown, [dict(bairro_chave='new', inicio_semana=date(2022, 3, 28), quantidade_registros=1)])
             ledger = pq.read_table(root / 'one/contribuicoes_alvo.parquet')
             cutoff = available_targets(sample, ledger, date(2022, 4, 4))
             self.assertEqual(len(cutoff), 1)

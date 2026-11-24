@@ -17,14 +17,14 @@ class ArtifactTests(unittest.TestCase):
             self.assertEqual(verify_selection(root, prov)['provenance'], prov)
             dest = root / 'teste'
             dest.mkdir()
-            result = dest / 'resultado.txt'
+            result = dest / 'result.txt'
             result.write_text('ok', encoding='utf-8')
-            write_json(dest / 'concluido.json', dict(provenance=prov, selection_sha256=sha256(selection), outputs_sha256={'resultado.txt': sha256(result)}))
+            write_json(dest / 'concluido.json', dict(provenance=prov, selection_sha256=sha256(selection), outputs_sha256={'result.txt': sha256(result)}))
             verify_completed(dest, prov, selection)
-            result.write_text('alterado', encoding='utf-8')
+            result.write_text('changed', encoding='utf-8')
             with self.assertRaises(ValueError):
                 verify_completed(dest, prov, selection)
-            write_json(selection, {'provenance': prov, 'alterado': True})
+            write_json(selection, {'provenance': prov, 'changed': True})
             with self.assertRaises(ValueError):
                 verify_selection(root, prov)
 

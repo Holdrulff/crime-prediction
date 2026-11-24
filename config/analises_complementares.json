@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "status_cientifico": "Exploratório, definido após conhecimento dos resultados principais; não é pré-registro independente.",
+  "status_cientifico": "Exploratory, defined after the main results were known; not an independent preregistration.",
   "seed": 42,
   "threads": 4,
   "window_days": 84,

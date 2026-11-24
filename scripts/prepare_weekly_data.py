@@ -1,4 +1,4 @@
-"""Exemplos semanais SSP; usa somente PyArrow e a biblioteca padrão."""
+
 from __future__ import annotations
 
 import argparse
@@ -16,39 +16,39 @@ ROOT = Path(__file__).resolve().parents[1]
 WINDOWS = (28, 56, 84)
 DAY = timedelta(days=1)
 VERSION = "1.0.0"
-DICTIONARY = """# Dicionário dos exemplos semanais
+DICTIONARY = """# Weekly example data dictionary
 
-## Unidade e elegibilidade
+## Unit and eligibility
 
-Uma linha por bairro conhecido no início da segunda-feira e semana prevista completa (segunda a domingo). As três janelas usam o mesmo calendário, após 84 dias de cobertura. O cadastro cresce com a primeira data de registro elegível estritamente anterior à previsão; não usa rótulos descobertos no futuro e não exige que o bairro permaneça ativo. As exclusões dos microdados normalizados continuam aplicadas.
+One row per neighborhood known at the beginning of Monday and complete forecast week (Monday through Sunday). All three windows share the same calendar after 84 days of coverage. Membership grows at the first eligible registration date strictly before the forecast; future labels are not used and continued neighborhood activity is not required. Normalized microdata exclusions remain in effect.
 
-## Exemplos
+## Examples
 
-| Campo | Tipo | Significado |
+| Field | Type | Meaning |
 |---|---|---|
-| bairro_chave | string | Rótulo textual SSP normalizado; categoria conhecida antes da previsão, sem polígono ou vizinhança oficial. |
-| inicio_semana | date32 | Segunda-feira da previsão, no início do dia. Identificador temporal, não preditor direto. |
-| fim_semana | date32 | Domingo seguinte, incluído no alvo. |
-| janela_dias | int16 | 28, 56 ou 84; configuração do experimento. |
-| mes | int8 | Mês da segunda-feira, conhecido antecipadamente. |
-| contagem_semana_anterior_01 ... | int32 | Contagens disponíveis de ocorrências em blocos de sete dias; 01 é o bloco mais recente, [início−7, início). Há 4, 8 ou 12 blocos. |
-| media_semanal | float64 | Média das contagens nos blocos da janela. |
-| desvio_padrao_semanal | float64 | Desvio padrão populacional dos blocos, divisor n (ddof=0). |
-| tendencia_semanal | float64 | Inclinação por mínimos quadrados das contagens semanais, em ordem cronológica; unidade registros por semana de avanço. |
-| dias_sem_registros | int16 | Dias com zero registros disponíveis na janela. Não significa ausência de crimes. |
-| alvo_retrospectivo | int32 | Contagem da semana no snapshot completo disponível. Exclusivamente para avaliação, não para ajuste histórico. |
+| bairro_chave | string | Normalized SSP neighborhood label, known before the forecast, without an official polygon or adjacency. |
+| inicio_semana | date32 | Forecast Monday, at the beginning of the day. Temporal identifier, not a direct predictor. |
+| fim_semana | date32 | Following Sunday, included in the target. |
+| janela_dias | int16 | 28, 56 or 84; experiment configuration. |
+| mes | int8 | Month of the forecast Monday, known in advance. |
+| contagem_semana_anterior_01 ... | int32 | Available occurrence counts in seven-day blocks; 01 is the most recent block, [start minus seven days, start). There are 4, 8 or 12 blocks. |
+| media_semanal | float64 | Mean block count within the window. |
+| desvio_padrao_semanal | float64 | Population standard deviation of block counts, divisor n (ddof=0). |
+| tendencia_semanal | float64 | Least-squares slope of weekly counts in chronological order; records per week of advancement. |
+| dias_sem_registros | int16 | Days with zero available records in the window. Does not imply absence of crime. |
+| alvo_retrospectivo | int32 | Weekly count in the complete available snapshot. For evaluation only, not historical fitting. |
 
-Todos os atributos históricos exigem data_ocorrencia dentro da janela e data_registro anterior ao início da semana. Zeros anteriores à primeira observação de um bairro não comprovam existência territorial. Não há codificadores ajustados, seleção aprendida, vizinhos geográficos, IBGE ou modelos treinados.
+All historical features require occurrence dates inside the window and registration dates before week start. Zeros before a neighborhood is first observed do not prove territorial existence. This preparation fits no encoders, learned feature selection, geographic neighbors, IBGE integration or models.
 
-## Reconstrução dos alvos
+## Target reconstruction
 
-contribuicoes_alvo.parquet: bairro_chave (string), inicio_semana (date32), data_registro (date32) e quantidade_registros (int32). Soma de contribuições por bairro e semana recupera o alvo retrospectivo. O comando targets soma somente data_registro < data de corte, remove alvo_retrospectivo e semanas ainda abertas, e acrescenta alvo_disponivel (int32) e data_corte_treinamento (date32). Entradas históricas permanecem as calculadas na origem de cada exemplo. O corte é exclusivo, inclusive para semanas e registros na fronteira. Alvos disponíveis são provisórios: ausência de registro na data de corte não comprova ausência de ocorrência. Não há política de maturação imposta nesta preparação.
+contribuicoes_alvo.parquet: bairro_chave (string), inicio_semana (date32), data_registro (date32) and quantidade_registros (int32). Summing contributions by neighborhood and week recovers the retrospective target. The targets command sums only registration dates before the cutoff, removes alvo_retrospectivo and still-open weeks, and adds alvo_disponivel (int32) and data_corte_treinamento (date32). Historical inputs remain those calculated at each forecast origin. The cutoff is exclusive for both weeks and records on the boundary. Available targets are provisional: no record at the cutoff does not prove no occurrence. No maturity policy is imposed at this preparation stage.
 
-## Auditoria
+## Audit
 
-bairros_desconhecidos.parquet: bairro_chave (string), inicio_semana (date32) e quantidade_registros (int32) dos alvos de categorias desconhecidas na origem, sem inseri-las artificialmente nas entradas. relatorio.json contém totais por conjunto, semanas e exclusões do calendário. conferencia_semanal.csv detalha os mesmos totais por semana. Cada contagem é reportada uma vez, sem triplicar os registros pelas três janelas.
+bairros_desconhecidos.parquet: bairro_chave (string), inicio_semana (date32) and quantidade_registros (int32) for targets of categories unknown at forecast origin, without adding them artificially to inputs. relatorio.json contains split totals, weeks and calendar exclusions. conferencia_semanal.csv details the same totals by week. Each record count is reported once, without tripling across windows.
 
-O manifesto semanal cobre os arquivos desta pasta, exceto ele próprio. O manifesto original continua cobrindo o snapshot anterior preservado. A data de registro é proxy da publicação; não existem snapshots históricos completos das versões dos boletins. Alvos recentes podem estar incompletos por registros tardios fora do snapshot.
+The weekly manifest covers all files in this directory except itself. The original manifest still covers the preserved earlier snapshot. Registration date is a proxy for publication; complete historical snapshots of report versions are unavailable. Recent targets may lack delayed reports outside the snapshot.
 """
 
 
@@ -70,7 +70,7 @@ def monday(d):
 
 
 def origins(splits, start, end):
-    """Mesmo calendário para todas as janelas; nunca cruza uma divisão."""
+
     result = {}
     for split, bounds in splits.items():
         lo, hi = (date.fromisoformat(bounds[k]) for k in ("start", "end"))
@@ -78,7 +78,7 @@ def origins(splits, start, end):
         d = lo + timedelta(days=(-lo.weekday()) % 7)
         while d + timedelta(days=6) <= hi:
             if d in result:
-                raise ValueError("Semanas compartilhadas entre conjuntos")
+                raise ValueError("Weeks shared across splits")
             result[d] = split
             d += timedelta(days=7)
     return dict(sorted(result.items()))
@@ -86,29 +86,29 @@ def origins(splits, start, end):
 
 def load_records(source):
     manifest = json.loads((source / "metadados/manifest.json").read_text(encoding="utf-8"))
-    # Conferir também as regras e auditorias evita tratar um snapshot misturado.
+
     for relative, expected in manifest["outputs_sha256"].items():
         if sha256(source / relative) != expected:
-            raise ValueError(f"Assinatura divergente: {relative}")
+            raise ValueError(f"Hash mismatch: {relative}")
     records, seen = [], set()
     for path in sorted((source / "registros").glob("*.parquet")):
         data = pq.read_table(path, columns=["record_id", "bairro_chave", "data_ocorrencia", "data_registro", "elegivel_painel"]).to_pydict()
         for rid, b, event, registered, eligible in zip(*data.values()):
             if rid in seen:
-                raise ValueError(f"Proveniência repetida: {rid}")
+                raise ValueError(f"Duplicate provenance: {rid}")
             seen.add(rid)
             if eligible:
                 if not b or not event or not registered or event > registered:
-                    raise ValueError(f"Registro elegível inconsistente: {rid}")
+                    raise ValueError(f"Inconsistent eligible record: {rid}")
                 records.append((b, event, registered))
     expected = manifest["summary"]["registros_elegiveis_paineis"]
     if len(records) != expected:
-        raise ValueError("Total elegível diverge do manifesto")
+        raise ValueError("Eligible total differs from the manifest")
     return records
 
 
 def weekly_statistics(daily, window):
-    """daily em ordem do mais antigo ao mais recente, com 84 posições."""
+
     values = daily[-window:]
     blocks = [sum(values[i:i + 7]) for i in range(0, window, 7)]
     n = len(blocks)
@@ -129,13 +129,13 @@ def example_schema(window):
 
 def build(source, output):
     if output.exists() and any(output.iterdir()):
-        raise ValueError("Destino deve estar vazio; use outro diretório para reconstruir e comparar")
+        raise ValueError("Destination must be empty; use another directory to rebuild and compare")
     records = load_records(source)
     rules = json.loads((source / "metadados/regras.json").read_text(encoding="utf-8"))
     coverage = sorted((date.fromisoformat(v["start"]), date.fromisoformat(v["end"])) for v in rules["coverage"].values())
     for previous, following in zip(coverage, coverage[1:]):
         if previous[1] + DAY != following[0]:
-            raise ValueError("Cobertura precisa ser contínua")
+            raise ValueError("Coverage must be continuous")
     start, end = coverage[0][0], coverage[-1][1]
     dates = origins(rules["splits"], start, end)
     targets, contributions, per_date = Counter(), Counter(), Counter()
@@ -184,7 +184,7 @@ def build(source, output):
             unknown = sum(n for b, n in targets_by_week[origin].items() if b not in known)
             total = sum(per_date[origin + timedelta(days=i)] for i in range(7))
             if evaluated + unknown != total:
-                raise ValueError("Falha na reconciliação semanal")
+                raise ValueError("Weekly reconciliation failed")
             audit.append(dict(conjunto=split, inicio_semana=origin.isoformat(), bairros_conhecidos=len(known), exemplos_por_janela=len(known), registros_avaliados=evaluated, registros_bairros_desconhecidos=unknown, total_elegivel_semana=total, alvos_zero=zero))
             s = summaries[split]
             for key, value in [("semanas", 1), ("exemplos_por_janela", len(known)), ("alvos_zero_por_janela", zero), ("registros_avaliados", evaluated), ("registros_bairros_desconhecidos", unknown)]:
@@ -192,7 +192,7 @@ def build(source, output):
     finally:
         for writer in writers.values():
             writer.close()
-    # O relatório detalhado é reconstruído com a primeira data de registro, sem olhar o cadastro futuro.
+
     first_seen = {}
     for b, _, registered in ordered:
         first_seen.setdefault(b, registered)
@@ -207,17 +207,17 @@ def build(source, output):
     total_evaluated = sum(s["registros_avaliados"] for s in summaries.values())
     total_unknown = sum(s["registros_bairros_desconhecidos"] for s in summaries.values())
     if total_evaluated + total_unknown + sum(excluded.values()) != len(records):
-        raise ValueError("Reconciliação global inválida")
-    report = dict(version=VERSION, registros_elegiveis=len(records), conjuntos=summaries, registros_fora_calendario=dict(excluded), semanas=audit, disponibilidade="data_registro < inicio_semana; proxy da publicação", alvo="registros por natureza; não crimes únicos", cobertura=[start.isoformat(), end.isoformat()])
+        raise ValueError("Invalid overall reconciliation")
+    report = dict(version=VERSION, registros_elegiveis=len(records), conjuntos=summaries, registros_fora_calendario=dict(excluded), semanas=audit, disponibilidade="Registration date precedes week start; proxy for publication", alvo="Records by offense classification, not unique crimes", cobertura=[start.isoformat(), end.isoformat()])
     write_json(output / "relatorio.json", report)
     import csv
     with (output / "conferencia_semanal.csv").open("w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=list(audit[0]))
         writer.writeheader()
         writer.writerows(audit)
-    lines = ["# Conferência da base semanal", "", "| Conjunto | Semanas | Exemplos por janela | Registros avaliados | Registros de bairros desconhecidos |", "|---|---:|---:|---:|---:|"]
+    lines = ["# Weekly dataset verification", "", "| Split | Weeks | Examples per window | Evaluated records | Records in unknown neighborhoods |", "|---|---:|---:|---:|---:|"]
     lines += [f"| {k} | {s['semanas']} | {s['exemplos_por_janela']} | {s['registros_avaliados']} | {s['registros_bairros_desconhecidos']} |" for k, s in summaries.items()]
-    lines += ["", f"Reconciliação: {len(records)} elegíveis = {total_evaluated} avaliados + {total_unknown} de bairros desconhecidos + {sum(excluded.values())} fora do calendário.", "", "As três janelas têm os mesmos pares bairro–semana. Alvos retrospectivos servem à avaliação; reconstruir alvos de treinamento com o subcomando targets.", "", "Não há treinamento de modelos. Cadastro de bairros e entradas respeitam data_registro anterior à previsão. Data de registro não é data comprovada de publicação. Os alvos recentes podem estar incompletos por atraso e pelo término do snapshot."]
+    lines += ["", f"Reconciliation: {len(records)} eligible = {total_evaluated} evaluated + {total_unknown} in unknown neighborhoods + {sum(excluded.values())} outside the calendar.", "", "All three windows contain the same neighborhood-week pairs. Retrospective targets are for evaluation; rebuild training targets with the targets subcommand.", "", "No models are trained. Neighborhood membership and inputs use registration dates before the forecast. Registration date is not verified publication date. Recent targets may be incomplete because of reporting delays and the snapshot boundary."]
     (output / "relatorio.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     (output / "dicionario.md").write_text(DICTIONARY, encoding="utf-8")
     hashes = {p.relative_to(output).as_posix(): sha256(p) for p in sorted(output.rglob("*")) if p.is_file()}
@@ -226,14 +226,14 @@ def build(source, output):
 
 
 def available_targets(examples, ledger, cutoff):
-    """Exclui semanas ainda abertas e remove o alvo retrospectivo da saída."""
+
     contributions = defaultdict(list)
     for b, w, r, n in zip(*(ledger.column(c).to_pylist() for c in ("bairro_chave", "inicio_semana", "data_registro", "quantidade_registros"))):
         if r < cutoff:
             contributions[b, w].append(n)
     examples = examples.filter(pa.array([end < cutoff for end in examples.column("fim_semana").to_pylist()]))
     if "alvo_disponivel" in examples.column_names:
-        raise ValueError("Use o arquivo original de exemplos")
+        raise ValueError("Use the original examples file")
     examples = examples.drop(["alvo_retrospectivo"])
     y = [sum(contributions[b, w]) for b, w in zip(examples.column("bairro_chave").to_pylist(), examples.column("inicio_semana").to_pylist())]
     examples = examples.append_column("alvo_disponivel", pa.array(y, type=pa.int32()))
@@ -242,7 +242,7 @@ def available_targets(examples, ledger, cutoff):
 
 
 def main():
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(description='Build weekly SSP examples and reconstruct targets available at a cutoff.')
     sub = parser.add_subparsers(dest="command", required=True)
     p = sub.add_parser("build")
     p.add_argument("--source", type=Path, default=ROOT / "normalized-data")
@@ -257,11 +257,11 @@ def main():
         build(args.source.resolve(), args.output.resolve())
     else:
         if args.output.exists():
-            parser.error("O arquivo de destino já existe")
+            parser.error("The destination file already exists")
         table = available_targets(pq.read_table(args.examples), pq.read_table(args.ledger), args.as_of)
         args.output.parent.mkdir(parents=True, exist_ok=True)
         pq.write_table(table, args.output, compression="zstd")
-        print(f"{len(table)} exemplos com alvos disponíveis antes de {args.as_of}")
+        print(f"{len(table)} examples with targets available before {args.as_of}")
 
 
 if __name__ == "__main__":

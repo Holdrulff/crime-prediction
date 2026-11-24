@@ -1,4 +1,4 @@
-"""Preparação e avaliação comuns aos dois modelos; sem ajuste de estimadores."""
+
 from __future__ import annotations
 
 from datetime import date, timedelta
@@ -28,10 +28,10 @@ def verify_inputs(source):
         manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
         for name, expected in manifest['outputs_sha256'].items():
             if sha256(base / name) != expected:
-                raise ValueError(f'Arquivo de entrada alterado: {base / name}')
+                raise ValueError(f'Input file has changed: {base / name}')
     weekly = json.loads((source / 'manifest.json').read_text(encoding='utf-8'))
     if weekly['source_manifest_sha256'] != sha256(source.parent / 'metadados/manifest.json'):
-        raise ValueError('Manifestos incompatíveis')
+        raise ValueError('Incompatible manifests')
 
 
 def mature(table, cutoff, days):
@@ -49,7 +49,7 @@ def features(frame, window):
     for name in result.columns[2:]:
         result[name] = result[name].astype(np.float32)
     if result.isna().any().any():
-        raise ValueError('Entrada com valores ausentes')
+        raise ValueError('Input contains missing values')
     return result
 
 
@@ -75,11 +75,11 @@ def prepare_phase(source, phase, window, config, ledger=None):
         target = 'alvo_retrospectivo'
     evaluation = evaluation.to_pandas()
     if train.empty or evaluation.empty:
-        raise ValueError('Treino ou avaliação vazios')
+        raise ValueError('Training or evaluation set is empty')
     if train[['bairro_chave', 'inicio_semana']].duplicated().any() or evaluation[['bairro_chave', 'inicio_semana']].duplicated().any():
-        raise ValueError('Exemplos repetidos')
+        raise ValueError('Duplicate examples')
     if max(train['fim_semana']) >= min(evaluation['inicio_semana']):
-        raise ValueError('Sobreposição temporal')
+        raise ValueError('Temporal overlap')
     return train, evaluation, features(train, window), features(evaluation, window), train['alvo_disponivel'].to_numpy(dtype=np.float64), evaluation[target].to_numpy(dtype=np.float64)
 
 
@@ -91,7 +91,7 @@ def baseline_predictions(frame):
 def metrics(y, prediction):
     y, prediction = np.asarray(y, dtype=np.float64), np.asarray(prediction, dtype=np.float64)
     if y.shape != prediction.shape or not len(y) or not np.isfinite(prediction).all() or not np.isfinite(y).all() or (prediction < 0).any():
-        raise ValueError('Alvos/previsões inválidos')
+        raise ValueError('Invalid targets or predictions')
     errors = prediction - y
     return dict(n=len(y), mae=float(np.abs(errors).mean()), rmse=float(np.sqrt(np.square(errors).mean())), alvo_total=float(y.sum()), previsao_total=float(prediction.sum()))
 
@@ -134,13 +134,13 @@ def block_bootstrap(frame, winner, reference, repetitions=1000, block=4, seed=42
     a = frame[frame['modelo'] == winner].sort_values(['inicio_semana', 'bairro_chave'])
     b = frame[frame['modelo'] == reference].sort_values(['inicio_semana', 'bairro_chave'])
     if not a[['inicio_semana', 'bairro_chave']].reset_index(drop=True).equals(b[['inicio_semana', 'bairro_chave']].reset_index(drop=True)) or not np.array_equal(a['alvo'], b['alvo']):
-        raise ValueError('Bootstrap exige pares e alvos idênticos')
+        raise ValueError('Bootstrap requires identical pairs and targets')
     delta = a[['inicio_semana']].copy()
     delta['difference'] = np.abs(a['previsao'].to_numpy() - a['alvo'].to_numpy()) - np.abs(b['previsao'].to_numpy() - b['alvo'].to_numpy())
     weekly = delta.groupby('inicio_semana')['difference'].agg(['sum', 'count'])
     n = len(weekly)
     if n < block:
-        raise ValueError('Poucas semanas para bootstrap')
+        raise ValueError('Too few weeks for bootstrap')
     rng = np.random.default_rng(seed)
     estimates = []
     for _ in range(repetitions):
@@ -148,4 +148,4 @@ def block_bootstrap(frame, winner, reference, repetitions=1000, block=4, seed=42
         indices = np.concatenate([np.arange(start, start + block) for start in starts])[:n]
         sample = weekly.iloc[indices]
         estimates.append(float(sample['sum'].sum() / sample['count'].sum()))
-    return dict(vencedor=winner, referencia=reference, diferenca_mae=float(delta['difference'].mean()), intervalo_95=np.quantile(estimates, [0.025, 0.975]).tolist(), repeticoes=repetitions, bloco_semanas=block, semanas=n, interpretacao='Diferença negativa favorece o vencedor; IC aproximado com blocos móveis por ordem das semanas avaliadas.')
+    return dict(vencedor=winner, referencia=reference, diferenca_mae=float(delta['difference'].mean()), intervalo_95=np.quantile(estimates, [0.025, 0.975]).tolist(), repeticoes=repetitions, bloco_semanas=block, semanas=n, interpretacao='A negative difference favors the winner; approximate CI using moving blocks in evaluation-week order.')

@@ -1,4 +1,4 @@
-"""Experimentos sequenciais de previsão semanal, com seleção anterior ao teste."""
+
 from __future__ import annotations
 
 import argparse
@@ -11,7 +11,7 @@ import platform
 import sys
 import time
 
-# Limites antes dos imports numéricos, inclusive para bibliotecas BLAS.
+
 for name in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS'):
     os.environ[name] = '4'
 
@@ -65,12 +65,12 @@ def check_population(reference, data):
     for key in ('train', 'evaluation'):
         columns = ['bairro_chave', 'inicio_semana', 'fim_semana']
         if not reference[key][columns].equals(data[key][columns]):
-            raise ValueError('Janelas com pares diferentes')
+            raise ValueError('Windows contain different pairs')
     if not np.array_equal(reference['ytrain'], data['ytrain']) or not np.array_equal(reference['y'], data['y']):
-        raise ValueError('Janelas com alvos diferentes')
+        raise ValueError('Windows contain different targets')
     columns = [f'contagem_semana_anterior_{i:02}' for i in range(1, 5)]
     if not reference['evaluation'][columns].equals(data['evaluation'][columns]):
-        raise ValueError('Referências simples inconsistentes entre janelas')
+        raise ValueError('Inconsistent baselines across windows')
 
 
 def verify_selection(output, prov):
@@ -78,17 +78,17 @@ def verify_selection(output, prov):
     selection = json.loads(path.read_text(encoding='utf-8'))
     expected = (output / 'selecao.sha256').read_text(encoding='utf-8').strip()
     if sha256(path) != expected or selection['provenance'] != prov:
-        raise ValueError('Seleção/protocolo alterado após congelamento')
+        raise ValueError('Selection or protocol changed after freezing')
     return selection
 
 
 def verify_completed(destination, prov, selection_path):
     marker = json.loads((destination / 'concluido.json').read_text(encoding='utf-8'))
     if marker['provenance'] != prov or marker['selection_sha256'] != sha256(selection_path):
-        raise ValueError('Resultado pertence a outra seleção ou protocolo')
+        raise ValueError('Result belongs to another selection or protocol')
     for name, expected in marker['outputs_sha256'].items():
         if sha256(destination / name) != expected:
-            raise ValueError(f'Resultado alterado: {destination / name}')
+            raise ValueError(f'Result has changed: {destination / name}')
 
 
 def fit_predict(family, params, data, config):
@@ -122,13 +122,13 @@ def make_plots(destination, frame):
     fig, ax = plt.subplots(figsize=(11, 4.5), layout='constrained')
     first = next(iter(frame['modelo'].unique()))
     real = totals.loc[first]
-    ax.plot(real.index, real['alvo'], color='black', linewidth=2, label='Observado na população avaliada')
+    ax.plot(real.index, real['alvo'], color='black', linewidth=2, label='Observed in the evaluated population')
     for model in frame['modelo'].unique():
         if model == 'zero':
             continue
         values = totals.loc[model]
         ax.plot(values.index, values['previsao'], label=model, alpha=.8)
-    ax.set(xlabel='Semana prevista', ylabel='Registros', title='Contagem semanal nos bairros avaliados')
+    ax.set(xlabel='Forecast week', ylabel='Records', title='Weekly counts in the evaluated neighborhoods')
     ax.legend(fontsize=8)
     fig.savefig(destination / 'contagens_semanais.png', dpi=160)
     plt.close(fig)
@@ -136,7 +136,7 @@ def make_plots(destination, frame):
     fig, axes = plt.subplots(1, 2, figsize=(10, 4), layout='constrained')
     for ax, metric in zip(axes, ['mae', 'rmse']):
         ax.barh([r[0] for r in rows], [r[1][metric] for r in rows])
-        ax.set(xlabel=metric.upper(), title=f'Comparação por {metric.upper()}')
+        ax.set(xlabel=metric.upper(), title=f'Comparison by {metric.upper()}')
     fig.savefig(destination / 'comparacao_erros.png', dpi=160)
     plt.close(fig)
 
@@ -149,7 +149,7 @@ def maturity_report(source, cutoff):
             if flag and registered < cutoff and event < cutoff:
                 eligible += 1
                 covered += delay <= 28
-    return dict(registros_disponiveis=eligible, atraso_ate_28_dias=covered, proporcao=float(covered / eligible), aviso='Proporção entre registros já disponíveis no corte; não estima boletins ainda não registrados.')
+    return dict(registros_disponiveis=eligible, atraso_ate_28_dias=covered, proporcao=float(covered / eligible), aviso='Proportion among records already available at the cutoff; does not estimate reports not yet registered.')
 
 
 def validate(source, output, config, prov, ledger):
@@ -159,7 +159,7 @@ def validate(source, output, config, prov, ledger):
     if selection_path.exists():
         verify_selection(output, prov)
         write_report(output)
-        print('Seleção já congelada; use as fases de teste ou avaliação complementar.', flush=True)
+        print('Selection is already frozen; use the test or supplementary evaluation phases.', flush=True)
         return
     rows, baseline_rows = [], []
     data_cache = {}
@@ -178,16 +178,16 @@ def validate(source, output, config, prov, ledger):
                 if record_path.exists() and prediction_path.exists():
                     row = json.loads(record_path.read_text(encoding='utf-8'))
                     if row['provenance'] != prov or row['prediction_sha256'] != sha256(prediction_path):
-                        raise ValueError(f'Cache incompatível: {name}')
-                    print(f'{name}: resultado existente conferido', flush=True)
+                        raise ValueError(f'Incompatible cache: {name}')
+                    print(f'{name}: Existing result verified', flush=True)
                 else:
-                    print(f'Treinando {name}: {len(data["ytrain"])} exemplos', flush=True)
+                    print(f'Training {name}: {len(data["ytrain"])} examples', flush=True)
                     estimator, prediction, fit_seconds, total_seconds = fit_predict(family, params, data, config)
                     frame, bounds = make_predictions(data, prediction, name, window, 'validacao')
                     frame.to_parquet(prediction_path, index=False, compression='zstd')
                     row = dict(family=family, model=name, window=window, order=order, params=params, **metrics(data['y'], prediction), fit_seconds=fit_seconds, total_seconds=total_seconds, treino_n=len(data['ytrain']), quartis_volume=bounds, provenance=prov, prediction_sha256=sha256(prediction_path))
                     write_json(record_path, row)
-                    print(f'{name}: MAE={row["mae"]:.6f}; RMSE={row["rmse"]:.6f}; ajuste={fit_seconds:.1f}s', flush=True)
+                    print(f'{name}: MAE={row["mae"]:.6f}; RMSE={row["rmse"]:.6f}; fit={fit_seconds:.1f}s', flush=True)
                     del estimator
                 rows.append(row)
     data = data_cache[28]
@@ -201,7 +201,7 @@ def validate(source, output, config, prov, ledger):
     reference = choose_best(baseline_rows, config['selection_tolerance'])
     reproduction = {}
     for family, row in winners.items():
-        print(f'Reproduzindo vencedor de validação: {row["model"]}', flush=True)
+        print(f'Reproducing the validation winner: {row["model"]}', flush=True)
         estimator, prediction, _, _ = fit_predict(family, row['params'], data_cache[row['window']], config)
         saved = pd.read_parquet(destination / f'{row["model"]}.parquet')
         np.testing.assert_allclose(prediction, saved['previsao'], rtol=1e-6, atol=1e-7)
@@ -210,19 +210,19 @@ def validate(source, output, config, prov, ledger):
         frames.append(saved)
         del estimator
     frame = save_phase_summary(destination, frames, rows + baseline_rows)
-    # A seleção é escrita ANTES de qualquer leitura de exemplos ou alvos de teste.
-    selection = dict(provenance=prov, created_at_utc=datetime.now(timezone.utc).isoformat(), winners=winners, best_family=best_model['family'], best_reference=reference['model'], baselines=baseline_rows, reproduction=reproduction, score_cutoff='2025-01-01', maturity_days=config['maturity_days'], score_weeks=int(frame['inicio_semana'].nunique()), score_target='Registros disponíveis antes de 2025-01-01; semanas maturadas por 28 dias.', maturity=maturity_report(source, date(2024, 1, 1)))
+
+    selection = dict(provenance=prov, created_at_utc=datetime.now(timezone.utc).isoformat(), winners=winners, best_family=best_model['family'], best_reference=reference['model'], baselines=baseline_rows, reproduction=reproduction, score_cutoff='2025-01-01', maturity_days=config['maturity_days'], score_weeks=int(frame['inicio_semana'].nunique()), score_target='Records available before 2025-01-01; weeks matured for 28 days.', maturity=maturity_report(source, date(2024, 1, 1)))
     write_json(selection_path, selection)
     (output / 'selecao.sha256').write_text(sha256(selection_path) + '\n', encoding='utf-8')
     write_report(output)
-    print(f'Seleção congelada: {selection["best_family"]}; referência: {selection["best_reference"]}', flush=True)
+    print(f'Selection frozen: {selection["best_family"]}; reference: {selection["best_reference"]}', flush=True)
 
 
 def evaluate(source, output, phase, config, prov, ledger):
     selection_path = output / 'selecao.json'
     selection = verify_selection(output, prov)
     if phase == 'avaliacao_2026' and not (output / 'teste/concluido.json').exists():
-        raise ValueError('Concluir teste antes da avaliação complementar')
+        raise ValueError('Complete the test before supplementary evaluation')
     if phase == 'avaliacao_2026':
         verify_completed(output / 'teste', prov, selection_path)
     destination = output / phase
@@ -230,7 +230,7 @@ def evaluate(source, output, phase, config, prov, ledger):
     if (destination / 'concluido.json').exists():
         verify_completed(destination, prov, selection_path)
         write_report(output)
-        print(f'{phase} já concluído; resultados preservados.', flush=True)
+        print(f'{phase} already completed; results preserved.', flush=True)
         return
     frames, records, data_cache = [], [], {}
     for family, row in selection['winners'].items():
@@ -238,7 +238,7 @@ def evaluate(source, output, phase, config, prov, ledger):
         if window not in data_cache:
             data_cache[window] = load_data(source, phase, window, config, ledger)
         data = data_cache[window]
-        print(f'{phase}: treinando {family}, janela={window}, n={len(data["ytrain"])}', flush=True)
+        print(f'{phase}: training {family}, window={window}, n={len(data["ytrain"])}', flush=True)
         estimator, prediction, fit_seconds, total_seconds = fit_predict(family, row['params'], data, config)
         frame, bounds = make_predictions(data, prediction, family, window, phase)
         frames.append(frame)
@@ -251,11 +251,11 @@ def evaluate(source, output, phase, config, prov, ledger):
         with threadpool_limits(limits=config['threads']):
             np.testing.assert_allclose(np.maximum(0, restored['estimator'].predict(data['xeval'])), prediction, rtol=1e-6, atol=1e-7)
         del estimator, restored
-        print(f'{phase}/{family}: MAE={records[-1]["mae"]:.6f}; ajuste={fit_seconds:.1f}s', flush=True)
-    # Comparabilidade entre famílias, mesmo se selecionarem janelas diferentes.
+        print(f'{phase}/{family}: MAE={records[-1]["mae"]:.6f}; fit={fit_seconds:.1f}s', flush=True)
+
     a, b = frames
     if not a[['bairro_chave', 'inicio_semana', 'alvo']].equals(b[['bairro_chave', 'inicio_semana', 'alvo']]):
-        raise ValueError('Populações de avaliação diferentes')
+        raise ValueError('Different evaluation populations')
     data = next(iter(data_cache.values()))
     for name, prediction in baseline_predictions(data['evaluation']).items():
         frame, _ = make_predictions(data, prediction, name, 28, phase)
@@ -272,27 +272,27 @@ def evaluate(source, output, phase, config, prov, ledger):
 
 def write_report(output):
     selection = json.loads((output / 'selecao.json').read_text(encoding='utf-8'))
-    lines = ['# Previsão semanal de registros de roubo', '', 'SSP-SP, município da ocorrência São Paulo. Alvo: registros por natureza criminal, não crimes únicos ou risco individual. Sem integração socioeconômica.', '', '## Protocolo', '', 'Modelos globais fixos em cada ano, com entradas atualizadas semanalmente. Cortes de ajuste em 01/01/2024, 01/01/2025 e 01/01/2026. Alvos de ajuste reconstruídos na data de corte e semanas com pelo menos 28 dias de maturação. Bairro e mês codificados exclusivamente no ajuste. Previsões negativas truncadas em zero, sem arredondamento.', '', f'Seleção: {selection["score_weeks"]} semanas de 2024, com rótulos disponíveis antes de 01/01/2025 e maturação de 28 dias. Vencedor pré-teste: **{selection["best_family"]}**; referência pré-teste: **{selection["best_reference"]}**. Nenhuma escolha é alterada pelos resultados de teste.', '', '## Configurações selecionadas', '']
+    lines = ['# Weekly forecasting of robbery records', '', 'SSP-SP, occurrence municipality of São Paulo. Target: records by offense classification, not unique crimes or individual risk. No socioeconomic integration.', '', '## Protocol', '', 'Global models remain fixed within each year, with inputs updated weekly. Fit cutoffs are 2024-01-01, 2025-01-01 and 2026-01-01. Training targets are reconstructed at the cutoff, using weeks matured for at least 28 days. Neighborhood and month encoding is fitted only on training data. Negative predictions are clipped to zero without rounding.', '', f'Selection: {selection["score_weeks"]} weeks in 2024, with labels available before 2025-01-01 and a 28-day maturity margin. Pre-test winner: **{selection["best_family"]}**; pre-test reference: **{selection["best_reference"]}**. Test results do not change any choices.', '', '## Selected configurations', '']
     for family, row in selection['winners'].items():
-        lines.append(f'- {family}: janela {row["window"]} dias; parâmetros `{json.dumps(row["params"], ensure_ascii=False, sort_keys=True)}`.')
+        lines.append(f'- {family}: window {row["window"]} days; parameters `{json.dumps(row["params"], ensure_ascii=False, sort_keys=True)}`.')
     for phase in ('validacao', 'teste', 'avaliacao_2026'):
         path = output / phase / 'metricas.csv'
         if not path.exists():
             continue
         table = pd.read_csv(path)
         table = table[table['dimensao'] == 'geral']
-        lines += ['', f'## {phase}', '', '| Modelo | Exemplos | MAE | RMSE |', '|---|---:|---:|---:|']
+        lines += ['', f'## {phase}', '', '| Model | Examples | MAE | RMSE |', '|---|---:|---:|---:|']
         lines += [f'| {r.modelo} | {r.n} | {r.mae:.6f} | {r.rmse:.6f} |' for r in table.itertuples()]
-        lines += ['', f'![Comparação de erros]({phase}/comparacao_erros.png)', '', f'![Contagens semanais]({phase}/contagens_semanais.png)']
+        lines += ['', f'![Error comparison]({phase}/comparacao_erros.png)', '', f'![Weekly counts]({phase}/contagens_semanais.png)']
         if phase != 'validacao':
             winner_mae = float(table.loc[table['modelo'] == selection['best_family'], 'mae'].iloc[0])
             reference_mae = float(table.loc[table['modelo'] == selection['best_reference'], 'mae'].iloc[0])
-            lines += ['', f'Diferença de MAE do vencedor pré-selecionado para a referência pré-selecionada: {winner_mae - reference_mae:.6f}. ' + ('Houve redução de MAE nesta população.' if winner_mae < reference_mae else 'Não houve redução de MAE nesta população; configurações foram mantidas.')]
+            lines += ['', f'MAE difference between the preselected winner and the preselected reference: {winner_mae - reference_mae:.6f}. ' + ('MAE was reduced in this population.' if winner_mae < reference_mae else 'MAE was not reduced in this population; configurations were kept unchanged.')]
     if (output / 'teste/bootstrap.json').exists():
         bootstrap = json.loads((output / 'teste/bootstrap.json').read_text(encoding='utf-8'))
         lo, hi = bootstrap['intervalo_95']
-        lines += ['', f'IC aproximado de 95% da diferença de MAE no teste: [{lo:.6f}, {hi:.6f}], por 1.000 reamostragens em blocos de quatro semanas. Diferenças negativas favorecem o modelo. Blocos seguem as semanas avaliadas, incluindo eventuais intervalos de calendário excluídos.']
-    lines += ['', '## Limitações e leitura dos resultados', '', '- A data de registro é proxy da disponibilidade pública; não há snapshots históricos completos das versões dos boletins.', '- A margem de 28 dias reduz a incompletude dos alvos de ajuste, sem eliminá-la. As proporções de atraso nos metadados consideram apenas registros já disponíveis no corte.', '- Alvos de teste são retrospectivos no snapshot de 16/10/2026. As diferenças para os rótulos provisórios usados na seleção devem ser consideradas ao comparar fases.', '- Bairros ainda desconhecidos na origem ficam fora dos exemplos e são quantificados na auditoria semanal. Categorias conhecidas na origem, mas ausentes do ajuste, continuam avaliadas e têm métricas próprias.', '- Quartis de volume usam somas dos alvos disponíveis do treino; limites empatados podem produzir faixas vazias. Não são taxas populacionais.', '- As somas nos gráficos abrangem a população de bairros avaliados; não representam necessariamente o total municipal completo.', '- Em 2026, as semanas com menos de 28 dias até 30/06 são marcadas como recentes e avaliadas também separadamente; mesmo as anteriores podem ter registros tardios ausentes.', '- Resultados mostram associação preditiva no recorte; não explicam causas da criminalidade nem garantem desempenho em outros períodos.', '', 'As previsões, métricas por grupo, tempos, versões, hashes e verificação de reprodução estão nos arquivos de cada fase e em selecao.json. Pesos dos modelos ficam locais nas subpastas models e podem ser reconstruídos com os mesmos comandos.']
+        lines += ['', f'Approximate 95% CI for the test MAE difference: [{lo:.6f}, {hi:.6f}], from 1,000 resamples in four-week blocks. Negative differences favor the model. Blocks follow evaluated weeks, including any excluded calendar gaps.']
+    lines += ['', '## Limitations and interpretation', '', '- Registration date is a proxy for public availability; complete historical snapshots of report versions are unavailable.', '- The 28-day margin reduces, but does not eliminate, incomplete training targets. Delay proportions in metadata include only records available at the cutoff.', '- Test targets are retrospective in the 2026-10-16 snapshot. Differences from the provisional labels used for selection must be considered when comparing phases.', '- Neighborhoods unknown at forecast origin are excluded from examples and counted in the weekly audit. Categories known at forecast origin but absent from training remain in evaluation and receive separate metrics.', '- Volume quartiles use sums of available training targets; tied boundaries may produce empty groups. These are not population rates.', '- Plot totals cover evaluated neighborhoods and do not necessarily represent the complete municipal total.', '- In 2026, weeks with fewer than 28 days before June 30 are marked as recent and also evaluated separately; earlier weeks may still lack late reports.', '- Results show predictive association within this scope; they do not explain crime causation or guarantee performance in other periods.', '', 'Predictions, grouped metrics, timings, versions, hashes and reproduction checks are stored in each phase directory and in selecao.json. Model weights are stored in the models subdirectories and can be rebuilt with the same commands.']
     (output / 'relatorio.md').write_text('\n'.join(lines) + '\n', encoding='utf-8')
 
 
@@ -312,7 +312,7 @@ def smoke(source, output, config, ledger):
 
 
 def main():
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(description='Run weekly forecasting experiments with selection before testing.')
     parser.add_argument('--phase', choices=['smoke', 'validacao', 'teste', 'avaliacao_2026'], required=True)
     parser.add_argument('--source', type=Path, default=ROOT / 'normalized-data/modelagem')
     parser.add_argument('--output', type=Path, default=ROOT / 'results')

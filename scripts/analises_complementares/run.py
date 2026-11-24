@@ -1,4 +1,4 @@
-"""Análises exploratórias isoladas; preserva o experimento semanal principal."""
+
 from __future__ import annotations
 
 import argparse
@@ -55,21 +55,21 @@ def code_hashes():
 
 def register():
     if OUT.exists() and any(OUT.iterdir()):
-        raise ValueError('Registro existente; use verify ou retome as fases.')
+        raise ValueError('Registration already exists; use verify or resume the phases.')
     cfg = read_json(CONFIG)
     selection = read_json(ROOT / 'results/selecao.json')
     if sha256(ROOT / 'results/selecao.json') != (ROOT / 'results/selecao.sha256').read_text().strip():
-        raise ValueError('Assinatura da seleção original inválida')
+        raise ValueError('Invalid original selection hash')
     for name, expected in selection['provenance']['scripts_sha256'].items():
         if sha256(ROOT / 'scripts' / name) != expected:
-            raise ValueError(f'Código original diverge da execução: {name}')
+            raise ValueError(f'Original code differs from the recorded run: {name}')
     verify_inputs(SOURCE)
     versions = {name: importlib.metadata.version(name) for name in
                 ['numpy', 'scipy', 'pandas', 'pyarrow', 'scikit-learn', 'xgboost', 'joblib', 'matplotlib']}
     if versions != selection['provenance']['versions']:
-        raise ValueError('Usar as mesmas versões do experimento original')
+        raise ValueError('Use the same versions as the original experiment')
     if any(v['window'] != cfg['window_days'] for v in selection['winners'].values()):
-        raise ValueError('Janela incompatível com o protocolo')
+        raise ValueError('Window is incompatible with the protocol')
     originals = {p.relative_to(ROOT).as_posix(): sha256(p) for p in original_files()}
     record = dict(registered_at_utc=datetime.now(timezone.utc).isoformat(),
                   status=cfg['status_cientifico'], config=cfg,
@@ -81,13 +81,13 @@ def register():
     OUT.mkdir(parents=True, exist_ok=True)
     write_json(OUT / 'registro.json', record)
     (OUT / 'registro.sha256').write_text(sha256(OUT / 'registro.json') + '\n', encoding='utf-8')
-    print(f'Protocolo registrado {record["registered_at_utc"]}; {len(originals)} arquivos preservados', flush=True)
+    print(f'Protocol registered {record["registered_at_utc"]}; {len(originals)} files preserved', flush=True)
 
 
 def verify():
     record = read_json(OUT / 'registro.json')
     if sha256(OUT / 'registro.json') != (OUT / 'registro.sha256').read_text().strip():
-        raise ValueError('Registro alterado')
+        raise ValueError('Registration has changed')
     expected_code = dict(record['code_sha256'])
     amendment_path = OUT / 'adendo_representacao.json'
     if amendment_path.exists():
@@ -97,18 +97,18 @@ def verify():
             or amendment['registro_inicial_sha256'] != sha256(OUT / 'registro.json')
             or amendment['codigo_inicial_sha256'] != original_code
             or sha256(OUT / 'protocolo_snapshot/run_inicial.py') != original_code):
-            raise ValueError('Adendo ou snapshot inicial inválido')
+            raise ValueError('Invalid amendment or initial snapshot')
         expected_code['scripts/analises_complementares/run.py'] = amendment['codigo_corrigido_sha256']
     if expected_code != code_hashes():
-        raise ValueError('Código ou protocolo complementar alterado após registro')
+        raise ValueError('Complementary code or protocol changed after registration')
     for name, expected in record['originals_sha256'].items():
         if sha256(ROOT / name) != expected:
-            raise ValueError(f'Original alterado: {name}')
+            raise ValueError(f'Original has changed: {name}')
     current = {p.relative_to(ROOT).as_posix() for p in original_files()}
     if current != set(record['originals_sha256']):
-        raise ValueError('Inventário original alterado')
+        raise ValueError('Original inventory has changed')
     if sha256(SOURCE / 'manifest.json') != record['weekly_manifest_sha256']:
-        raise ValueError('Manifesto semanal alterado')
+        raise ValueError('Weekly manifest has changed')
     verify_inputs(SOURCE)
     return record
 
@@ -118,7 +118,7 @@ def columns_for(groups, window=84):
                'resumos': ['media_semanal', 'desvio_padrao_semanal', 'tendencia_semanal', 'dias_sem_registros'],
                'calendario': ['mes'], 'bairro': ['bairro_chave']}
     if not groups or set(groups) - mapping.keys() or len(groups) != len(set(groups)):
-        raise ValueError('Grupos inválidos')
+        raise ValueError('Invalid groups')
     chosen = {c for g in groups for c in mapping[g]}
     return [c for c in feature_names(window) if c in chosen]
 
@@ -135,23 +135,23 @@ def encoder_for(columns):
 
 
 def encode_inputs(encoder, train, evaluation):
-    # CSR mantém a semântica de zeros do XGBoost original mesmo sem categorias.
+
     return (csr_matrix(encoder.fit_transform(train), dtype=np.float32),
             csr_matrix(encoder.transform(evaluation), dtype=np.float32))
 
 
 def aligned(frame, reference):
     if frame[KEYS].duplicated().any() or reference[KEYS].duplicated().any():
-        raise ValueError('Pares duplicados')
+        raise ValueError('Duplicate pairs')
     a, b = frame.sort_values(KEYS).reset_index(drop=True), reference.sort_values(KEYS).reset_index(drop=True)
     if not a[KEYS].equals(b[KEYS]) or not np.array_equal(a['alvo'], b['alvo']):
-        raise ValueError('Comparação exige pares e alvos idênticos')
+        raise ValueError('Comparison requires identical pairs and targets')
     return a, b
 
 
 def block_indices(n, repetitions, block, seed):
     if n < block:
-        raise ValueError('Poucas semanas para bootstrap')
+        raise ValueError('Too few weeks for bootstrap')
     rng = np.random.default_rng(seed)
     starts = rng.integers(0, n - block + 1, size=(repetitions, math.ceil(n / block)))
     return (starts[:, :, None] + np.arange(block)).reshape(repetitions, -1)[:, :n]
@@ -166,7 +166,7 @@ def contrast(frame, reference, weeks, samples):
                   semanas_com_pares=effective, n=len(a), ic95_inferior=None, ic95_superior=None,
                   repeticoes_validas=0, repeticoes_descartadas=0)
     if effective < 4:
-        result['aviso'] = 'Menos de quatro semanas com pares; intervalo não calculado'
+        result['aviso'] = 'Fewer than four weeks with pairs; interval not calculated'
         return result
     weekly = weekly.reindex(weeks, fill_value=0)
     sums = weekly['sum'].to_numpy()[samples].sum(axis=1)
@@ -176,7 +176,7 @@ def contrast(frame, reference, weeks, samples):
     low, high = np.quantile(estimates, [.025, .975])
     result.update(ic95_inferior=float(low), ic95_superior=float(high),
                   repeticoes_validas=int(good.sum()), repeticoes_descartadas=int((~good).sum()),
-                  aviso='Intervalo exploratório aproximado sem correção por multiplicidade')
+                  aviso='Approximate exploratory interval without multiplicity correction')
     return result
 
 
@@ -190,10 +190,10 @@ def seal(destination):
 def check_seal(destination):
     record = read_json(destination / 'concluido.json')
     if record['registered_sha256'] != sha256(OUT / 'registro.json'):
-        raise ValueError('Saída pertence a outro protocolo')
+        raise ValueError('Output belongs to another protocol')
     for name, expected in record['outputs_sha256'].items():
         if sha256(destination / name) != expected:
-            raise ValueError(f'Saída complementar alterada: {name}')
+            raise ValueError(f'Complementary output has changed: {name}')
 
 
 def attributes(record):
@@ -216,18 +216,18 @@ def attributes(record):
             if saved.exists() and metadata.exists():
                 row = read_json(metadata)
                 if row['registro_sha256'] != sha256(OUT / 'registro.json') or row['prediction_sha256'] != sha256(saved):
-                    raise ValueError('Cache complementar incompatível')
+                    raise ValueError('Incompatible complementary cache')
                 if variant == 'somente_historico' and not row.get('entrada_esparsa_csr'):
-                    raise ValueError('Cache somente histórico anterior ao controle da representação CSR')
+                    raise ValueError('History-only cache predates the CSR representation check')
                 frame = pd.read_parquet(saved)
-                print(f'{name}: cache verificado', flush=True)
+                print(f'{name}: cache verified', flush=True)
             else:
                 if saved.exists() or metadata.exists():
-                    raise ValueError(f'Arquivo incompleto em {name}; conferir antes de retomar')
+                    raise ValueError(f'Incomplete file for {name}; check before resuming')
                 encoder = encoder_for(columns)
                 a, b = encode_inputs(encoder, xtrain[columns], xeval[columns])
                 estimator = model_builder(family)(record['parameters'][family], seed=cfg['seed'], threads=cfg['threads'])
-                print(f'{name}: iniciando ajuste; n={len(train)}; atributos={len(columns)}; codificados={a.shape[1]}', flush=True)
+                print(f'{name}: starting fit; n={len(train)}; features={len(columns)}; encoded={a.shape[1]}', flush=True)
                 started = time.perf_counter()
                 with threadpool_limits(limits=cfg['threads']):
                     estimator.fit(a, ytrain)
@@ -289,7 +289,7 @@ def calendar_info(weeks):
     values = pd.to_datetime(weeks)
     gaps = [(a.date().isoformat(), b.date().isoformat()) for a, b in zip(values[:-1], values[1:]) if (b-a).days != 7]
     return dict(inicio=values.min().date().isoformat(), fim=values.max().date().isoformat(),
-                intervalos_nao_consecutivos=gaps, blocos='Ordem das semanas elegíveis; todos os bairros da semana são mantidos')
+                intervalos_nao_consecutivos=gaps, blocos='Eligible week order; all neighborhoods within each week are retained')
 
 
 def volume(record):
@@ -302,7 +302,7 @@ def volume(record):
     frame = pd.read_parquet(ROOT / 'results/teste/previsoes.parquet')
     expected = {'rf', 'xgb', 'media_4_semanas', 'ultima_semana', 'zero'}
     if set(frame['modelo']) != expected:
-        raise ValueError('Métodos originais inesperados')
+        raise ValueError('Unexpected original methods')
     main_cfg = read_json(ROOT / 'config/experimento_semanal.json')
     train, evaluation, _, _, _, y = prepare_phase(SOURCE, 'teste', 84, main_cfg)
     rebuilt, bounds = prediction_frame(train, evaluation, y, np.zeros(len(y)), 'auditoria', 84, 'teste')
@@ -310,7 +310,7 @@ def volume(record):
     reference, rebuilt = aligned(reference, rebuilt)
     for column in ['faixa_volume_treino', 'categoria_desconhecida']:
         if not reference[column].equals(rebuilt[column]):
-            raise ValueError('Quartis ou categorias divergem do ajuste original')
+            raise ValueError('Quartiles or categories differ from the original fit')
     weeks = sorted(reference['inicio_semana'].unique())
     samples = block_indices(len(weeks), cfg['bootstrap']['repetitions'], cfg['bootstrap']['block_weeks'], cfg['seed'])
     rows, overall, diagnostic, comparisons, by_week, by_area = [], [], [], [], [], []
@@ -318,7 +318,7 @@ def volume(record):
         aligned(predictions, reference)
         a, b = aligned(predictions, reference)
         if not a['faixa_volume_treino'].equals(b['faixa_volume_treino']):
-            raise ValueError('Grupos diferentes entre métodos')
+            raise ValueError('Different groups across methods')
         full = error_summary(predictions)
         overall.append(dict(modelo=model, **full))
         part = []
@@ -359,7 +359,7 @@ def volume(record):
         pares=len(reference), semanas=len(weeks), calendario=calendar_info(weeks)))
     plot_volume(table, pd.DataFrame(comparisons), dest)
     seal(dest)
-    print('Volume: pares, quartis e erros reconciliados; tabelas e gráficos gerados', flush=True)
+    print('Volume: pairs, quartiles and errors reconciled; tables and plots generated', flush=True)
 
 
 def plot_setup():
@@ -385,8 +385,8 @@ def plot_attributes(table, comparisons, dest):
         ax.scatter(data['delta_mae'], np.arange(len(data)), color='#007F83')
         ax.set_yticks(np.arange(len(data)), data['versao'].str.replace('_', ' '))
         ax.axvline(0, color='gray', linewidth=1)
-        ax.set(title='Random Forest' if family=='rf' else 'XGBoost', xlabel='ΔMAE versão reduzida − completa')
-    fig.suptitle('Remoção de atributos em 2024 • intervalos exploratórios de 95%')
+        ax.set(title='Random Forest' if family=='rf' else 'XGBoost', xlabel='ΔMAE reduced version − full version')
+    fig.suptitle('Feature removal in 2024 • exploratory 95% intervals')
     export(fig, dest, 'contribuicao_atributos', plt)
 
 
@@ -399,11 +399,11 @@ def plot_volume(table, comparisons, dest):
         data = table[table['modelo']==model].set_index('grupo').reindex(labels)
         axes[0].plot(labels, data['mae'], 'o-', label=model, color=color)
         axes[1].plot(labels, data['erro_medio'], 'o-', label=model, color=color)
-    axes[0].set(ylabel='MAE por par bairro–semana', xlabel='Quartil de volume no treino')
+    axes[0].set(ylabel='MAE per neighborhood-week pair', xlabel='Training volume quartile')
     axes[1].axhline(0, color='gray', linewidth=1)
-    axes[1].set(ylabel='Erro médio com sinal', xlabel='Quartil de volume no treino')
+    axes[1].set(ylabel='Mean signed error', xlabel='Training volume quartile')
     axes[0].legend(fontsize=9)
-    fig.suptitle('Teste de 2025 • magnitude e direção dos erros')
+    fig.suptitle('2025 test • error magnitude and direction')
     export(fig, dest, 'erros_por_volume', plt)
     fig, ax = plt.subplots(figsize=(10, 4.5), layout='constrained')
     labels = [g for g in GROUPS if g in set(comparisons['grupo'])]
@@ -413,9 +413,9 @@ def plot_volume(table, comparisons, dest):
         positions = np.arange(len(labels))+offset
         ax.vlines(positions, data['ic95_inferior'], data['ic95_superior'], color=colors[model])
         ax.scatter(positions, means, label=model, color=colors[model])
-    ax.set_xticks(np.arange(len(labels)), [g.replace('sem_historico_ajuste', 'Sem histórico\nde ajuste') for g in labels])
+    ax.set_xticks(np.arange(len(labels)), [g.replace('sem_historico_ajuste', 'No training\nhistory') for g in labels])
     ax.axhline(0, color='gray', linewidth=1)
-    ax.set(ylabel='ΔMAE modelo − média de quatro semanas', title='Comparações exploratórias por volume em 2025 • intervalos de 95%')
+    ax.set(ylabel='ΔMAE model − four-week mean', title='Exploratory volume comparisons in 2025 • 95% intervals')
     ax.legend()
     export(fig, dest, 'contrastes_por_volume', plt)
 
@@ -428,62 +428,62 @@ def report(record):
     v = pd.read_csv(OUT / 'volume/metricas_por_volume.csv')
     vc = pd.read_csv(OUT / 'volume/contrastes.csv')
     composition = pd.read_csv(OUT / 'volume/composicao.csv')
-    lines = ['# Análises complementares de atributos e erros por volume', '',
-        f'Protocolo registrado em {record["registered_at_utc"]}, antes das execuções complementares.', '',
-        '**Análises exploratórias posteriores ao conhecimento dos resultados principais.** '
-        '2024 já orientou a escolha dos parâmetros; 2025 já foi examinado. Não há nova confirmação independente, '
-        'mudança da seleção original ou demonstração causal. Os dados são exclusivamente SSP-SP.', '',
-        '## Contribuição dos atributos em 2024', '',
-        'Dez ajustes, mantendo parâmetros e janela de 84 dias. Mesmos pares e alvos disponíveis na validação original. '
-        'Cada versão completa foi retreinada e comparada às previsões originais. Não houve nova busca de parâmetros.', '',
-        '| Modelo | Versão | MAE | RMSE | Ajuste e previsão em segundos |', '|---|---|---:|---:|---:|']
+    lines = ['# Complementary feature and volume error analyses', '',
+        f'Protocol registered at {record["registered_at_utc"]}, before the complementary runs.', '',
+        '**Exploratory analyses performed after the main results were known.** '
+        '2024 already informed parameter selection; 2025 has already been examined. This is not new independent confirmation, '
+        'a change to the original selection, or causal evidence. Only SSP-SP data are used.', '',
+        '## Feature contribution in 2024', '',
+        'Ten fits, keeping parameters and the 84-day window unchanged. The same pairs and available targets as in the original validation are used. '
+        'Each full version was retrained and compared with the original predictions. No new parameter search was performed.', '',
+        '| Model | Version | MAE | RMSE | Fit and prediction seconds |', '|---|---|---:|---:|---:|']
     lines += [f'| {r.modelo} | {r.versao} | {r.mae:.6f} | {r.rmse:.6f} | {r.segundos:.1f} |' for r in a.itertuples()]
     baseline = pd.read_csv(OUT / 'atributos/referencias.csv')
     ref = baseline[baseline['modelo']=='media_4_semanas'].iloc[0]
-    lines += ['', f'Média de quatro semanas na mesma população: MAE {ref.mae:.6f}; RMSE {ref.rmse:.6f}.', '',
-        '| Modelo | Remoção | ΔMAE versus completa | Intervalo exploratório de 95% |', '|---|---|---:|---|']
+    lines += ['', f'Four-week mean on the same population: MAE {ref.mae:.6f}; RMSE {ref.rmse:.6f}.', '',
+        '| Model | Removal | ΔMAE versus full version | Exploratory 95% interval |', '|---|---|---:|---|']
     lines += [f'| {r.modelo} | {r.versao} | {r.delta_mae:+.6f} | [{r.ic95_inferior:+.6f}; {r.ic95_superior:+.6f}] |' for r in c.itertuples()]
-    lines += ['', 'ΔMAE positivo indica piora ao retirar entradas; negativo indica melhora. '
-        'São comparações condicionais às configurações escolhidas para a versão completa. Os grupos são correlacionados; '
-        'os resumos derivam do histórico. Remover colunas pode mudar as divisões das árvores e não mede causalidade nem importância universal. '
-        'Uma única semente não mede estabilidade entre sementes. Não se escolhe uma nova versão vencedora.', '',
-        '![Contribuição dos atributos](atributos/contribuicao_atributos.png)', '',
-        '## Composição dos grupos de volume em 2025', '',
-        'Quartis reconstruídos a partir dos alvos disponíveis no treino e conferidos contra os rótulos originais. '
-        'Não se usou o volume futuro para definir grupos. Empates podem tornar os grupos desiguais.', '',
-        '| Grupo | Bairros | Pares | Registros observados | Alvos zero |', '|---|---:|---:|---:|---:|']
+    lines += ['', 'Positive ΔMAE indicates worse performance after removing inputs; negative values indicate improvement. '
+        'Comparisons are conditional on configurations selected for the full version. Groups are correlated; '
+        'summaries are derived from history. Removing columns can change tree splits and does not measure causality or universal importance. '
+        'A single seed does not measure stability across seeds. No new winning version is selected.', '',
+        '![Feature contribution](atributos/contribuicao_atributos.png)', '',
+        '## Volume group composition in 2025', '',
+        'Quartiles are reconstructed from available training targets and checked against original labels. '
+        'Future volume was not used to define groups. Ties can produce unequal groups.', '',
+        '| Group | Neighborhoods | Pairs | Observed records | Zero targets |', '|---|---:|---:|---:|---:|']
     lines += [f'| {r.grupo} | {r.bairros} | {r.pares} | {r.registros:.0f} | {r.proporcao_zero:.1%} |' for r in composition.itertuples()]
-    lines += ['', '## Erros por volume', '', '| Modelo | Grupo | MAE | RMSE | Erro médio com sinal | Parcela do erro absoluto | Parcela do erro quadrático |',
+    lines += ['', '## Errors by volume', '', '| Model | Group | MAE | RMSE | Mean signed error | Absolute error share | Squared error share |',
         '|---|---|---:|---:|---:|---:|---:|']
     lines += [f'| {r.modelo} | {r.grupo} | {r.mae:.6f} | {r.rmse:.6f} | {r.erro_medio:+.6f} | {r.participacao_erro_absoluto:.1%} | {r.participacao_erro_quadratico:.1%} |'
               for r in v.itertuples()]
-    lines += ['', 'Erro com sinal é previsão menos observado: positivo indica superestimação média. '
-        'As parcelas de erro usam o total de cada método como denominador. Diferem de participação nos registros.', '',
-        '| Modelo | Grupo | ΔMAE versus média | Intervalo exploratório de 95% |', '|---|---|---:|---|']
+    lines += ['', 'Signed error is prediction minus observation: positive values indicate average overestimation. '
+        'Error shares use each method total as the denominator. They differ from shares of records.', '',
+        '| Model | Group | ΔMAE versus mean | Exploratory 95% interval |', '|---|---|---:|---|']
     lines += [f'| {r.modelo} | {r.grupo} | {r.delta_mae:+.6f} | [{r.ic95_inferior:+.6f}; {r.ic95_superior:+.6f}] |' for r in vc.itertuples()]
-    lines += ['', '![Erros por volume](volume/erros_por_volume.png)', '',
-        '![Contrastes por volume](volume/contrastes_por_volume.png)', '',
-        '## Diagnóstico dos zeros e rastreabilidade', '',
-        'O arquivo volume/diagnostico_zero_positivo.csv separa alvos observados zero e positivos por método e grupo. '
-        'É retrospectivo: não permite escolher uma estratégia sabendo de antemão se a semana terá registro. '
-        'Os arquivos erros_por_semana.csv e erros_por_bairro.csv permitem localizar concentrações de erro sem selecionar casos favoráveis.', '',
-        '## Inferência e limitações', '',
-        'Mil reamostragens pareadas em blocos de quatro semanas avaliadas, com todos os bairros de cada semana. '
-        'Os mesmos sorteios foram usados dentro de cada fase. Intervalos percentis de 95% são aproximações '
-        'exploratórias, sem correção por multiplicidade; não são intervalos de previsão ou comprovação confirmatória. '
-        'A dependência espacial e a escolha do bloco limitam a inferência. Semanas sem pares num grupo têm denominador zero; '
-        'sorteios com denominador total zero são descartados e contabilizados. Os calendários e eventuais lacunas estão nos arquivos conferencia.json.', '',
-        'Não se ajustou uma política de seleção por bairro. Não se treinaram ablações em 2025 ou 2026. '
-        'Subnotificação, instabilidade dos rótulos de bairro e registro como proxy de publicação continuam limitando o estudo.', '',
-        '## Ajuste técnico documentado', '',
-        'O adendo de representação, registrado antes dos ajustes somente históricos, garante matrizes CSR '
-        'em todas as versões. Isso evita que a remoção das categorias altere também a representação dos zeros '
-        'para XGBoost. Os três primeiros ajustes de RF já usavam CSR e foram preservados. Um ajuste sem resumos '
-        'ainda não concluído foi interrompido e refeito. O código inicial e o registro original estão preservados; '
-        'parâmetros, grupos de atributos, hipóteses e métricas permaneceram os mesmos.', '',
-        '## Integridade', '',
-        f'{len(record["originals_sha256"])} arquivos do experimento original conferidos por SHA256 antes e depois. '
-        'As previsões e os parâmetros originais permaneceram intactos. Registro, verificações e manifestos de saída acompanham esta pasta.']
+    lines += ['', '![Errors by volume](volume/erros_por_volume.png)', '',
+        '![Volume contrasts](volume/contrastes_por_volume.png)', '',
+        '## Zero target diagnostics and traceability', '',
+        'The file volume/diagnostico_zero_positivo.csv separates observed zero and positive targets by method and group. '
+        'This is retrospective: it does not allow strategy selection with advance knowledge of whether a week will contain a record. '
+        'The files erros_por_semana.csv and erros_por_bairro.csv identify error concentrations without selecting favorable cases.', '',
+        '## Inference and limitations', '',
+        'One thousand paired resamples in blocks of four evaluated weeks, retaining every neighborhood within each week. '
+        'The same draws were used within each phase. Percentile 95% intervals are '
+        'exploratory approximations without multiplicity correction; they are not prediction intervals or confirmatory evidence. '
+        'Spatial dependence and block choice limit inference. Weeks with no pairs in a group have a zero denominator; '
+        'draws with zero total denominator are discarded and counted. Calendars and any gaps are recorded in conferencia.json files.', '',
+        'No neighborhood-specific selection policy was fitted. Ablations were not trained in 2025 or 2026. '
+        'Underreporting, unstable neighborhood labels and registration as a proxy for publication remain study limitations.', '',
+        '## Documented technical adjustment', '',
+        'The representation amendment, registered before history-only fits, ensures CSR matrices '
+        'in every version. This prevents category removal from also changing zero representation '
+        'for XGBoost. The first three RF fits already used CSR and were preserved. An unfinished fit without summaries '
+        'was interrupted and repeated. The initial code and original registration are preserved; '
+        'parameters, feature groups, hypotheses and metrics remained unchanged.', '',
+        '## Integrity', '',
+        f'{len(record["originals_sha256"])} original experiment files checked by SHA256 before and after. '
+        'Original predictions and parameters remained intact. Registration, checks and output manifests accompany this directory.']
     (OUT / 'relatorio.md').write_text('\n'.join(lines)+'\n', encoding='utf-8')
     verify()
     write_json(OUT / 'verificacao_final.json', dict(checked_at_utc=datetime.now(timezone.utc).isoformat(),
@@ -491,11 +491,11 @@ def report(record):
         registro_sha256=sha256(OUT / 'registro.json'),
         outputs_sha256={p.relative_to(OUT).as_posix(): sha256(p) for p in sorted(OUT.rglob('*'))
                        if p.is_file() and p.name != 'verificacao_final.json'}))
-    print('Relatório concluído; originais preservados', flush=True)
+    print('Report completed; originals preserved', flush=True)
 
 
 def main():
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(description='Run exploratory complementary feature and volume error analyses.')
     parser.add_argument('phase', choices=['register', 'verify', 'attributes', 'volume', 'report'])
     args = parser.parse_args()
     if args.phase == 'register':
@@ -508,7 +508,7 @@ def main():
     elif args.phase == 'report':
         report(record)
     verify()
-    print('Integridade original verificada', flush=True)
+    print('Original integrity verified', flush=True)
 
 
 if __name__ == '__main__':

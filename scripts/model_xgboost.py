@@ -1,4 +1,4 @@
-"""Adaptador XGBoost para os experimentos semanais compartilhados."""
+
 
 from xgboost import XGBRegressor
 

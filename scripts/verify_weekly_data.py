@@ -1,4 +1,4 @@
-"""Conferência integral dos exemplos e amostra independente dos históricos."""
+
 import argparse
 from collections import Counter, defaultdict
 from datetime import date, timedelta
@@ -54,7 +54,7 @@ def verify(source, output):
                 for row in batch.to_pylist():
                     b, origin, end = row['bairro_chave'], row['inicio_semana'], row['fim_semana']
                     key = (origin, b)
-                    assert previous is None or previous < key, ('ordem/duplicata', path, key)
+                    assert previous is None or previous < key, ('order/duplicate', path, key)
                     previous = key
                     assert origin.weekday() == 0 and end == origin + timedelta(days=6)
                     assert date.fromisoformat(rules['splits'][split]['start']) <= origin <= end <= date.fromisoformat(rules['splits'][split]['end'])
@@ -70,7 +70,7 @@ def verify(source, output):
                     if origin in samples:
                         counts = samples[origin][b]
                         expected = [sum(counts[origin - timedelta(days=7 * i + j)] for j in range(1, 8)) for i in range(window // 7)]
-                        assert blocks == expected, ('historico', origin, b, window)
+                        assert blocks == expected, ('history', origin, b, window)
                         assert row['dias_sem_registros'] == sum(counts[origin - timedelta(days=j)] == 0 for j in range(1, window + 1))
                     keys.append(key)
                     weeks.add(origin)
@@ -86,7 +86,7 @@ def verify(source, output):
                 all_weeks.update(weeks)
                 reference_keys = keys
             else:
-                assert reference_keys == keys, ('janelas divergentes', split)
+                assert reference_keys == keys, ('mismatched windows', split)
             checked += rows
     expected_unknown = {(b, w): n for (b, w), n in targets.items() if w in all_weeks and first_seen[b] >= w}
     actual_unknown = {}
@@ -97,11 +97,11 @@ def verify(source, output):
     assert actual_unknown == expected_unknown
     assert sum(expected_unknown.values()) == sum(s['registros_bairros_desconhecidos'] for s in report['conjuntos'].values())
     assert len(records) == sum(s['registros_avaliados'] + s['registros_bairros_desconhecidos'] for s in report['conjuntos'].values()) + sum(report['registros_fora_calendario'].values())
-    print(f'OK: {checked:,} exemplos, {len(all_weeks)} semanas; históricos conferidos em {len(samples)} origens; fontes preservadas.')
+    print(f'OK: {checked:,} examples, {len(all_weeks)} weeks; histories verified at {len(samples)} origins; sources preserved.')
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(description='Verify weekly examples and independently check historical input samples.')
     parser.add_argument('--source', type=Path, default=ROOT / 'normalized-data')
     parser.add_argument('--output', type=Path, default=ROOT / 'normalized-data/modelagem')
     args = parser.parse_args()

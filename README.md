@@ -4,6 +4,24 @@ Este repositório reúne os dados públicos originais da SSP-SP, os registros no
 
 O snapshot normalizado é de **16 de outubro de 2026** e usa exclusivamente as cinco planilhas locais de 2022 a 2026. O arquivo de 2026 contém janeiro a junho. O escopo atual usa somente SSP-SP; não inclui integração com o IBGE.
 
+## Code language and historical reproducibility
+
+Active Python code uses English messages and generated explanatory text, without
+comments or docstrings. Existing storage field names, category identifiers and
+paths remain unchanged for compatibility with the published datasets and results.
+The archived `results/analises_complementares/protocolo_snapshot/run_inicial.py`
+is immutable experimental evidence, not the active implementation.
+
+Published results retain their original hashes. To verify or reproduce the
+historical experiment with its original source hashes, use a separate checkout
+of commit `8ca0a41d653867a0d2d9dbf31f0e8980f120b885` with the pinned dependencies.
+The language cleanup changes source hashes, so the existing integrity guards
+intentionally reject resuming frozen experiments with this edited code. Do not
+replace historical hashes to make them match the edited files. For a new run,
+build weekly data into a separate empty directory and use a separate experiment
+output directory. Complementary analyses remain bound to their registered code
+and protocol; their published record is not migrated by this cleanup.
+
 ## Estrutura
 
 ```text

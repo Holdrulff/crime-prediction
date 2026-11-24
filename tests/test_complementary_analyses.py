@@ -28,10 +28,10 @@ class ComplementaryTests(unittest.TestCase):
         encoder = analysis.encoder_for(complete)
         encoder.fit(frame)
         future = frame.iloc[:1].copy()
-        future['bairro_chave'], future['mes'] = 'FUTURO', '12'
+        future['bairro_chave'], future['mes'] = 'FUTURE', '12'
         self.assertTrue(np.isfinite(encoder.transform(future).toarray()).all())
         categories = encoder.named_transformers_['categories'].categories_
-        self.assertNotIn('FUTURO', categories[0])
+        self.assertNotIn('FUTURE', categories[0])
         self.assertNotIn('12', categories[1])
         numeric = analysis.encoder_for(reduced).fit_transform(frame[reduced])
         np.testing.assert_array_equal(numeric, frame[reduced])
@@ -87,7 +87,7 @@ class ComplementaryTests(unittest.TestCase):
             (root / 'config/experimento_semanal.json').write_text('{}')
             (root / 'results/original.csv').write_text('original')
             (out / 'registro.json').write_text('{}')
-            saved = dest / 'resultado.csv'
+            saved = dest / 'result.csv'
             saved.write_text('ok')
             with patch.object(analysis, 'ROOT', root), patch.object(analysis, 'OUT', out):
                 files = analysis.original_files()
@@ -95,7 +95,7 @@ class ComplementaryTests(unittest.TestCase):
                 self.assertNotIn(saved, files)
                 analysis.seal(dest)
                 analysis.check_seal(dest)
-                saved.write_text('corrompido')
+                saved.write_text('corrupted')
                 with self.assertRaises(ValueError):
                     analysis.check_seal(dest)
 

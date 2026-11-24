@@ -29,9 +29,9 @@ class TrainingCommonTests(unittest.TestCase):
         encoder = preprocessor(28)
         encoder.fit(x)
         future = x.iloc[:1].copy()
-        future['bairro_chave'] = 'FUTURO'
+        future['bairro_chave'] = 'FUTURE'
         encoder.transform(future)
-        self.assertNotIn('FUTURO', encoder.named_transformers_['categories'].categories_[0])
+        self.assertNotIn('FUTURE', encoder.named_transformers_['categories'].categories_[0])
 
     def test_cutoff_and_maturation(self):
         end = date(2023, 12, 3)
