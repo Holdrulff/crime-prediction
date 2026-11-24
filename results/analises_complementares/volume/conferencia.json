@@ -1,0 +1,19 @@
+{
+  "calendario": {
+    "blocos": "Ordem das semanas elegíveis; todos os bairros da semana são mantidos",
+    "fim": "2025-12-22",
+    "inicio": "2025-01-06",
+    "intervalos_nao_consecutivos": []
+  },
+  "erros_reconciliados": true,
+  "grupos_reconstruidos": true,
+  "pares": 116436,
+  "pares_comuns": true,
+  "quartis_treino": [
+    2.0,
+    12.5,
+    45.0
+  ],
+  "semanas": 51,
+  "zeros_positivos_reconciliados": true
+}

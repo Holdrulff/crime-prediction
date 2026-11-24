@@ -1,0 +1,9 @@
+modelo,versao,delta_mae,semanas_com_pares,n,ic95_inferior,ic95_superior,repeticoes_validas,repeticoes_descartadas,aviso
+rf,sem_bairro,0.0032075426329344027,48,104714,0.0016934615575275064,0.004379174820688136,1000,0,Intervalo exploratório aproximado sem correção por multiplicidade
+rf,sem_calendario,0.01784262526821394,48,104714,0.015517906262763895,0.019602658305651735,1000,0,Intervalo exploratório aproximado sem correção por multiplicidade
+rf,sem_resumos,0.000337317325360755,48,104714,-0.0011858545542456518,0.0017729489834209466,1000,0,Intervalo exploratório aproximado sem correção por multiplicidade
+rf,somente_historico,0.004047982160818416,48,104714,0.0011636044231208781,0.006313732801915849,1000,0,Intervalo exploratório aproximado sem correção por multiplicidade
+xgb,sem_bairro,-0.0014167732903180824,48,104714,-0.0024166970649264746,0.00030904170448842243,1000,0,Intervalo exploratório aproximado sem correção por multiplicidade
+xgb,sem_calendario,0.0014156761059114283,48,104714,0.00018317792781952246,0.0021548152001204125,1000,0,Intervalo exploratório aproximado sem correção por multiplicidade
+xgb,sem_resumos,0.0002349461605010519,48,104714,-0.0006366126149283904,0.0013464683875487017,1000,0,Intervalo exploratório aproximado sem correção por multiplicidade
+xgb,somente_historico,0.00035554093113631026,48,104714,-0.001582819671427222,0.0017644301998659768,1000,0,Intervalo exploratório aproximado sem correção por multiplicidade

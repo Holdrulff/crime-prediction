@@ -2,3 +2,14 @@
 __pycache__/
 *.pyc
 *.tmp
+*.joblib
+!results/teste/models/rf.joblib
+!results/teste/models/xgb.joblib
+!results/avaliacao_2026/models/rf.joblib
+!results/avaliacao_2026/models/xgb.joblib
+
+# Materiais de entrega e arquivos auxiliares permanecem locais.
+/output/
+/video/
+/tmp/
+/.chart-data-*/

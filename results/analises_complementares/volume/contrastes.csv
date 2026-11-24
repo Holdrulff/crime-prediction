@@ -1,0 +1,11 @@
+modelo,grupo,delta_mae,semanas_com_pares,n,ic95_inferior,ic95_superior,repeticoes_validas,repeticoes_descartadas,aviso
+rf,Q1,0.010738442388960642,51,32181,0.00929500836530089,0.01210499091853608,1000,0,Intervalo exploratório aproximado sem correção por multiplicidade
+rf,Q2,0.025033082836466134,51,24735,0.02256452352159255,0.02746328407342782,1000,0,Intervalo exploratório aproximado sem correção por multiplicidade
+rf,Q3,0.04656811043204758,51,28509,0.040980871958370885,0.05278495320636238,1000,0,Intervalo exploratório aproximado sem correção por multiplicidade
+rf,Q4,-0.026792842957286202,51,28407,-0.04601452790103667,-0.009542230601148232,1000,0,Intervalo exploratório aproximado sem correção por multiplicidade
+rf,sem_historico_ajuste,-0.0006566720393187297,51,2604,-0.010987866247070687,0.005896776332230026,1000,0,Intervalo exploratório aproximado sem correção por multiplicidade
+xgb,Q1,0.048286942243326005,51,32181,0.04777675123134509,0.04899697236435796,1000,0,Intervalo exploratório aproximado sem correção por multiplicidade
+xgb,Q2,0.03776873430748865,51,24735,0.03582695718128735,0.03963571504042327,1000,0,Intervalo exploratório aproximado sem correção por multiplicidade
+xgb,Q3,0.020950158836945367,51,28509,0.018296428901719338,0.023421875972547343,1000,0,Intervalo exploratório aproximado sem correção por multiplicidade
+xgb,Q4,-0.04303067549813967,51,28407,-0.06511796766069632,-0.023589993757849013,1000,0,Intervalo exploratório aproximado sem correção por multiplicidade
+xgb,sem_historico_ajuste,0.03725100827107232,51,2604,0.03144676932591336,0.041581570831818855,1000,0,Intervalo exploratório aproximado sem correção por multiplicidade

@@ -1,0 +1,10 @@
+{
+  "logical_cpus": 12,
+  "platform": "Windows-11-10.0.26200-SP0",
+  "processor": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+  "python": "3.12.14",
+  "requirements_sha256": "64d9ac9fd02c4576fe1754740164377a85058d49fb1f76f176551d300319d53c",
+  "selection_sha256": "8a0373de3ca9eabb21ec0357431ae6c90194184dbe936595ae85e20e296a894d",
+  "threads_per_fit": 4,
+  "timing_note": "Tempos observados no ambiente local; sem benchmark de hardware controlado."
+}

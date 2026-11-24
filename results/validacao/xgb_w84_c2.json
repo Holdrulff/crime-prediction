@@ -1,0 +1,55 @@
+{
+  "alvo_total": 115557.0,
+  "family": "xgb",
+  "fit_seconds": 3.3044298000168055,
+  "mae": 0.4819920679950053,
+  "model": "xgb_w84_c2",
+  "n": 104714,
+  "order": 2,
+  "params": {
+    "colsample_bytree": 0.8,
+    "device": "cpu",
+    "learning_rate": 0.05,
+    "max_depth": 6,
+    "min_child_weight": 1,
+    "n_estimators": 400,
+    "objective": "reg:squarederror",
+    "reg_lambda": 1,
+    "subsample": 0.8,
+    "tree_method": "hist"
+  },
+  "prediction_sha256": "c330ec83d06ede293e7ca24b0252878f56a8acccddc5c9539d526ac8f338bac4",
+  "previsao_total": 118829.02437979355,
+  "provenance": {
+    "config_sha256": "348eeaa54365486772d86f882066b9a25a3090fbcbfa125ca257d6f08456cb6d",
+    "python": "3.12.14",
+    "scripts_sha256": {
+      "model_random_forest.py": "88927b7680c2ce870d9896cbb56c51da5bb2488a2d2e7252c72012833a9ce1b2",
+      "model_xgboost.py": "244ad47bf8369293dfff7aaaed1416015b518716ce9fb20d807f7f065d643824",
+      "prepare_weekly_data.py": "90a5a30e69363517b3e5868e7566ca5fbafe1680972bbbe947c33f0f1b6c59e7",
+      "train_models.py": "2bf73f1731196d01e2372a7376d83ea8eee72a04f3ce9fda448d64f4a42f0b40",
+      "training_common.py": "90ccf20289028df44de730c28e0450d6b47562492d7023578a9e63414b379145",
+      "verify_weekly_data.py": "fda96ca5b992b89ff767ba25e572727fb094ed15a686ca025c2c7b7ecf9c463a"
+    },
+    "versions": {
+      "joblib": "1.6.0",
+      "matplotlib": "3.11.2",
+      "numpy": "2.5.4",
+      "pandas": "3.0.6",
+      "pyarrow": "26.0.0",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.18.1",
+      "xgboost": "3.4.1"
+    },
+    "weekly_manifest_sha256": "57d35bce9b24e1010163bbb90e4d4fde8795c82521dbdc0e97c5753f7bb253a3"
+  },
+  "quartis_volume": [
+    2.0,
+    9.0,
+    32.0
+  ],
+  "rmse": 1.4376782328206952,
+  "total_seconds": 3.681679500004975,
+  "treino_n": 161558,
+  "window": 84
+}

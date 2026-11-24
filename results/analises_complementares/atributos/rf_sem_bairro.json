@@ -1,0 +1,33 @@
+{
+  "alvo_total": 115557.0,
+  "atributos_codificados": 28,
+  "entradas": [
+    "mes",
+    "contagem_semana_anterior_01",
+    "contagem_semana_anterior_02",
+    "contagem_semana_anterior_03",
+    "contagem_semana_anterior_04",
+    "contagem_semana_anterior_05",
+    "contagem_semana_anterior_06",
+    "contagem_semana_anterior_07",
+    "contagem_semana_anterior_08",
+    "contagem_semana_anterior_09",
+    "contagem_semana_anterior_10",
+    "contagem_semana_anterior_11",
+    "contagem_semana_anterior_12",
+    "media_semanal",
+    "desvio_padrao_semanal",
+    "tendencia_semanal",
+    "dias_sem_registros"
+  ],
+  "mae": 0.4761305208431057,
+  "modelo": "rf",
+  "n": 104714,
+  "prediction_sha256": "f1a416bec929b6b1b1058c1b661cb47ed6f18713c0b5bc77e92f031255758f9a",
+  "previsao_total": 117757.4542961425,
+  "registro_sha256": "bed8bdbc7d7d133e1cd465ca0eda124e07df3dec285e1435a6f4c7f6122cf407",
+  "rmse": 1.4336642671623834,
+  "segundos": 224.87820719999945,
+  "treino_n": 161558,
+  "versao": "sem_bairro"
+}

@@ -1,0 +1,32 @@
+{
+  "version": "1.0.0",
+  "seed": 42,
+  "threads": 4,
+  "maturity_days": 28,
+  "windows": [28, 56, 84],
+  "selection_tolerance": 0.000001,
+  "bootstrap": {"repetitions": 1000, "block_weeks": 4},
+  "phases": {
+    "validacao": {"fit_cutoff": "2024-01-01", "train_splits": ["treino"], "eval_split": "validacao", "score_cutoff": "2025-01-01"},
+    "teste": {"fit_cutoff": "2025-01-01", "train_splits": ["treino", "validacao"], "eval_split": "teste"},
+    "avaliacao_2026": {"fit_cutoff": "2026-01-01", "train_splits": ["treino", "validacao", "teste"], "eval_split": "avaliacao_2026"}
+  },
+  "rf": {
+    "fixed": {"n_estimators": 200, "criterion": "squared_error", "max_features": 1.0},
+    "grid": [
+      {"max_depth": 16, "min_samples_leaf": 5},
+      {"max_depth": 16, "min_samples_leaf": 20},
+      {"max_depth": null, "min_samples_leaf": 5},
+      {"max_depth": null, "min_samples_leaf": 20}
+    ]
+  },
+  "xgb": {
+    "fixed": {"n_estimators": 400, "objective": "reg:squarederror", "tree_method": "hist", "device": "cpu", "learning_rate": 0.05, "subsample": 0.8, "colsample_bytree": 0.8, "reg_lambda": 1},
+    "grid": [
+      {"max_depth": 3, "min_child_weight": 1},
+      {"max_depth": 3, "min_child_weight": 10},
+      {"max_depth": 6, "min_child_weight": 1},
+      {"max_depth": 6, "min_child_weight": 10}
+    ]
+  }
+}

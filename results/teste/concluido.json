@@ -1,0 +1,42 @@
+{
+  "maturity": {
+    "atraso_ate_28_dias": 424607,
+    "aviso": "Proporção entre registros já disponíveis no corte; não estima boletins ainda não registrados.",
+    "proporcao": 0.9857708666097099,
+    "registros_disponiveis": 430736
+  },
+  "outputs_sha256": {
+    "bootstrap.json": "0305920be0c688abae0654dd63aa9fa90bb86c51e5e64e3c20c18efb557fae73",
+    "comparacao_erros.png": "69323f74554d09e24b361cdcb10678c4c8c9b593f3e2c47aee22aea3e5c0e47e",
+    "contagens_semanais.png": "6f7e4ab6c5e8145774ad9004236ebcdec8c63eee7b2b7a574b977c59cdcbb9c0",
+    "execucoes.json": "3d81a48aafc2419ec12f8d70f3f887a0932db165aa771ae9887a97d3ab664e5e",
+    "metricas.csv": "3f5ad470b46aa59fbd24782206a747737aa2571daf49f18ab7ad3d50fb129bd7",
+    "models/rf.joblib": "4dbf5d55c05080fcc01e80964dbeb95b399e2db73fd3687e8029a4bcd4144126",
+    "models/xgb.joblib": "1424bffca3f2c6d8c1e68499f9f0df2c1806c57cb84c9d66678b80d5e6dada34",
+    "previsoes.parquet": "7a183b719af1233a2f10d6de069d49e7c37dad47a4bc188f6056b552a3304cb2"
+  },
+  "provenance": {
+    "config_sha256": "348eeaa54365486772d86f882066b9a25a3090fbcbfa125ca257d6f08456cb6d",
+    "python": "3.12.14",
+    "scripts_sha256": {
+      "model_random_forest.py": "88927b7680c2ce870d9896cbb56c51da5bb2488a2d2e7252c72012833a9ce1b2",
+      "model_xgboost.py": "244ad47bf8369293dfff7aaaed1416015b518716ce9fb20d807f7f065d643824",
+      "prepare_weekly_data.py": "90a5a30e69363517b3e5868e7566ca5fbafe1680972bbbe947c33f0f1b6c59e7",
+      "train_models.py": "2bf73f1731196d01e2372a7376d83ea8eee72a04f3ce9fda448d64f4a42f0b40",
+      "training_common.py": "90ccf20289028df44de730c28e0450d6b47562492d7023578a9e63414b379145",
+      "verify_weekly_data.py": "fda96ca5b992b89ff767ba25e572727fb094ed15a686ca025c2c7b7ecf9c463a"
+    },
+    "versions": {
+      "joblib": "1.6.0",
+      "matplotlib": "3.11.2",
+      "numpy": "2.5.4",
+      "pandas": "3.0.6",
+      "pyarrow": "26.0.0",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.18.1",
+      "xgboost": "3.4.1"
+    },
+    "weekly_manifest_sha256": "57d35bce9b24e1010163bbb90e4d4fde8795c82521dbdc0e97c5753f7bb253a3"
+  },
+  "selection_sha256": "8a0373de3ca9eabb21ec0357431ae6c90194184dbe936595ae85e20e296a894d"
+}

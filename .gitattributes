@@ -1,2 +1,10 @@
 *.xlsx filter=lfs diff=lfs merge=lfs -text
 *.parquet filter=lfs diff=lfs merge=lfs -text
+*.joblib filter=lfs diff=lfs merge=lfs -text
+
+# Manifestos científicos verificam os bytes exatos, inclusive quebras de linha.
+normalized-data/** -text
+scripts/** -text
+config/** -text
+docs/protocolos/** -text
+results/** -text

@@ -1,0 +1,33 @@
+{
+  "completed_at_utc": "2026-11-17T00:08:44.766354+00:00",
+  "outputs_sha256": {
+    "conferencia.json": "adeb36cc0234a80e1a58715930dd2c9e96af6e3db679bc39b232968eaecb0c00",
+    "contrastes.csv": "ebb0b0ec3bfa674502bcab0f8d9bfb0c3cca43a4459f6dd9fb9b817308d4cdf9",
+    "contribuicao_atributos.pdf": "1449ad2f8cfa22a3105d9541868e6d0f49419b2478418b10c39c8c1428de8fc9",
+    "contribuicao_atributos.png": "ed1424b10be65f0c5c293c8ab7fca344253fef05e1142410c337e4ab35c7755f",
+    "metricas.csv": "9bd556a35c9e130ad5609a21d0c2d71c99c56e83ea7ba8f79a9bef67df67ed67",
+    "previsoes.parquet": "8f4305ee3dc12878bb53ee0691e1b3c1661d7555c38d46d2bc2049106e43e5a8",
+    "referencias.csv": "fb542d959309f5fa869f70ec74a634911cd45a3415fc423a5ec7efc60dfbcdca",
+    "rf_completa.json": "886828026d80c4d2329d9f63ec19429f53b4339a176823835875c3dca995341e",
+    "rf_completa.parquet": "89b72663a81d85c685ec7f7a6bdadfee57a4f312196d05bb13c863633e3b1069",
+    "rf_sem_bairro.json": "0fe6af4fc6a0c8b68dda4ea9100bf7ae3ebedbd3c5003c45dcb0bea93514779b",
+    "rf_sem_bairro.parquet": "f1a416bec929b6b1b1058c1b661cb47ed6f18713c0b5bc77e92f031255758f9a",
+    "rf_sem_calendario.json": "a11ee91a902a5e2410e3eb78a7a2fe9932bbd9dac0a201e3b53b14e193a4364f",
+    "rf_sem_calendario.parquet": "dd20ebd8fd0e4ce2b4050a1c2bf3b71f5a88371493fc7781504188305a5b219e",
+    "rf_sem_resumos.json": "415db59bcd37c9b6eccc4a587121b6beb133cd7431a3f7417d4a71e409109570",
+    "rf_sem_resumos.parquet": "f17b04c20fbef7edca316f71ed7f63c30187b3f4a2d55a87df014963520458aa",
+    "rf_somente_historico.json": "357f59a255c09f38523af89f2a73d0991b39d3f1e92b1a9ba88395282060aef8",
+    "rf_somente_historico.parquet": "357afb847042cc938870095f838a8781f9bb35007926127eb4c9c366d983b0b5",
+    "xgb_completa.json": "54de75781040d1d06f8cc8acab3de7a6915f7d8e9298651c027c7317b6a2edef",
+    "xgb_completa.parquet": "6ecf1dced48d683cfc4f6ff50f0de9f7b4e8190380af8978cf185c61c9da06c1",
+    "xgb_sem_bairro.json": "d36cf649c2e7d1c312a4a0f969235713a4e383a0f2d5865bfc7914a769596e2d",
+    "xgb_sem_bairro.parquet": "8eb898233d012fe4dc8b2f047e0d5df1d2dd9cba8154ff0e383857b7c4d31ab0",
+    "xgb_sem_calendario.json": "2f47a78d668daa46a89bba2d9bc807a5684d624490ae97a8df12d83ba804cd1d",
+    "xgb_sem_calendario.parquet": "7cc91bee2af28da4fd1a10e27232b40a86c0e6d0cf96ec89f707bbb17a16cfb3",
+    "xgb_sem_resumos.json": "5bc1cd4ea02730c97e1f84e3e4071bb157cc45e11245d73f2c4c1343f47474d2",
+    "xgb_sem_resumos.parquet": "5bc6e14a7e7bc515ba4cedc5f052b5e960a62963982ebab194265e64f2c60d76",
+    "xgb_somente_historico.json": "2debbc18ded05c95c98e8ed674a71867aab9f7a41f91abdc28519af64c9529e3",
+    "xgb_somente_historico.parquet": "08612879a81e593b30498c6f2367d164cf5e63d37805d9e43e93fb4a732befca"
+  },
+  "registered_sha256": "bed8bdbc7d7d133e1cd465ca0eda124e07df3dec285e1435a6f4c7f6122cf407"
+}

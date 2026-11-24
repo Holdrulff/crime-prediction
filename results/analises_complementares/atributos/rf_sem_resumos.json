@@ -1,0 +1,32 @@
+{
+  "adendo_sha256": "829e8f2898e0a74381b6fd795f6c632cec5e44a9ca548a11f10bfa2b20968a6d",
+  "alvo_total": 115557.0,
+  "atributos_codificados": 2131,
+  "entrada_esparsa_csr": true,
+  "entradas": [
+    "bairro_chave",
+    "mes",
+    "contagem_semana_anterior_01",
+    "contagem_semana_anterior_02",
+    "contagem_semana_anterior_03",
+    "contagem_semana_anterior_04",
+    "contagem_semana_anterior_05",
+    "contagem_semana_anterior_06",
+    "contagem_semana_anterior_07",
+    "contagem_semana_anterior_08",
+    "contagem_semana_anterior_09",
+    "contagem_semana_anterior_10",
+    "contagem_semana_anterior_11",
+    "contagem_semana_anterior_12"
+  ],
+  "mae": 0.473260295535532,
+  "modelo": "rf",
+  "n": 104714,
+  "prediction_sha256": "f17b04c20fbef7edca316f71ed7f63c30187b3f4a2d55a87df014963520458aa",
+  "previsao_total": 117330.23779530358,
+  "registro_sha256": "bed8bdbc7d7d133e1cd465ca0eda124e07df3dec285e1435a6f4c7f6122cf407",
+  "rmse": 1.4271243366871602,
+  "segundos": 303.2507716,
+  "treino_n": 161558,
+  "versao": "sem_resumos"
+}

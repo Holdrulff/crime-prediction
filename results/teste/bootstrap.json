@@ -1,0 +1,13 @@
+{
+  "bloco_semanas": 4,
+  "diferenca_mae": 0.013136513749255913,
+  "interpretacao": "Diferença negativa favorece o vencedor; IC aproximado com blocos móveis por ordem das semanas avaliadas.",
+  "intervalo_95": [
+    0.007071472789079064,
+    0.01814731839456843
+  ],
+  "referencia": "media_4_semanas",
+  "repeticoes": 1000,
+  "semanas": 51,
+  "vencedor": "rf"
+}

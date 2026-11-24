@@ -1,6 +1,6 @@
 # Dados de roubos na cidade de São Paulo
 
-Este repositório reúne os dados públicos originais da SSP-SP, os registros normalizados e exemplos para prever contagens de registros de roubo por bairro na semana seguinte. As entradas usam históricos de 28, 56 ou 84 dias. Há scripts de preparação e conferência; os modelos ainda não foram treinados.
+Este repositório reúne os dados públicos originais da SSP-SP, os registros normalizados e experimentos para prever contagens de registros de roubo por bairro na semana seguinte. As entradas usam históricos de 28, 56 ou 84 dias. A implementação compara Random Forest, XGBoost e referências simples, com preparação e avaliação temporal compartilhadas.
 
 O snapshot normalizado é de **16 de outubro de 2026** e usa exclusivamente as cinco planilhas locais de 2022 a 2026. O arquivo de 2026 contém janeiro a junho. O escopo atual usa somente SSP-SP; não inclui integração com o IBGE.
 
@@ -73,7 +73,68 @@ A data de registro é uma aproximação da disponibilidade, não uma comprovaç�
 
 Na seleção dos modelos, usar 2024; reservar 2025 para o teste final. Não ajustar codificadores com bairros de períodos futuros. Antes de treinar, selecionar explicitamente as colunas preditoras: bairro, mês e atributos históricos; datas identificam as previsões, e alvos/colunas de auditoria não são preditores. As janelas não usam eventos futuros nem dados socioeconômicos.
 
-Os arquivos ocultos `.gitattributes` e `.gitignore` são configurações técnicas do Git. Os Excel e os Parquet usam **Git LFS**. Instale o Git LFS antes de clonar o repositório; em uma cópia já existente, execute `git lfs pull`. Sem isso, podem aparecer apenas arquivos de ponteiro, em vez dos dados binários completos.
+## Treinamento e comparação dos modelos
+
+O protocolo está em `config/experimento_semanal.json`. O ambiente desta execução usa Python 3.12; todas as dependências, inclusive transitivas, estão fixadas em `requirements.txt`. Criar um ambiente local antes de executar:
+
+```bash
+python -m venv .venv
+.venv/Scripts/python.exe -m pip install -r requirements.txt
+.venv/Scripts/python.exe -m unittest discover -s tests -v
+.venv/Scripts/python.exe scripts/train_models.py --phase smoke
+.venv/Scripts/python.exe scripts/train_models.py --phase validacao
+.venv/Scripts/python.exe scripts/train_models.py --phase teste
+.venv/Scripts/python.exe scripts/train_models.py --phase avaliacao_2026
+```
+
+Os comandos acima são para Windows. Em Linux/macOS, trocar `.venv/Scripts/python.exe` por `.venv/bin/python`. Executar fases sequencialmente. `smoke` verifica os modelos em amostras pequenas e não participa da seleção. Não há treinamento paralelo entre famílias: cada ajuste usa até quatro threads. Os dois modelos compartilham preparação, one-hot para bairro e mês, métricas e critérios de inclusão; usam modelos globais para todos os bairros.
+
+| Fase | Corte exclusivo de registro para ajuste | Exemplos de ajuste | Avaliação |
+|---|---|---|---|
+| Validação | 01/01/2024 | 2022–2023 | Semanas de 2024 maturadas por 28 dias antes de 01/01/2025, com alvos disponíveis nessa data |
+| Teste | 01/01/2025 | 2022–2024 | Semanas completas de 2025; alvos retrospectivos do snapshot |
+| Complementar | 01/01/2026 | 2022–2025 | Semanas completas disponíveis de 2026; alvos retrospectivos, destacando as recentes |
+
+O ajuste usa apenas semanas encerradas pelo menos 28 dias antes do corte e alvos reconstruídos conforme os registros disponíveis nessa data. Os modelos ficam fixos durante cada ano; as entradas são atualizadas a cada segunda-feira. A margem não garante alvos completos, e as proporções de atraso observadas em cada corte são reportadas sem usar boletins registrados depois dele.
+
+A validação compara 12 configurações por família (três janelas e quatro combinações de parâmetros). Random Forest usa 200 árvores; XGBoost, 400, sem parada antecipada. As referências são zero, última semana disponível e média disponível de quatro semanas. Menor MAE define os vencedores por família e a referência, com desempate por RMSE, janela menor e ordem da configuração quando a diferença de MAE é menor que `1e-6`.
+
+A seleção fica congelada em `results/selecao.json` e `results/selecao.sha256` antes do teste. O comando de teste rejeita alterações no protocolo ou na seleção. As fases concluídas conferem seus arquivos por hash antes de aceitar uma retomada. Para um experimento diferente, usar `--output` com outro diretório e manter o teste de 2025 fora do ajuste de parâmetros. Um resultado desfavorável no teste não autoriza novas escolhas baseadas nele.
+
+Resultados em `results/`:
+
+- `ambiente.json`: sistema, processador, quantidade de processadores lógicos e limite de threads usados; tempos observados são específicos desta execução local.
+- `relatorio.md`: comparação das fases e limitações.
+- `validacao/`: previsões e metadados de cada configuração, métricas dos finalistas e referências, gráficos e tempos.
+- `teste/` e `avaliacao_2026/`: previsões por bairro e semana, métricas gerais e por grupo, gráficos e metadados.
+- `teste/bootstrap.json`: intervalo aproximado de 95% da diferença de MAE entre o vencedor e a referência previamente escolhidos, com 1.000 reamostragens em blocos de quatro semanas.
+- `models/` dentro de `teste/` e `avaliacao_2026/`: codificador e estimador serializados, publicados pelo Git LFS. Os quatro arquivos preservam os hashes exigidos pelos manifestos originais e permitem reutilizar os modelos sem retreinar.
+
+Após clonar, executar `git lfs pull` para obter os dados, as previsões Parquet e os modelos salvos. A retomada de uma fase concluída exige todos os arquivos listados no seu manifesto, inclusive os pesos. Para uma reprodução independente, executar todas as fases com `--output results_reproducao`, preservando os resultados publicados.
+
+As métricas incluem MAE e RMSE por bairro, semana, categoria desconhecida no ajuste e quartil de volume do treino. Limites de quartis empatados preservam valores iguais na mesma faixa e podem gerar faixas vazias. Em 2026, as semanas que não completam 28 dias até 30/06 recebem `alvo_recente=True` e também são avaliadas separadamente. As curvas agregadas somam somente bairros avaliados; registros de bairros desconhecidos na origem estão na auditoria semanal, não nessas curvas.
+
+Comparar modelos e referências dentro da mesma fase. Os anos têm volumes, quantidade de bairros conhecidos e maturidade dos alvos diferentes; uma redução do MAE entre anos, isoladamente, não demonstra melhora do modelo. A avaliação de 2026 cobre somente parte do ano.
+
+### Resultado do teste de 2025
+
+Com a seleção congelada em 2024, foram avaliados 116.436 pares bairro–semana, em 51 semanas completas. Ambos os algoritmos selecionaram histórico de 84 dias.
+
+| Método | MAE | RMSE |
+|---|---:|---:|
+| Média das últimas quatro semanas | 0,404317 | 1,356921 |
+| Random Forest | 0,417453 | 1,283875 |
+| XGBoost | 0,421150 | 1,280749 |
+
+A referência apresentou o menor MAE global. Para Random Forest menos referência, a diferença de MAE foi +0,013137, com intervalo aproximado de 95% de [+0,007071; +0,018147], por bootstrap em blocos de quatro semanas. Os algoritmos apresentaram menor RMSE, indicando menor penalização dos erros grandes nessa população.
+
+A comparação por volume, definida a partir do treino, mostra um contraste descritivo: no maior quartil, os MAEs foram 1,327287 para a referência, 1,300494 para Random Forest e 1,284257 para XGBoost. Esse grupo concentra 99.637 dos 105.216 registros avaliados (cerca de 94,7%). Nas faixas de menor volume, a referência teve menor MAE. Esses resultados por grupo não alteram a seleção prévia, e não foram usados para reajustar os parâmetros. As tabelas completas estão em `results/teste/metricas.csv`; gráficos, previsões e limitações estão em `results/relatorio.md`.
+
+Os arquivos ocultos `.gitattributes` e `.gitignore` são configurações técnicas do Git. Os Excel, os Parquet e os modelos Joblib usam **Git LFS**. Instale o Git LFS antes de clonar o repositório; em uma cópia já existente, execute `git lfs pull`. Sem isso, podem aparecer apenas arquivos de ponteiro, em vez dos dados e modelos binários completos.
+
+O repositório publica dados, código, configurações, testes, protocolo científico e resultados. Materiais de entrega da disciplina em `output/` e `video/`, ambientes instalados e arquivos temporários permanecem apenas locais. Os gráficos científicos em `results/` fazem parte dos resultados publicados.
+
+Os arquivos cobertos por assinaturas científicas preservam suas quebras de linha originais, sem conversão automática pelo Git. Isso permite verificar os mesmos hashes após clonar em sistemas diferentes; não normalizar esses arquivos antes das conferências.
 
 ## Qual arquivo usar
 
@@ -149,4 +210,47 @@ Parquet pode ser lido por Python com pandas ou PyArrow, por R e por outras ferra
 
 Foram conferidos os 591.760 identificadores de origem, a reconciliação de registros, as regras de elegibilidade, os totais dos quatro conjuntos, a ausência de pares bairro e dia repetidos, as contagens não negativas, a ordem das datas e a ausência de sobreposição entre os conjuntos. O [manifesto](normalized-data/metadados/manifest.json) contém as assinaturas das fontes e das saídas para verificar integridade.
 
-Esta versão preserva o snapshot dos dados e acrescenta a preparação semanal. Os scripts e documentos anteriores de normalização permanecem no histórico do Git, incluindo o commit `7da66367c6eb1f269bc337d899e0a58ff41517f2`. A implementação dos modelos será adicionada em uma etapa posterior.
+Esta versão preserva o snapshot dos dados, a preparação semanal e o protocolo de treinamento. Os scripts e documentos anteriores de normalização permanecem no histórico do Git, incluindo o commit `7da66367c6eb1f269bc337d899e0a58ff41517f2`.
+
+## Análises complementares de atributos e erros por volume
+
+O [protocolo complementar](docs/protocolos/analises_complementares.md) foi definido
+após conhecer os resultados principais. As análises são exploratórias: a remoção
+de grupos de atributos usa as mesmas 48 semanas de validação de 2024 e mantém os
+parâmetros e a janela de 84 dias; o diagnóstico de volume usa apenas as previsões
+já existentes de 2025. Não se escolhe um novo modelo com base no teste.
+
+Configuração em `config/analises_complementares.json`; implementação isolada em
+`scripts/analises_complementares/run.py`. No ambiente original:
+
+```bash
+.venv/Scripts/python.exe -m unittest discover -s tests -v
+.venv/Scripts/python.exe scripts/analises_complementares/run.py register
+.venv/Scripts/python.exe scripts/analises_complementares/run.py volume
+.venv/Scripts/python.exe scripts/analises_complementares/run.py attributes
+.venv/Scripts/python.exe scripts/analises_complementares/run.py report
+.venv/Scripts/python.exe scripts/analises_complementares/run.py verify
+```
+
+`register` é executado uma única vez, antes das análises. Em uma cópia com o registro
+já existente, comece por `verify`: as fases conferem e reutilizam resultados
+concluídos, sem sobrescrever as previsões originais. Alterações posteriores no
+protocolo ou código registrado são rejeitadas. Execute os ajustes sequencialmente.
+
+As saídas estão em `results/analises_complementares/`: registro com data UTC e
+assinaturas dos originais, previsões por versão, métricas, contrastes pareados com
+intervalos exploratórios, composição dos quartis, diagnósticos por bairro/semana e
+por alvo zero/positivo, gráficos PNG/PDF e `relatorio.md`. `verificacao_final.json`
+registra a preservação dos originais e as assinaturas das saídas.
+
+Os quartis mantêm os volumes disponíveis do treino e separam bairros sem histórico
+de ajuste. Os intervalos usam mil reamostragens em blocos de quatro semanas, sem
+correção por multiplicidade. Os resultados não medem causalidade nem confirmam
+generalização independente; 2024 já foi usado para escolher a configuração
+completa, e apenas uma semente é avaliada.
+
+Um adendo técnico datado, em `results/analises_complementares/adendo_representacao.json`,
+mantém matrizes CSR em todas as versões, inclusive quando bairro e mês são
+removidos. Isso conserva a representação dos zeros do experimento original no
+XGBoost. O adendo antecede os ajustes afetados e preserva o código inicialmente
+registrado em `protocolo_snapshot/run_inicial.py`; não altera hipóteses ou parâmetros.

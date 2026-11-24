@@ -1,0 +1,14 @@
+{
+  "avaliacao_shape": [
+    104714,
+    2135
+  ],
+  "checked_at_utc": "2026-11-17T00:09:03.320994+00:00",
+  "historico_csr": true,
+  "matriz_completa_igual_original": true,
+  "metricas_com_erros_positivos_negativos_conferidas": true,
+  "treino_shape": [
+    161558,
+    2135
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "status_cientifico": "Exploratório, definido após conhecimento dos resultados principais; não é pré-registro independente.",
+  "seed": 42,
+  "threads": 4,
+  "window_days": 84,
+  "phase_attributes": "validacao",
+  "phase_volume": "teste",
+  "variants": {
+    "completa": ["historico", "resumos", "calendario", "bairro"],
+    "sem_bairro": ["historico", "resumos", "calendario"],
+    "sem_calendario": ["historico", "resumos", "bairro"],
+    "somente_historico": ["historico", "resumos"],
+    "sem_resumos": ["historico", "calendario", "bairro"]
+  },
+  "bootstrap": {"repetitions": 1000, "block_weeks": 4, "confidence": 0.95},
+  "reproduction": {"rtol": 0.000001, "atol": 0.0000001},
+  "reference": "media_4_semanas"
+}

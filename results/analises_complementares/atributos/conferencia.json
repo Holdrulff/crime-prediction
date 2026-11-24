@@ -1,0 +1,16 @@
+{
+  "calendario": {
+    "blocos": "Ordem das semanas elegíveis; todos os bairros da semana são mantidos",
+    "fim": "2024-11-25",
+    "inicio": "2024-01-01",
+    "intervalos_nao_consecutivos": []
+  },
+  "pares": 104714,
+  "pares_alvos_identicos": true,
+  "reproducao": {
+    "rf": 1.4210854715202004e-14,
+    "xgb": 0.0
+  },
+  "semanas": 48,
+  "treino": 161558
+}

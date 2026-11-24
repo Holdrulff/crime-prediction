@@ -1,0 +1,20 @@
+{
+  "ajuste_interrompido_sem_checkpoint": "rf_sem_resumos",
+  "ajustes_afetados_ainda_nao_executados": true,
+  "checkpoints_preservados": {
+    "atributos/rf_completa.json": "886828026d80c4d2329d9f63ec19429f53b4339a176823835875c3dca995341e",
+    "atributos/rf_completa.parquet": "89b72663a81d85c685ec7f7a6bdadfee57a4f312196d05bb13c863633e3b1069",
+    "atributos/rf_sem_bairro.json": "0fe6af4fc6a0c8b68dda4ea9100bf7ae3ebedbd3c5003c45dcb0bea93514779b",
+    "atributos/rf_sem_bairro.parquet": "f1a416bec929b6b1b1058c1b661cb47ed6f18713c0b5bc77e92f031255758f9a",
+    "atributos/rf_sem_calendario.json": "a11ee91a902a5e2410e3eb78a7a2fe9932bbd9dac0a201e3b53b14e193a4364f",
+    "atributos/rf_sem_calendario.parquet": "dd20ebd8fd0e4ce2b4050a1c2bf3b71f5a88371493fc7781504188305a5b219e"
+  },
+  "codigo_corrigido_sha256": "71fd88fed81348d322d6b821526fcce3414c1c2e303e7684e257a16e0a40be1d",
+  "codigo_inicial_sha256": "e251900fc319becc506f410fb825299705ce78ce5faa52608ea4a724089a95e8",
+  "escopo": "Correcao tecnica anterior aos ajustes somente_historico; hipoteses, parametros, grupos e metricas inalterados.",
+  "motivo": "Manter CSR em todas as variantes para impedir que remover categorias altere a representacao dos zeros no XGBoost; na matriz esparsa original, entradas nao armazenadas sao tratadas como ausentes pelo estimador.",
+  "registered_at_utc": "2026-11-17T00:00:55.278839+00:00",
+  "registro_inicial_sha256": "bed8bdbc7d7d133e1cd465ca0eda124e07df3dec285e1435a6f4c7f6122cf407",
+  "testes_passaram": 16,
+  "testes_sha256": "3017bdacac7fce7d4150627579eeb00f629548c278b8d88657526ce112359242"
+}

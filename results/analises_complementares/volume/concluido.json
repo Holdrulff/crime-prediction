@@ -1,0 +1,18 @@
+{
+  "completed_at_utc": "2026-11-16T23:35:52.118025+00:00",
+  "outputs_sha256": {
+    "composicao.csv": "223b9a350b3562bac7e05a300aeccaaca0a434318117c3daebe38eb26987a46c",
+    "conferencia.json": "534818532cdfa2abe38f357522372de012e8dc36b3be0ab95cad53d062228f65",
+    "contrastes.csv": "3fc1e6ee36815c491b10f9d899f7ec4a0b933ced8266f081025b60a4f5c7f18b",
+    "contrastes_por_volume.pdf": "27cf4aa1a92062dea15ffa2cc7e515b8babea92f4b46140bacfec488d2d17df7",
+    "contrastes_por_volume.png": "d0a2b8c6f902ba4de26b4e60724af7aa95d807309cf5e35be99d595ee629bf9b",
+    "diagnostico_zero_positivo.csv": "d670dcb30dea9c02f2abe315d2a60199b6cb5c81000d2ae23ef3144732135af2",
+    "erros_por_bairro.csv": "775ccaab43b463a76baf97cb069a3131b4466fab6c4ad69bdb4f7336305b8bc4",
+    "erros_por_semana.csv": "972ce822dd8c6c2db4a9190d09855e2fe45bd67eee4b1e3c569a75dd388e8a82",
+    "erros_por_volume.pdf": "3c881314df4c165dbd5423c4d97d45a53cf1dee6416294b97da1889e18ae36c8",
+    "erros_por_volume.png": "fba6ea2b7844c84a56ab253e74cdd251a6809bebafee694d4e6ffe1256813647",
+    "metricas_gerais.csv": "12597a6f164edee512bdefcf8714dda13840ac864854ecd991c78c196ebc52c2",
+    "metricas_por_volume.csv": "c2891a346aaa120bf9b03647f4ddcad84936ef9735f4594fa5f93f22751eb86f"
+  },
+  "registered_sha256": "bed8bdbc7d7d133e1cd465ca0eda124e07df3dec285e1435a6f4c7f6122cf407"
+}
